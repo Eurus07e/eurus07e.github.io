@@ -1,0 +1,704 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light">
+  <meta name="theme-color" content="#ffffff">
+  <meta name="description" content="从 LLM、Prompt、RAG 到 Agent、MCP 与 Harness，理解当代 AI 应用的基本组成。">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="漫话近年AI应用技术 | Yuxuan Shu">
+  <meta property="og:description" content="从 LLM、Prompt、RAG 到 Agent、MCP 与 Harness，理解当代 AI 应用的基本组成。">
+  <link rel="canonical" href="https://eurus07e.github.io/blog/ai/"><link rel="alternate" type="application/rss+xml" title="Yuxuan Shu Blog" href="/blog/feed.xml">
+  <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="/site.css">
+  <script src="/site.js" defer></script>
+  <title>漫话近年AI应用技术 | Yuxuan Shu</title>
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+  <div class="page post-page"><header class="interior-header">
+    <a class="site-name" href="/">Yuxuan Shu</a>
+    <nav aria-label="Main navigation"><a href="/">Home</a><span>/</span><a href="/blog/">Blog</a></nav>
+  </header><main id="main" class="article-main">
+    <a class="back-link" href="/blog/">← All articles</a>
+    <article lang="zh-CN">
+      <header class="article-header"><h1 lang="zh-CN">漫话近年AI应用技术</h1>
+        <p class="article-summary" lang="zh-CN">从 LLM、Prompt、RAG 到 Agent、MCP 与 Harness，理解当代 AI 应用的基本组成。</p>
+        <p class="article-meta"><time datetime="2026-09-11">Sep 11, 2026</time><span>·</span><span>Artificial Intelligence</span><span class="tag" lang="en">#MCP</span><span class="tag" lang="en">#agent</span><span class="tag" lang="en">#LLM</span><span class="tag" lang="en">#RAG</span></p>
+      </header>
+      <details class="article-toc"><summary>On this page</summary><ol><li class=""><a href="#01-llm-生成文字的模型" lang="zh-CN">01 | LLM：生成文字的模型</a></li><li class="subheading"><a href="#1-llm-是怎样学会这些能力的" lang="zh-CN">1. LLM 是怎样学会这些能力的</a></li><li class="subheading"><a href="#2-llm-的局限" lang="zh-CN">2. LLM 的局限</a></li><li class=""><a href="#02-prompt-告诉模型要做什么" lang="zh-CN">02 | Prompt：告诉模型要做什么</a></li><li class="subheading"><a href="#1-一个好的-prompt-通常包含什么" lang="zh-CN">1. 一个好的 Prompt 通常包含什么</a></li><li class="subheading"><a href="#2-prompt-与上下文的关系" lang="zh-CN">2. Prompt 与上下文的关系</a></li><li class=""><a href="#03-fine-tuning-改变模型的行为倾向" lang="zh-CN">03 | Fine-tuning：改变模型的行为倾向</a></li><li class="subheading"><a href="#1-微调适合解决什么问题" lang="zh-CN">1. 微调适合解决什么问题</a></li><li class="subheading"><a href="#2-微调不适合存储经常变化的知识" lang="zh-CN">2. 微调不适合存储经常变化的知识</a></li><li class=""><a href="#04-rag-先检索-再生成" lang="zh-CN">04 | RAG：先检索，再生成</a></li><li class="subheading"><a href="#1-文档怎样被检索出来" lang="zh-CN">1. 文档怎样被检索出来</a></li><li class="subheading"><a href="#2-rag-的完整流程" lang="zh-CN">2. RAG 的完整流程</a></li><li class="subheading"><a href="#3-rag-的问题" lang="zh-CN">3. RAG 的问题</a></li><li class=""><a href="#05-function-calling-让模型请求程序执行操作" lang="zh-CN">05 | Function Calling：让模型请求程序执行操作</a></li><li class="subheading"><a href="#1-模型和程序各自做什么" lang="zh-CN">1. 模型和程序各自做什么</a></li><li class="subheading"><a href="#2-function-calling-的安全问题" lang="zh-CN">2. Function Calling 的安全问题</a></li><li class=""><a href="#06-mcp-统一连接工具的协议" lang="zh-CN">06 | MCP：统一连接工具的协议</a></li><li class="subheading"><a href="#1-mcp-server-和-mcp-client" lang="zh-CN">1. MCP Server 和 MCP Client</a></li><li class="subheading"><a href="#2-mcp-与-function-calling-的关系" lang="zh-CN">2. MCP 与 Function Calling 的关系</a></li><li class=""><a href="#07-agent-能够循环执行任务的系统" lang="zh-CN">07 | Agent：能够循环执行任务的系统</a></li><li class="subheading"><a href="#1-workflow-与-agent-的区别" lang="zh-CN">1. Workflow 与 Agent 的区别</a></li><li class="subheading"><a href="#2-agent-的基本循环" lang="zh-CN">2. Agent 的基本循环</a></li><li class="subheading"><a href="#3-agent-适合什么任务" lang="zh-CN">3. Agent 适合什么任务</a></li><li class=""><a href="#08-multi-agent-多个-agent-协作" lang="zh-CN">08 | Multi-Agent：多个 Agent 协作</a></li><li class="subheading"><a href="#1-multi-agent-的优点" lang="zh-CN">1. Multi-Agent 的优点</a></li><li class="subheading"><a href="#2-multi-agent-的代价" lang="zh-CN">2. Multi-Agent 的代价</a></li><li class=""><a href="#09-context-engineering-管理模型能看到的信息" lang="zh-CN">09 | Context Engineering：管理模型能看到的信息</a></li><li class="subheading"><a href="#1-一个简单例子" lang="zh-CN">1. 一个简单例子</a></li><li class=""><a href="#10-skill-可复用的任务能力" lang="zh-CN">10 | Skill：可复用的任务能力</a></li><li class="subheading"><a href="#1-skill-与微调的区别" lang="zh-CN">1. Skill 与微调的区别</a></li><li class="subheading"><a href="#2-skill-与工具的区别" lang="zh-CN">2. Skill 与工具的区别</a></li><li class=""><a href="#11-openclaw-开放式-ai-助手项目" lang="zh-CN">11 | OpenClaw：开放式 AI 助手项目</a></li><li class=""><a href="#12-harness-engineering-为-agent-建立可靠的工作环境" lang="zh-CN">12 | Harness Engineering：为 Agent 建立可靠的工作环境</a></li><li class="subheading"><a href="#1-为什么需要-harness" lang="zh-CN">1. 为什么需要 Harness</a></li><li class=""><a href="#13-把这些概念放在一起" lang="zh-CN">13 | 把这些概念放在一起</a></li><li class=""><a href="#14-一个完整例子-让-ai-整理项目文档" lang="zh-CN">14 | 一个完整例子：让 AI 整理项目文档</a></li><li class="subheading"><a href="#第一步-agent-接收目标" lang="zh-CN">第一步：Agent 接收目标</a></li><li class="subheading"><a href="#第二步-调用文件工具" lang="zh-CN">第二步：调用文件工具</a></li><li class="subheading"><a href="#第三步-读取文件" lang="zh-CN">第三步：读取文件</a></li><li class="subheading"><a href="#第四步-使用-skill" lang="zh-CN">第四步：使用 Skill</a></li><li class="subheading"><a href="#第五步-生成报告" lang="zh-CN">第五步：生成报告</a></li><li class=""><a href="#15-常见问题" lang="zh-CN">15 | 常见问题</a></li><li class="subheading"><a href="#有了-llm-就等于有了-agent-吗" lang="zh-CN">“有了 LLM 就等于有了 Agent”吗？</a></li><li class="subheading"><a href="#rag-会改变模型参数吗" lang="zh-CN">“RAG 会改变模型参数吗？”</a></li><li class="subheading"><a href="#mcp-是一种模型吗" lang="zh-CN">“MCP 是一种模型吗？”</a></li><li class="subheading"><a href="#function-calling-会让模型自己执行代码吗" lang="zh-CN">“Function Calling 会让模型自己执行代码吗？”</a></li><li class="subheading"><a href="#multi-agent-一定比单个-agent-好吗" lang="zh-CN">“Multi-Agent 一定比单个 Agent 好吗？”</a></li><li class="subheading"><a href="#skill-和-prompt-有什么区别" lang="zh-CN">“Skill 和 Prompt 有什么区别？”</a></li><li class=""><a href="#16-总结" lang="zh-CN">16 | 总结</a></li><li class=""><a href="#17-相关资料与致谢" lang="zh-CN">17 | 相关资料与致谢</a></li></ol></details><div class="article-body"><p>最近几年，AI 应用从“输入一句话，得到一段回答”，逐渐发展到能够搜索资料、调用软件、修改文件、执行代码的系统。</p>
+<p>这些系统经常出现一些术语：LLM、Prompt Engineering、Fine-tuning、RAG、Function Calling、MCP、Agent、Multi-Agent、Context Engineering、Skill、OpenClaw、Harness。</p>
+<p>这些术语使得初学者难以理解，加深了学习的难度与壁垒。</p>
+<p>简而言之：</p>
+<ul>
+<li>LLM 是生成和理解文本的模型。</li>
+<li>Prompt、RAG、Fine-tuning 主要影响模型获得什么信息，以及如何完成任务。</li>
+<li>Function Calling 和 MCP 负责让模型使用外部工具。</li>
+<li>Agent 是一个能够多次思考、调用工具并根据结果继续行动的应用系统。</li>
+<li>Skill 和 Harness 主要用于组织能力、约束流程和提高可靠性。</li>
+<li>OpenClaw 是一种把这些能力组合起来的开放式 AI 助手项目。</li>
+</ul>
+<h2 id="01-llm-生成文字的模型">01 | LLM：生成文字的模型</h2>
+<p>LLM 是 Large Language Model 的缩写，中文通常译为“大语言模型”。</p>
+<p>它的基本任务是：根据已经出现的文本，预测接下来最可能出现的内容。</p>
+<p>例如：</p>
+<pre><code class="language-text">今天的天气很
+</code></pre>
+<p>模型可能预测：</p>
+<pre><code class="language-text">好
+</code></pre>
+<p>也可能预测：</p>
+<pre><code class="language-text">冷
+</code></pre>
+<p>在实际使用中，模型一次会根据整段上下文生成许多词。所谓“回答问题”“总结文章”“写代码”，都可以看作模型根据输入内容生成后续文本。</p>
+<h3 id="1-llm-是怎样学会这些能力的">1. LLM 是怎样学会这些能力的</h3>
+<p>训练过程通常包含几个阶段。</p>
+<p>第一阶段是预训练。模型从大量文本中学习词语、句子、代码和不同知识之间的统计关系。</p>
+<p>第二阶段是指令微调。训练数据会变成类似下面的形式：</p>
+<pre><code class="language-text">用户：解释什么是递归。
+
+助手：递归是一种让函数调用自身的编程方法……
+</code></pre>
+<p>模型通过这些数据学习如何理解指令，以及如何组织回答。</p>
+<p>第三阶段通常还会加入人工反馈或偏好优化，让模型更倾向于给出有帮助、清晰、安全的回答。</p>
+<h3 id="2-llm-的局限">2. LLM 的局限</h3>
+<p>LLM 的回答来自训练数据和当前上下文。它可能存在几个问题：</p>
+<ol>
+<li>训练数据有截止时间，无法自动知道最新信息。</li>
+<li>它可能生成语法正确但事实错误的内容。</li>
+<li>它不一定知道用户的私人资料。</li>
+<li>它只能输出文本，除非应用额外提供搜索、计算、文件操作等工具。</li>
+</ol>
+<p>因此，一个真正有用的 AI 应用通常需要在 LLM 外面增加其他组件。</p>
+<h2 id="02-prompt-告诉模型要做什么">02 | Prompt：告诉模型要做什么</h2>
+<p>Prompt 可以理解为发送给模型的输入，包括问题、背景、限制条件和输出格式。</p>
+<p>最简单的 Prompt 是：</p>
+<pre><code class="language-text">解释一下 RAG。
+</code></pre>
+<p>更明确的 Prompt 可以写成：</p>
+<pre><code class="language-text">面向只会使用聊天机器人的初学者，
+解释 RAG 的工作流程。
+先给出定义，再举一个技术文档问答的例子。
+避免使用没有解释过的术语。
+</code></pre>
+<p>后一个 Prompt 包含了四类信息：</p>
+<ul>
+<li>任务：解释 RAG。</li>
+<li>读者：只会使用聊天机器人的初学者。</li>
+<li>结构：先定义，再举例。</li>
+<li>限制：解释术语，避免默认读者已有背景。</li>
+</ul>
+<p>Prompt Engineering 指的是系统地设计、测试和修改 Prompt，使模型更稳定地完成任务。</p>
+<h3 id="1-一个好的-prompt-通常包含什么">1. 一个好的 Prompt 通常包含什么</h3>
+<p>可以使用下面这个结构：</p>
+<pre><code class="language-text">角色：
+你是一名负责技术教学的助手。
+
+任务：
+解释什么是函数调用。
+
+背景：
+读者只了解基本的 AI 聊天工具。
+
+要求：
+1. 先解释术语。
+2. 给出完整流程。
+3. 使用一个天气查询的例子。
+4. 指出模型和程序分别负责什么。
+
+输出格式：
+使用 Markdown，包含小标题和代码块。
+</code></pre>
+<p>这类写法的可以减少歧义，但它不能保证模型永远正确，因此仍然需要检查和测试。</p>
+<h3 id="2-prompt-与上下文的关系">2. Prompt 与上下文的关系</h3>
+<p>模型每次生成回答时，都只能看到当前请求中提供的上下文。上下文可能包括：</p>
+<ul>
+<li>系统指令。</li>
+<li>用户问题。</li>
+<li>对话历史。</li>
+<li>检索到的文档。</li>
+<li>工具返回结果。</li>
+<li>当前任务的中间状态。</li>
+</ul>
+<p>Prompt 更像是一次任务说明；上下文则是模型在这次任务中能够读取到的全部信息。</p>
+<h2 id="03-fine-tuning-改变模型的行为倾向">03 | Fine-tuning：改变模型的行为倾向</h2>
+<p>Fine-tuning，中文称为微调，是在已有模型的基础上继续训练。</p>
+<p>假设一个模型已经具备通用语言能力，开发者可以使用自己的数据训练它，让模型更熟悉某种格式、领域或表达方式。</p>
+<p>例如，训练数据可以是：</p>
+<pre><code class="language-json">{
+  &quot;input&quot;: &quot;订单 10086 当前状态是什么？&quot;,
+  &quot;output&quot;: &quot;订单状态：已发货；预计明天送达。&quot;
+}
+</code></pre>
+<p>经过大量类似数据训练后，模型可能更熟悉客服问答的语气和格式。</p>
+<h3 id="1-微调适合解决什么问题">1. 微调适合解决什么问题</h3>
+<p>微调通常适合以下场景：</p>
+<ul>
+<li>固定的输出格式。</li>
+<li>稳定的语气和风格。</li>
+<li>特定领域的术语和任务模式。</li>
+<li>需要模型始终遵循的分类标准。</li>
+</ul>
+<p>例如：</p>
+<ul>
+<li>把客服问题分成退款、物流、账户三类。</li>
+<li>按公司规定的 JSON 格式输出。</li>
+<li>让模型生成统一风格的法律文书初稿。</li>
+</ul>
+<h3 id="2-微调不适合存储经常变化的知识">2. 微调不适合存储经常变化的知识</h3>
+<p>如果公司每天更新商品价格，把价格写入微调数据并不方便。价格变化后，需要重新准备数据和训练模型。</p>
+<p>这类信息更适合使用 RAG：回答问题时，先检索最新资料，再把资料交给模型。</p>
+<h2 id="04-rag-先检索-再生成">04 | RAG：先检索，再生成</h2>
+<p>RAG 是 Retrieval-Augmented Generation 的缩写，中文常译为“检索增强生成”。</p>
+<p>它的基本流程是：</p>
+<pre><code class="language-text">用户提问
+  ↓
+检索相关资料
+  ↓
+把资料放入上下文
+  ↓
+LLM 根据资料生成回答
+</code></pre>
+<p>例如，用户询问：</p>
+<pre><code class="language-text">公司的年假规定是什么？
+</code></pre>
+<p>系统可以先从员工手册中找到相关段落：</p>
+<pre><code class="language-text">工作满一年后，每年享有五天带薪年假……
+</code></pre>
+<p>然后将这段内容和用户问题一起发送给模型。</p>
+<h3 id="1-文档怎样被检索出来">1. 文档怎样被检索出来</h3>
+<p>常见做法是先把文档切成许多小段，再把每一段转换成向量。</p>
+<p>向量是一串数字，用于表示文本的语义特征。含义相近的文本，向量通常也更接近。</p>
+<p>例如：</p>
+<pre><code class="language-text">如何申请年假？
+年假需要在哪里提交？
+</code></pre>
+<p>虽然用词不同，但语义相近，系统可以将它们检索到相同的文档片段。</p>
+<h3 id="2-rag-的完整流程">2. RAG 的完整流程</h3>
+<p>一个简单的 RAG 系统通常包含以下步骤：</p>
+<ol>
+<li>读取 PDF、网页或数据库内容。</li>
+<li>将长文档切分为多个片段。</li>
+<li>为每个片段生成向量。</li>
+<li>将向量保存到向量数据库。</li>
+<li>用户提问时，将问题转换成向量。</li>
+<li>找到最相关的文档片段。</li>
+<li>把片段和问题一起交给 LLM。</li>
+<li>生成带有资料依据的回答。</li>
+</ol>
+<h3 id="3-rag-的问题">3. RAG 的问题</h3>
+<p>RAG 的效果取决于检索结果。如果检索阶段找错了内容，模型可能会基于错误资料回答。</p>
+<p>常见问题包括：</p>
+<ul>
+<li>文档切分得太碎，缺少上下文。</li>
+<li>关键词匹配到相似但无关的内容。</li>
+<li>文档本身已经过期。</li>
+<li>检索内容太多，挤占了模型的上下文空间。</li>
+</ul>
+<p>因此，RAG 需要同时关注文档清洗、切分、检索和答案引用。</p>
+<h2 id="05-function-calling-让模型请求程序执行操作">05 | Function Calling：让模型请求程序执行操作</h2>
+<p>Function Calling 通常译为“函数调用”。</p>
+<p>这里的函数不是模型内部自动拥有的函数，而是开发者提供给模型的一组程序接口。</p>
+<p>例如，开发者可以提供：</p>
+<pre><code class="language-json">{
+  &quot;name&quot;: &quot;get_weather&quot;,
+  &quot;description&quot;: &quot;查询指定城市的天气&quot;,
+  &quot;parameters&quot;: {
+    &quot;city&quot;: &quot;城市名称&quot;
+  }
+}
+</code></pre>
+<p>用户问：</p>
+<pre><code class="language-text">北京今天的天气怎么样？
+</code></pre>
+<p>模型可能返回一个结构化请求：</p>
+<pre><code class="language-json">{
+  &quot;name&quot;: &quot;get_weather&quot;,
+  &quot;arguments&quot;: {
+    &quot;city&quot;: &quot;北京&quot;
+  }
+}
+</code></pre>
+<p>接下来由应用程序真正执行 <code>get_weather</code>，访问天气服务，再把结果返回给模型：</p>
+<pre><code class="language-json">{
+  &quot;temperature&quot;: 24,
+  &quot;condition&quot;: &quot;晴&quot;
+}
+</code></pre>
+<p>模型最后把结果整理成自然语言：</p>
+<pre><code class="language-text">北京今天晴，气温约 24℃。
+</code></pre>
+<h3 id="1-模型和程序各自做什么">1. 模型和程序各自做什么</h3>
+<p>整个过程可以分为四步：</p>
+<ol>
+<li>模型理解用户意图。</li>
+<li>模型选择合适的函数，并生成参数。</li>
+<li>程序执行函数。</li>
+<li>模型根据执行结果组织回答。</li>
+</ol>
+<p>模型负责决定“需要什么操作”；程序负责真正执行操作。</p>
+<p>模型本身不会因为知道 <code>get_weather</code> 的名字，就自动获得天气数据。它必须通过应用程序提供的接口访问外部服务。</p>
+<h3 id="2-function-calling-的安全问题">2. Function Calling 的安全问题</h3>
+<p>工具可能会读取文件、修改数据库或发送消息，因此开发者需要限制：</p>
+<ul>
+<li>工具可以访问哪些数据。</li>
+<li>参数允许使用什么范围。</li>
+<li>是否需要用户确认。</li>
+<li>失败时如何停止。</li>
+<li>是否记录每一次调用。</li>
+</ul>
+<p>查询天气和删除数据库的风险完全不同，二者不应使用同样的权限和确认流程。</p>
+<h2 id="06-mcp-统一连接工具的协议">06 | MCP：统一连接工具的协议</h2>
+<p>MCP 是 Model Context Protocol 的缩写，中文可以译为“模型上下文协议”。</p>
+<p>它规定了模型应用如何发现和调用外部工具、资源与提示模板。</p>
+<p>没有统一协议时，每个 AI 应用都需要为每个服务单独开发连接方式：</p>
+<pre><code class="language-text">AI 应用 ↔ GitHub 接口
+AI 应用 ↔ 数据库接口
+AI 应用 ↔ 文件系统接口
+</code></pre>
+<p>使用 MCP 后，可以将连接方式标准化：</p>
+<pre><code class="language-text">AI 应用 ↔ MCP Server ↔ GitHub
+AI 应用 ↔ MCP Server ↔ 数据库
+AI 应用 ↔ MCP Server ↔ 文件系统
+</code></pre>
+<h3 id="1-mcp-server-和-mcp-client">1. MCP Server 和 MCP Client</h3>
+<p>MCP 中通常有两个角色：</p>
+<ul>
+<li>MCP Client：负责使用工具的 AI 应用。</li>
+<li>MCP Server：负责提供工具或数据的服务。</li>
+</ul>
+<p>例如，一个 GitHub MCP Server 可以提供：</p>
+<ul>
+<li>搜索仓库。</li>
+<li>读取 Issue。</li>
+<li>查看 Pull Request。</li>
+<li>创建分支。</li>
+</ul>
+<p>AI 应用连接到这个 Server 后，就可以通过统一的方式发现和调用这些能力。</p>
+<h3 id="2-mcp-与-function-calling-的关系">2. MCP 与 Function Calling 的关系</h3>
+<p>Function Calling 解决的是：</p>
+<pre><code class="language-text">模型怎样提出一个结构化的工具调用请求？
+</code></pre>
+<p>MCP 解决的是：</p>
+<pre><code class="language-text">工具由谁提供？
+工具怎样被发现？
+不同工具怎样使用统一协议连接？
+</code></pre>
+<p>两者经常一起使用，但处在不同层次。</p>
+<h2 id="07-agent-能够循环执行任务的系统">07 | Agent：能够循环执行任务的系统</h2>
+<p>Agent 可以译为“智能体”。</p>
+<p>一个普通聊天应用通常是：</p>
+<pre><code class="language-text">用户输入 → 模型回答
+</code></pre>
+<p>一个 Agent 的流程更接近：</p>
+<pre><code class="language-text">用户提出目标
+  ↓
+模型制定下一步计划
+  ↓
+调用工具
+  ↓
+读取工具结果
+  ↓
+决定下一步
+  ↓
+继续调用工具或结束
+</code></pre>
+<p>例如，用户要求：</p>
+<pre><code class="language-text">找出项目中所有使用了过时 API 的文件，并给出修改建议。
+</code></pre>
+<p>Agent 可能执行：</p>
+<ol>
+<li>搜索项目文件。</li>
+<li>读取依赖配置。</li>
+<li>检查代码中的 API。</li>
+<li>查阅官方文档。</li>
+<li>汇总过时用法。</li>
+<li>生成修改建议。</li>
+<li>运行测试确认结果。</li>
+</ol>
+<h3 id="1-workflow-与-agent-的区别">1. Workflow 与 Agent 的区别</h3>
+<p>Workflow 是预先写好的固定流程：</p>
+<pre><code class="language-text">提取文章
+  ↓
+翻译文章
+  ↓
+检查语法
+  ↓
+输出结果
+</code></pre>
+<p>每一步都由程序提前规定。</p>
+<p>Agent 的步骤可以根据任务动态变化。例如，检查不同项目时，涉及的文件数量、错误类型和所需工具可能不同，Agent 会根据当前结果决定下一步。</p>
+<p>Anthropic 在技术文章中也区分了这两个概念：Workflow 通过预定义代码路径组织模型和工具；Agent 让模型动态决定过程和工具使用方式。</p>
+<h3 id="2-agent-的基本循环">2. Agent 的基本循环</h3>
+<p>可以用这样的伪代码表示：</p>
+<pre><code class="language-python">while not finished:
+    response = model(context, tools)
+
+    if response.requests_tool:
+        result = run_tool(response.tool_name, response.arguments)
+        context.append(result)
+    else:
+        return response.text
+</code></pre>
+<p>这个循环中有三个关键部分：</p>
+<ul>
+<li><code>context</code>：模型当前可以看到的信息。</li>
+<li><code>tools</code>：模型能够调用的工具。</li>
+<li><code>finished</code>：任务是否达到结束条件。</li>
+</ul>
+<h3 id="3-agent-适合什么任务">3. Agent 适合什么任务</h3>
+<p>Agent 适合步骤数量难以提前确定的任务，例如：</p>
+<ul>
+<li>排查复杂代码问题。</li>
+<li>搜索并比较多个资料来源。</li>
+<li>操作多个软件完成工作。</li>
+<li>根据执行结果不断调整方案。</li>
+</ul>
+<p>如果任务可以用三四个固定步骤完成，普通 Workflow 往往更容易调试，也更容易控制成本。</p>
+<p>Agent 会带来额外的延迟、模型调用费用和错误累积，因此应该设置最大循环次数、权限边界和人工确认点。</p>
+<h2 id="08-multi-agent-多个-agent-协作">08 | Multi-Agent：多个 Agent 协作</h2>
+<p>Multi-Agent 指多个 Agent 共同完成一个任务。</p>
+<p>一种常见结构是“协调者—执行者”：</p>
+<pre><code class="language-text">协调 Agent
+ ├── 搜索 Agent
+ ├── 编程 Agent
+ ├── 测试 Agent
+ └── 总结 Agent
+</code></pre>
+<p>协调 Agent 负责拆分任务和汇总结果，其他 Agent 分别完成具体工作。</p>
+<p>例如，写一篇技术调研报告时，可以安排：</p>
+<ul>
+<li>一个 Agent 搜集资料。</li>
+<li>一个 Agent 检查数据。</li>
+<li>一个 Agent 整理结构。</li>
+<li>一个 Agent 审核结论。</li>
+</ul>
+<h3 id="1-multi-agent-的优点">1. Multi-Agent 的优点</h3>
+<p>不同 Agent 可以拥有不同的工具和指令：</p>
+<ul>
+<li>搜索 Agent 只能访问网页。</li>
+<li>编程 Agent 可以读取代码和运行测试。</li>
+<li>审核 Agent 负责发现错误。</li>
+</ul>
+<p>这样可以减少单个 Agent 的任务复杂度。</p>
+<h3 id="2-multi-agent-的代价">2. Multi-Agent 的代价</h3>
+<p>多个 Agent 会带来更多模型调用，也会产生协调问题：</p>
+<ul>
+<li>不同 Agent 得到的结论可能互相矛盾。</li>
+<li>中间结果需要设计统一格式。</li>
+<li>协调者需要判断哪些结果可信。</li>
+<li>错误可能从一个 Agent 传递到下一个 Agent。</li>
+</ul>
+<p>因此，Multi-Agent 适合任务确实可以拆分的场景。为了展示复杂架构而增加 Agent，通常不会带来稳定收益。</p>
+<h2 id="09-context-engineering-管理模型能看到的信息">09 | Context Engineering：管理模型能看到的信息</h2>
+<p>Context Engineering 可以译为“上下文工程”。</p>
+<p>Prompt Engineering 重点是写好指令；Context Engineering 关注如何构造模型每次真正看到的完整输入。</p>
+<p>一个 Agent 的上下文可能包括：</p>
+<pre><code class="language-text">系统指令
+用户目标
+对话历史
+相关文档
+工具说明
+工具返回结果
+已经完成的步骤
+当前文件状态
+剩余任务
+</code></pre>
+<p>如果把所有信息都塞进上下文，模型可能难以找到真正重要的内容。上下文工程需要决定：</p>
+<ul>
+<li>哪些信息应该保留。</li>
+<li>哪些历史可以压缩。</li>
+<li>哪些文档需要检索。</li>
+<li>工具返回结果使用什么格式。</li>
+<li>什么时候清理已经无用的内容。</li>
+</ul>
+<h3 id="1-一个简单例子">1. 一个简单例子</h3>
+<p>假设 Agent 正在修改代码。上下文中可能有几十次工具调用记录。</p>
+<p>早期的目录搜索结果可能已经没有用，但最近一次测试失败信息仍然重要。系统可以压缩旧记录，只保留：</p>
+<pre><code class="language-text">任务目标
+已修改文件
+当前错误
+最近一次测试结果
+下一步限制
+</code></pre>
+<p>这样可以减少上下文长度，让模型把注意力放在当前问题上。</p>
+<h2 id="10-skill-可复用的任务能力">10 | Skill：可复用的任务能力</h2>
+<p>Skill 通常指一组可以复用的任务说明、操作流程和辅助文件。</p>
+<p>一个 Skill 可能包含：</p>
+<pre><code class="language-text">skill/
+├── SKILL.md
+├── examples/
+├── scripts/
+└── references/
+</code></pre>
+<p>其中 <code>SKILL.md</code> 可以说明：</p>
+<ul>
+<li>这个 Skill 解决什么问题。</li>
+<li>什么时候使用。</li>
+<li>需要遵守哪些步骤。</li>
+<li>输出应该是什么格式。</li>
+<li>如何处理常见错误。</li>
+</ul>
+<p>例如，一个“PDF 处理 Skill”可以规定：</p>
+<ol>
+<li>先提取文本。</li>
+<li>如果涉及布局，再渲染页面检查。</li>
+<li>使用统一的文件命名方式。</li>
+<li>最后报告生成文件的位置。</li>
+</ol>
+<h3 id="1-skill-与微调的区别">1. Skill 与微调的区别</h3>
+<p>微调会改变模型参数，需要准备训练数据并进行训练。</p>
+<p>Skill 通常保留在模型外部，模型在需要时读取对应说明。修改 Skill 文件后，可以立即更新流程，成本也更低。</p>
+<p>Skill 更适合描述操作方法和工作规范；微调更适合改变长期稳定的输出行为。</p>
+<h3 id="2-skill-与工具的区别">2. Skill 与工具的区别</h3>
+<p>工具负责执行动作，例如：</p>
+<pre><code class="language-text">读取文件
+运行代码
+搜索网页
+发送请求
+</code></pre>
+<p>Skill 负责告诉模型如何完成一类任务，例如：</p>
+<pre><code class="language-text">处理 PDF 时先提取文本，再检查页面布局。
+</code></pre>
+<p>一个 Skill 往往会组合多个工具。</p>
+<h2 id="11-openclaw-开放式-ai-助手项目">11 | OpenClaw：开放式 AI 助手项目</h2>
+<p>OpenClaw 是一个开源的个人 AI 助手项目。它关注的是让 AI 通过聊天入口连接外部工具，完成持续性的任务。</p>
+<p>它通常包含几个部分：</p>
+<ul>
+<li>消息入口：接收用户指令。</li>
+<li>模型接口：负责理解和生成文本。</li>
+<li>工具系统：访问文件、网页和其他服务。</li>
+<li>任务循环：根据工具结果继续工作。</li>
+<li>权限控制：限制可执行的操作。</li>
+<li>记忆或状态：保存必要的任务信息。</li>
+</ul>
+<p>例如，用户可以通过聊天要求助手读取某个文件、整理内容，再将结果保存到指定位置。</p>
+<p>使用这类系统时，需要特别关注权限。能够读取文件、执行命令和发送消息的助手，权限范围已经超过普通聊天机器人。工具应当只开放完成任务所需的最小权限。</p>
+<h2 id="12-harness-engineering-为-agent-建立可靠的工作环境">12 | Harness Engineering：为 Agent 建立可靠的工作环境</h2>
+<p>Harness 原本是工程领域中的“控制系统”或“约束结构”。在 AI Agent 开发中，Harness Engineering 通常指围绕 Agent 建立的运行框架和保障机制。</p>
+<p>它负责处理模型本身不擅长或不应该独自处理的部分：</p>
+<ul>
+<li>任务状态保存。</li>
+<li>工具调用和结果记录。</li>
+<li>权限控制。</li>
+<li>超时和重试。</li>
+<li>最大执行步数。</li>
+<li>测试和评估。</li>
+<li>人工确认。</li>
+<li>错误恢复。</li>
+<li>日志和审计。</li>
+</ul>
+<p>一个简单的 Agent 可能只有：</p>
+<pre><code class="language-text">模型 → 工具 → 模型 → 工具
+</code></pre>
+<p>加入 Harness 后，流程会变成：</p>
+<pre><code class="language-text">模型提出调用
+  ↓
+Harness 检查权限和参数
+  ↓
+Harness 执行工具
+  ↓
+Harness 记录结果
+  ↓
+模型读取结果并继续
+</code></pre>
+<h3 id="1-为什么需要-harness">1. 为什么需要 Harness</h3>
+<p>模型可能会：</p>
+<ul>
+<li>选择错误的工具。</li>
+<li>生成不完整的参数。</li>
+<li>重复执行同一个动作。</li>
+<li>误解工具返回值。</li>
+<li>在任务已经完成后继续运行。</li>
+</ul>
+<p>Harness 可以在这些地方加入程序检查。</p>
+<p>例如，模型提出删除文件的请求时，Harness 可以要求用户确认；模型尝试访问工作目录之外的文件时，Harness 可以直接拒绝。</p>
+<p>Harness 不会让模型自动变得可靠，但它可以限制错误的影响范围，并让问题更容易追踪。</p>
+<h2 id="13-把这些概念放在一起">13 | 把这些概念放在一起</h2>
+<p>一个较完整的 AI 应用可以表示为：</p>
+<pre><code class="language-text">用户
+ ↓
+聊天界面
+ ↓
+Agent
+ ├── Prompt：任务指令
+ ├── Context：当前上下文
+ ├── Skill：任务流程
+ ├── RAG：检索知识
+ ├── Function Calling：请求工具
+ ├── MCP：连接外部服务
+ └── Harness：权限、状态和执行控制
+       ↓
+      LLM
+</code></pre>
+<p>它们之间的关系可以这样理解：</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">概念</th>
+<th style="text-align:left">主要解决的问题</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">LLM</td>
+<td style="text-align:left">理解文本并生成内容</td>
+</tr>
+<tr>
+<td style="text-align:center">Prompt Engineering</td>
+<td style="text-align:left">怎样向模型说明任务</td>
+</tr>
+<tr>
+<td style="text-align:center">Fine-tuning</td>
+<td style="text-align:left">怎样改变模型的稳定行为</td>
+</tr>
+<tr>
+<td style="text-align:center">RAG</td>
+<td style="text-align:left">怎样让模型使用外部知识</td>
+</tr>
+<tr>
+<td style="text-align:center">Function Calling</td>
+<td style="text-align:left">怎样让模型请求程序执行操作</td>
+</tr>
+<tr>
+<td style="text-align:center">MCP</td>
+<td style="text-align:left">怎样用统一协议连接工具和资源</td>
+</tr>
+<tr>
+<td style="text-align:center">Agent</td>
+<td style="text-align:left">怎样让模型循环完成多步骤任务</td>
+</tr>
+<tr>
+<td style="text-align:center">Multi-Agent</td>
+<td style="text-align:left">怎样让多个 Agent 分工合作</td>
+</tr>
+<tr>
+<td style="text-align:center">Context Engineering</td>
+<td style="text-align:left">怎样管理模型看到的信息</td>
+</tr>
+<tr>
+<td style="text-align:center">Skill</td>
+<td style="text-align:left">怎样封装可复用的任务流程</td>
+</tr>
+<tr>
+<td style="text-align:center">OpenClaw</td>
+<td style="text-align:left">怎样组合模型、工具和聊天入口</td>
+</tr>
+<tr>
+<td style="text-align:center">Harness</td>
+<td style="text-align:left">怎样控制 Agent 的执行过程</td>
+</tr>
+</tbody>
+</table>
+<h2 id="14-一个完整例子-让-ai-整理项目文档">14 | 一个完整例子：让 AI 整理项目文档</h2>
+<p>假设我们希望构建一个助手，完成下面的任务：</p>
+<pre><code class="language-text">扫描项目中的 Markdown 文件，
+提取每篇文章的标题和摘要，
+找出缺少摘要的文章，
+最后生成一份报告。
+</code></pre>
+<p>系统可能这样工作：</p>
+<h3 id="第一步-agent-接收目标">第一步：Agent 接收目标</h3>
+<p>模型分析任务，判断需要：</p>
+<ol>
+<li>列出 Markdown 文件。</li>
+<li>读取文件内容。</li>
+<li>提取标题和摘要。</li>
+<li>检查缺失项。</li>
+<li>生成报告。</li>
+</ol>
+<h3 id="第二步-调用文件工具">第二步：调用文件工具</h3>
+<p>模型通过 Function Calling 请求：</p>
+<pre><code class="language-json">{
+  &quot;name&quot;: &quot;list_files&quot;,
+  &quot;arguments&quot;: {
+    &quot;pattern&quot;: &quot;**/*.md&quot;
+  }
+}
+</code></pre>
+<p>Harness 检查路径是否在允许的项目目录内，然后执行工具。</p>
+<h3 id="第三步-读取文件">第三步：读取文件</h3>
+<p>模型根据文件列表，调用读取工具。</p>
+<p>如果文件数量很多，Context Engineering 可能会先筛选文件，或分批处理，避免一次性把全部内容放入上下文。</p>
+<h3 id="第四步-使用-skill">第四步：使用 Skill</h3>
+<p>一个“博客文章检查 Skill”可以规定：</p>
+<ul>
+<li>标题必须存在。</li>
+<li>摘要建议控制在两句话以内。</li>
+<li>front matter 必须包含 <code>title</code>、<code>slug</code> 和 <code>date</code>。</li>
+<li>报告使用表格输出。</li>
+</ul>
+<p>模型按照这个流程检查文件。</p>
+<h3 id="第五步-生成报告">第五步：生成报告</h3>
+<p>最终结果可能是：</p>
+<pre><code class="language-markdown">| 文件 | 标题 | 摘要 | 问题 |
+| :--- | :--- | :--- | :--- |
+| blog/a.md | 已存在 | 已存在 | 无 |
+| blog/b.md | 已存在 | 缺少 | 需要补充摘要 |
+</code></pre>
+<p>这个例子中：</p>
+<ul>
+<li>LLM 负责理解任务和生成报告。</li>
+<li>Agent 负责安排多个步骤。</li>
+<li>Function Calling 负责请求文件操作。</li>
+<li>Harness 负责权限和执行限制。</li>
+<li>Skill 负责规定检查标准。</li>
+<li>Context Engineering 负责控制传给模型的信息量。</li>
+</ul>
+<h2 id="15-常见问题">15 | 常见问题</h2>
+<h3 id="有了-llm-就等于有了-agent-吗">“有了 LLM 就等于有了 Agent”吗？</h3>
+<p>不等于。</p>
+<p>LLM 是模型，Agent 是围绕模型构建的应用系统。Agent 通常还需要工具、状态、循环和停止条件。</p>
+<h3 id="rag-会改变模型参数吗">“RAG 会改变模型参数吗？”</h3>
+<p>通常不会。</p>
+<p>RAG 在回答时临时提供检索结果，模型参数保持不变。微调才会更新模型参数。</p>
+<h3 id="mcp-是一种模型吗">“MCP 是一种模型吗？”</h3>
+<p>不是。</p>
+<p>MCP 是连接 AI 应用和外部工具的协议。</p>
+<h3 id="function-calling-会让模型自己执行代码吗">“Function Calling 会让模型自己执行代码吗？”</h3>
+<p>通常不会。</p>
+<p>模型生成的是工具调用请求，真正的执行由外部程序完成。</p>
+<h3 id="multi-agent-一定比单个-agent-好吗">“Multi-Agent 一定比单个 Agent 好吗？”</h3>
+<p>不一定。</p>
+<p>多个 Agent 会增加协调成本。只有当任务能够清晰拆分，并且不同角色确实需要不同工具或指令时，Multi-Agent 才更有价值。</p>
+<h3 id="skill-和-prompt-有什么区别">“Skill 和 Prompt 有什么区别？”</h3>
+<p>Prompt 往往针对一次具体请求；Skill 通常是一套可以反复使用的任务说明和流程。</p>
+<h2 id="16-总结">16 | 总结</h2>
+<p>理解 AI 应用时，可以按下面的顺序建立概念：</p>
+<ol>
+<li>LLM 负责理解和生成文本。</li>
+<li>Prompt 负责描述任务。</li>
+<li>RAG 负责提供外部知识。</li>
+<li>Function Calling 负责提出工具调用请求。</li>
+<li>MCP 负责标准化工具连接。</li>
+<li>Agent 负责根据结果循环推进任务。</li>
+<li>Multi-Agent 负责让多个角色协作。</li>
+<li>Context Engineering 负责管理模型看到的信息。</li>
+<li>Skill 负责封装任务流程。</li>
+<li>Harness 负责权限、状态、测试和错误控制。</li>
+</ol>
+<p>一个稳定的 AI 应用通常从简单结构开始：</p>
+<pre><code class="language-text">LLM + Prompt
+</code></pre>
+<p>需要外部知识时加入 RAG，需要外部操作时加入工具。任务步骤难以预先确定时，再考虑 Agent。只有在实际效果得到验证后，才有必要增加 Multi-Agent、复杂 Skill 或更完整的 Harness。</p>
+<h2 id="17-相关资料与致谢">17 | 相关资料与致谢</h2>
+<blockquote>
+<p>本文基于<a href="https://oigi8odzc5w.feishu.cn/wiki/WBMfwiNkfi6uNFkRtXdcavDzn0e?from=from_copylink">《近年 AI 应用技术串讲与优质文档分享｜Agent、Skill、OpenClaw、Harness……》</a>整理，并补充了面向初学者的背景知识与示例。在此感谢bilibili up主 @堂吉诃德拉曼查的英豪 的细致整理。</p>
+</blockquote>
+<ul>
+<li><a href="https://arxiv.org/abs/1706.03762">Attention Is All You Need</a></li>
+<li><a href="https://arxiv.org/abs/2005.11401">Retrieval-Augmented Generation for Knowledge-Intensive NLP Tasks</a></li>
+<li><a href="https://arxiv.org/abs/2106.09685">LoRA: Low-Rank Adaptation of Large Language Models</a></li>
+<li><a href="https://www.anthropic.com/engineering/building-effective-agents">Building effective agents — Anthropic</a></li>
+<li><a href="https://modelcontextprotocol.io/">Model Context Protocol</a></li>
+</ul>
+</div>
+    </article>
+    <p class="article-end"><a href="/blog/">← Back to all articles</a></p>
+  </main><footer class="site-footer">
+    <span>© 2026 Yuxuan Shu</span>
+    <span>Design inspired by <a href="https://jonbarron.info/">Jon Barron</a>.</span>
+  </footer></div>
+</body>
+</html>
