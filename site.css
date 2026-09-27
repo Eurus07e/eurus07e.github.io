@@ -62,7 +62,7 @@ button { font: inherit; }
 
 .home-header { padding-top: 34px; }
 .home-header h1 { margin: 0 0 17px; font-size: 32px; font-weight: 500; line-height: 1.2; text-align: center; letter-spacing: -.025em; }
-.intro { width: 100%; line-height: 1.4; letter-spacing: -.05px; }
+.intro { width: 100%; line-height: 1.4; letter-spacing: .2px; }
 .intro p { margin: 0 0 13px; }
 .intro strong { font-weight: 650; }
 .contact-links { display: flex; align-items: center; justify-content: center; flex-wrap: wrap; gap: 0 7px; margin: 12px 0 38px; }
@@ -91,10 +91,9 @@ button { font: inherit; }
 .interior-header nav { display: flex; gap: 9px; color: var(--muted); font-size: 14px; }
 .interior-header nav [aria-current] { color: var(--ink); font-weight: 600; }
 .archive-main { padding: 24px 8px 4px; }
-.archive-main > h1 { margin: 0 0 5px; font-size: 27px; line-height: 1.2; font-weight: 500; }
-.archive-intro { margin: 0 0 20px; color: var(--muted); }
+.archive-main > h1 { margin: 0 0 18px; font-size: 27px; line-height: 1.2; font-weight: 500; }
 .filters { display: flex; flex-wrap: wrap; gap: 6px; margin: 0 0 15px; }
-.filter-button { border: 1px solid #d7dce0; border-radius: 4px; background: #fff; color: var(--link); padding: 5px 9px; cursor: pointer; font-size: 12px; line-height: 1.3; }
+.filter-button { border: 1px solid #d7dce0; border-radius: 4px; background: #fff; color: var(--link); padding: 4px 8px; cursor: pointer; font-size: 13px; font-weight: 700; line-height: 1.25; }
 .filter-button span { color: var(--muted); margin-left: 3px; }
 .filter-button:hover { border-color: var(--link); }
 .filter-button.is-active { color: #fff; background: var(--link); border-color: var(--link); }
