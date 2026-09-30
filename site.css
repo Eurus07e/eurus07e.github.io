@@ -117,6 +117,120 @@ button { font: inherit; }
 .article-toc ol { margin: 12px 0 0; padding-left: 19px; columns: 2; column-gap: 26px; font-size: 13px; }
 .article-toc li { break-inside: avoid; margin: 3px 0; }
 .article-toc .subheading { margin-left: 10px; }
+.article-toc-toggle { display: none; }
+/* Use the desktop margin for a sticky outline without moving the reading column. */
+@media (min-width: 1200px) {
+  .article-toc-toggle {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 34px;
+    height: 30px;
+    margin: -2px 0 0 12px;
+    padding: 4px;
+    vertical-align: middle;
+    border: 0;
+    border-radius: 4px;
+    background: transparent;
+    color: #454e57;
+    cursor: pointer;
+  }
+  .article-toc-toggle:hover, .article-toc-toggle[aria-expanded="true"] { color: var(--link-hover); background: #f4f6f8; }
+  .article-toc-toggle::after {
+    content: attr(data-tooltip);
+    position: absolute;
+    z-index: 2;
+    left: 50%;
+    bottom: calc(100% + 8px);
+    transform: translateX(-50%) translateY(3px);
+    padding: 6px 9px;
+    border-radius: 5px;
+    background: #303942;
+    color: #fff;
+    font: 12px/1.4 system-ui, sans-serif;
+    white-space: nowrap;
+    pointer-events: none;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity .15s ease, transform .15s ease, visibility .15s;
+  }
+  .article-toc-toggle:hover::after, .article-toc-toggle:focus-visible::after {
+    opacity: 1;
+    visibility: visible;
+    transform: translateX(-50%);
+    transition-delay: .15s;
+  }
+  .article-toc.is-animating ol { overflow: hidden; pointer-events: none; }
+  .article-toc.has-icon-toggle:not([open]) { display: none; }
+  .article-main > article {
+    --article-header-gap: 16px;
+    --outline-heading-height: 32px;
+    --outline-body-gap: 56px;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .article-header { grid-column: 1; grid-row: 1; margin-bottom: var(--article-header-gap); }
+  .article-body { grid-column: 1; grid-row: 2; }
+  .article-toc {
+    grid-column: 1;
+    grid-row: 2;
+    align-self: start;
+    position: sticky;
+    top: 24px;
+    width: min(240px, calc((100vw - 760px) / 2 - var(--outline-body-gap) - 16px));
+    transform: translateX(calc(-100% - var(--outline-body-gap)));
+    /* Lift the summary so both header rules share the same baseline. */
+    margin: calc(-1 * (var(--article-header-gap) + var(--outline-heading-height))) 0 0;
+    padding: 0;
+    border: 0;
+    background: transparent;
+  }
+  .article-toc summary {
+    height: var(--outline-heading-height);
+    line-height: 21px;
+    padding: 0 0 10px;
+    border-bottom: 1px solid transparent;
+    color: var(--ink);
+  }
+  .article-toc[open] summary { border-bottom-color: var(--line); }
+  .article-toc summary::marker { color: var(--muted); font-size: 10px; }
+  .article-toc ol {
+    /* A constrained multicol list creates extra columns even with column-count: 1. */
+    columns: auto;
+    list-style: none;
+    margin-top: 12px;
+    padding: 3px 6px 8px 3px;
+    max-height: var(--outline-list-height, calc(100dvh - 100px));
+    overflow-x: hidden;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    scrollbar-width: none;
+  }
+  .article-toc ol::-webkit-scrollbar { display: none; }
+  .article-toc li { margin: 0; break-inside: auto; }
+  .article-toc li:not(.subheading) { margin-top: 12px; }
+  .article-toc li:first-child { margin-top: 0; }
+  .article-toc .subheading { margin-left: 12px; }
+  .article-toc a {
+    display: block;
+    padding: 6px 8px;
+    border-radius: 4px;
+    font-size: 13px;
+    line-height: 1.55;
+    color: #454e57;
+    overflow-wrap: anywhere;
+    white-space: normal;
+    text-decoration: none;
+  }
+  .article-toc li:not(.subheading) > a { font-weight: 700; }
+  .article-toc .subheading > a { color: var(--muted); }
+  .article-toc a:hover { color: var(--link-hover); background: #f4f6f8; }
+  .article-toc a[aria-current="location"] { color: var(--link-hover); background: #edf3f8; font-weight: 700; }
+  .article-toc a:focus-visible { outline-offset: -2px; }
+  .article-body :is(h2, h3)[id] { scroll-margin-top: 28px; }
+  .article-body > :first-child { margin-top: 0; }
+}
 .article-body { min-width: 0; font-size: 17px; line-height: 1.7; overflow-wrap: break-word; }
 .article-body h2 { margin: 2.1em 0 .75em; padding-bottom: .25em; border-bottom: 1px solid var(--soft-line); font-size: 24px; line-height: 1.35; font-weight: 600; }
 .article-body h3 { margin: 1.75em 0 .6em; font-size: 19px; line-height: 1.4; }
