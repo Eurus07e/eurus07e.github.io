@@ -113,7 +113,9 @@ button { font: inherit; }
 .article-summary { color: #41474d; margin: 0 0 12px; font-size: 16px; }
 .article-meta { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; color: var(--muted); font-size: 13px; margin: 0; }
 .article-toc { border: 1px solid var(--soft-line); background: #fafafa; padding: 10px 15px; margin: 0 0 25px; }
-.article-toc summary { color: var(--link); font-size: 14px; font-weight: 600; cursor: pointer; }
+.article-toc summary { display: block; list-style: none; color: var(--link); font-size: 14px; font-weight: 600; cursor: pointer; }
+.article-toc summary::marker { content: ''; }
+.article-toc summary::-webkit-details-marker { display: none; }
 .article-toc ol { margin: 12px 0 0; padding-left: 19px; columns: 2; column-gap: 26px; font-size: 13px; }
 .article-toc li { break-inside: avoid; margin: 3px 0; }
 .article-toc .subheading { margin-left: 10px; }
@@ -194,7 +196,6 @@ button { font: inherit; }
     color: var(--ink);
   }
   .article-toc[open] summary { border-bottom-color: var(--line); }
-  .article-toc summary::marker { color: var(--muted); font-size: 10px; }
   .article-toc ol {
     /* A constrained multicol list creates extra columns even with column-count: 1. */
     columns: auto;
@@ -245,7 +246,7 @@ button { font: inherit; }
 .article-body pre { overflow-x: auto; background: #f5f6f7; border: 1px solid #e7e9ea; padding: 14px 16px; border-radius: 4px; font-size: 13px; line-height: 1.5; tab-size: 2; }
 .article-body code { font: .88em/1.45 SFMono-Regular, Consolas, "Liberation Mono", monospace; background: #f2f4f5; padding: .13em .28em; border-radius: 3px; }
 .article-body pre code { background: transparent; padding: 0; font-size: inherit; }
-.article-body table { display: block; max-width: 100%; overflow-x: auto; border-collapse: collapse; margin: 1.5em 0; font-size: 14px; }
+.article-body table { display: block; width: max-content; max-width: 100%; overflow-x: auto; border-collapse: collapse; margin: 1.5em auto; font-size: 14px; }
 .article-body th, .article-body td { border: 1px solid #d7dce0; padding: 6px 10px; }
 .article-body th { background: #f5f6f7; text-align: left; }
 .article-body hr { border: 0; border-top: 1px solid var(--soft-line); margin: 2em 0; }
