@@ -1,7 +1,7 @@
 {
   "version": 1,
   "sourceRepository": "Eurus07e/personal-website",
-  "sourceCommit": "3f5cc836b95639776425724f5bb83e0331567742",
+  "sourceCommit": "9c9c72f2bd89e327e2f522386408189da7fd61c2",
   "files": {
     ".nojekyll": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
     "assets/downloads/python-for-deep-learning/plot_results.py": "d975ba3ab43d876545bdfc1d4581586411361ec111fbe2a0ff82c7f2f13d8b9a",
@@ -26,14 +26,13 @@
     "blog/conditionalprobability/index.html": "53c90b2f4953fc41beb7247c2cc4a4cbfcc9c6019df7d41ba22035f0bb5e690e",
     "blog/derangement-methods/index.html": "dd40d62f270b2353b8ec7d03371bcd34b510e8ddf02bdaf9449592f54e389285",
     "blog/dl/index.html": "e9652b166ddb15fbe53281b0adc796088041fda408b600ff91439ee16cad39ff",
-    "blog/feed.xml": "89eb32a3a43bb9e150796f4f4c5874e73a29bfe5311e067070d4dfa5bca3d752",
+    "blog/feed.xml": "d3159ffa0b3196de033ebc0acba2d433045d489d141be44d8f93032c606bfa0d",
     "blog/hanota/index.html": "c2da69686879503c47315560adb53ba9ef7beddd7107cbb18df47dd8d6bd92fe",
-    "blog/index.html": "50dba726f2f8ae1089c633383300302537eee6221fe81b6ad71f31307bfe6d8b",
+    "blog/index.html": "53d5464c772fab6e7fb51c3a896ac9a8c93fca458c952b37bfac58aec7c6d234",
     "blog/kmp/index.html": "43ea2b848e1b10fcebecd7c4e580bede3bd601f960b6c2a98cbbdd75b0fd88d6",
     "blog/machine-learning-01/index.html": "0a28128d96344f8d6a00d9a3413f6421e985522f7a806e6c7d9e7f300a99b6f5",
     "blog/nju-jokes/index.html": "6f3a6890b1983c224e53a7b1d7eea43e30eea10518e3e4aeed84fb8e42a9e701",
     "blog/python/index.html": "786e9b20afc99d6104a8647bf822f5b960674d3daea57ab8b43c712a23ad233c",
-    "blog/random-variables/index.html": "937ac446df9fa6250a43dbab695505de6a0c168cc41e00ec1df4ed9c26d0934a",
     "blog/rpn/index.html": "fdb0171b1f2b2f7b5023d4ab1bb13dfee20d4f2638b6f9725295e8cabca409a4",
     "blog/rv/index.html": "08a6c4b9bf62bb0c8a985e52535696f80a1676a3f88039966f0f89cdcc434a82",
     "blog/twelvefold-way/index.html": "2f00bfbf21ba0d0f48fb9fb9f5e9a062565997e7f83985758dc4760ae006ea4b",
@@ -43,7 +42,7 @@
     "fonts/Lato-Regular-Latin.woff2": "d4ae5188a65370ecfe28f42293bbee8297cfd5712c6aadfdb270d48f2bcd88b0",
     "fonts/Lato-Regular-LatinExt.woff2": "b85c84c655bcbba3bd628b2c1fea0fbdb5b158a9022281a2f910e82fd6da5098",
     "fonts/OFL.txt": "19e7e97ffc31e58fa0e54919b8189b2ddcc6fd75539f387e2822b107b6a51423",
-    "index.html": "23de17ac5f92fa572bc78fe87763ad1527b917fe86ac04700edd552dda98be63",
+    "index.html": "2aa62ede3366cd0ddd615b50d676626d26e49d9ffa3470bed51939ce07f37a23",
     "site.css": "bfaed40170c265ea36581a733094fdb8746b9779ef763b5c5b5d0b551fbf003d",
     "site.js": "eccc671773ee1adfb8f9ec171546752ad5757f231c9aa6e17d9cd18b82127ea5"
   }
