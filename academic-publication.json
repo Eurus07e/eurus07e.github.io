@@ -1,7 +1,7 @@
 {
   "version": 1,
   "sourceRepository": "Eurus07e/personal-website",
-  "sourceCommit": "e478ba53e5a1194ea29c4ce5a7ff17e3e8b9f2cc",
+  "sourceCommit": "db2cf362fa4dcf853ce26dca1571b15a8ba8099f",
   "files": {
     ".nojekyll": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
     "assets/downloads/python-for-deep-learning/plot_results.py": "d975ba3ab43d876545bdfc1d4581586411361ec111fbe2a0ff82c7f2f13d8b9a",
@@ -27,10 +27,11 @@
     "blog/conditionalprobability/index.html": "53c90b2f4953fc41beb7247c2cc4a4cbfcc9c6019df7d41ba22035f0bb5e690e",
     "blog/derangement-methods/index.html": "dd40d62f270b2353b8ec7d03371bcd34b510e8ddf02bdaf9449592f54e389285",
     "blog/dl/index.html": "e9652b166ddb15fbe53281b0adc796088041fda408b600ff91439ee16cad39ff",
-    "blog/feed.xml": "3355c7217fbcae0d0529c56fb14cf1e8286df07bb77df683e503e794df8bf078",
+    "blog/feed.xml": "064faae6dac7e78aec3e49c5d357c503b3f05ea3c216d9423d5f0c28d5154470",
     "blog/hanota/index.html": "c2da69686879503c47315560adb53ba9ef7beddd7107cbb18df47dd8d6bd92fe",
-    "blog/index.html": "beb488657e6ef0036607e39b0efe8e4f9fb0b9bb4b43882fd1e7f6dbf25b6c42",
+    "blog/index.html": "d4d180b81bc70ca8551eee81df78c0de1780ac6e0a3c8428d6ffce8a9d751c0d",
     "blog/kmp/index.html": "43ea2b848e1b10fcebecd7c4e580bede3bd601f960b6c2a98cbbdd75b0fd88d6",
+    "blog/logic2p2/index.html": "7bb2ebd173c406009827cee46f378dd6e0811efdf192cb1f579733168b325586",
     "blog/machine-learning-01/index.html": "0a28128d96344f8d6a00d9a3413f6421e985522f7a806e6c7d9e7f300a99b6f5",
     "blog/nju-jokes/index.html": "6f3a6890b1983c224e53a7b1d7eea43e30eea10518e3e4aeed84fb8e42a9e701",
     "blog/python/index.html": "786e9b20afc99d6104a8647bf822f5b960674d3daea57ab8b43c712a23ad233c",
@@ -43,7 +44,7 @@
     "fonts/Lato-Regular-Latin.woff2": "d4ae5188a65370ecfe28f42293bbee8297cfd5712c6aadfdb270d48f2bcd88b0",
     "fonts/Lato-Regular-LatinExt.woff2": "b85c84c655bcbba3bd628b2c1fea0fbdb5b158a9022281a2f910e82fd6da5098",
     "fonts/OFL.txt": "19e7e97ffc31e58fa0e54919b8189b2ddcc6fd75539f387e2822b107b6a51423",
-    "index.html": "78f86493a0e6e879e2900879b42db6dd51ef9bc2077163e770e963cf2a888f80",
+    "index.html": "513109833010d60654ddc36c0eb54f77afd3fd6b7d191770b0aaad000ab5dd65",
     "site.css": "bfaed40170c265ea36581a733094fdb8746b9779ef763b5c5b5d0b551fbf003d",
     "site.js": "eccc671773ee1adfb8f9ec171546752ad5757f231c9aa6e17d9cd18b82127ea5"
   }
