@@ -1,7 +1,7 @@
 {
   "version": 1,
   "sourceRepository": "Eurus07e/personal-website",
-  "sourceCommit": "a3b6402a18622bc90dc18296f790608293222441",
+  "sourceCommit": "ce22527605869153938d9035ca038392cd6f48c1",
   "files": {
     ".nojekyll": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
     "assets/downloads/python-for-deep-learning/plot_results.py": "d975ba3ab43d876545bdfc1d4581586411361ec111fbe2a0ff82c7f2f13d8b9a",
@@ -31,7 +31,7 @@
     "blog/hanota/index.html": "c2da69686879503c47315560adb53ba9ef7beddd7107cbb18df47dd8d6bd92fe",
     "blog/index.html": "d4d180b81bc70ca8551eee81df78c0de1780ac6e0a3c8428d6ffce8a9d751c0d",
     "blog/kmp/index.html": "43ea2b848e1b10fcebecd7c4e580bede3bd601f960b6c2a98cbbdd75b0fd88d6",
-    "blog/logic2p2/index.html": "53c6a5d6b71a8367c03e09643994f7f3414ad0c059c2d156c1c6b9c9822d3a8e",
+    "blog/logic2p2/index.html": "df010bbd39a2719c5caa40278bc6df4bfa9c9a3959ddc45d25277c59a5bd128f",
     "blog/machine-learning-01/index.html": "0a28128d96344f8d6a00d9a3413f6421e985522f7a806e6c7d9e7f300a99b6f5",
     "blog/nju-jokes/index.html": "6f3a6890b1983c224e53a7b1d7eea43e30eea10518e3e4aeed84fb8e42a9e701",
     "blog/python/index.html": "786e9b20afc99d6104a8647bf822f5b960674d3daea57ab8b43c712a23ad233c",
