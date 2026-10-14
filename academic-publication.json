@@ -1,7 +1,7 @@
 {
   "version": 1,
   "sourceRepository": "Eurus07e/personal-website",
-  "sourceCommit": "4c1e2e5905d376418339785bb3d48e85f247995b",
+  "sourceCommit": "2ca62bb2a608627f3e9dc303cc83d72721abc45b",
   "files": {
     ".nojekyll": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
     "assets/downloads/python-for-deep-learning/plot_results.py": "d975ba3ab43d876545bdfc1d4581586411361ec111fbe2a0ff82c7f2f13d8b9a",
@@ -27,15 +27,15 @@
     "blog/conditionalprobability/index.html": "53c90b2f4953fc41beb7247c2cc4a4cbfcc9c6019df7d41ba22035f0bb5e690e",
     "blog/derangement-methods/index.html": "dd40d62f270b2353b8ec7d03371bcd34b510e8ddf02bdaf9449592f54e389285",
     "blog/dl/index.html": "e9652b166ddb15fbe53281b0adc796088041fda408b600ff91439ee16cad39ff",
-    "blog/feed.xml": "199cff1580ed6c33e57faa715c4941ba694fec430e604426a7dd1234cd9aefa7",
+    "blog/feed.xml": "e048ecba496e1d9c2f334b0b185a990dac9d4994b8501d618cc05dbcd84b708f",
     "blog/hanota/index.html": "c2da69686879503c47315560adb53ba9ef7beddd7107cbb18df47dd8d6bd92fe",
-    "blog/index.html": "0d8ad7d63afc6c14c55492c2195b1b8e2a8defc3ce76ed93bd79c8f1225677e1",
+    "blog/index.html": "718bec4d6090fd3a3bebcf1d90a4c32864d3474ead17d60f9858d305fa7c1113",
     "blog/kmp/index.html": "43ea2b848e1b10fcebecd7c4e580bede3bd601f960b6c2a98cbbdd75b0fd88d6",
     "blog/logic2p2/index.html": "87b7e3076ad9142064c5f1c107e330248e75e2aad7884cfa6d00b9bd36bd8911",
     "blog/machine-learning-01/index.html": "0a28128d96344f8d6a00d9a3413f6421e985522f7a806e6c7d9e7f300a99b6f5",
     "blog/nju-jokes/index.html": "6f3a6890b1983c224e53a7b1d7eea43e30eea10518e3e4aeed84fb8e42a9e701",
-    "blog/ps-10-transformations/index.html": "e793def257678a0c3485a69273b20da2d7719ba3de7c91c045dbcc59cbaa311d",
-    "blog/ps-11-numerical-characteristics/index.html": "564bd6c1abd343bb07e29e50d357b077c2403c3ff9dc2d8de0d24ef4437f16b9",
+    "blog/ps-10-transformations/index.html": "e5321282dbb03cfd8ba633f979560fe0c4f0e5f9db0dbf98d3569a5e73b1c28a",
+    "blog/ps-11-numerical-characteristics/index.html": "f44dc0ee3838002ab86c210d13815e85a04f43113178b3c52284e0d9d0341292",
     "blog/python/index.html": "786e9b20afc99d6104a8647bf822f5b960674d3daea57ab8b43c712a23ad233c",
     "blog/rpn/index.html": "fdb0171b1f2b2f7b5023d4ab1bb13dfee20d4f2638b6f9725295e8cabca409a4",
     "blog/rv/index.html": "08a6c4b9bf62bb0c8a985e52535696f80a1676a3f88039966f0f89cdcc434a82",
@@ -46,8 +46,8 @@
     "fonts/Lato-Regular-Latin.woff2": "d4ae5188a65370ecfe28f42293bbee8297cfd5712c6aadfdb270d48f2bcd88b0",
     "fonts/Lato-Regular-LatinExt.woff2": "b85c84c655bcbba3bd628b2c1fea0fbdb5b158a9022281a2f910e82fd6da5098",
     "fonts/OFL.txt": "19e7e97ffc31e58fa0e54919b8189b2ddcc6fd75539f387e2822b107b6a51423",
-    "index.html": "4a2fad0566eb0cfc587bc88b64a14b8d904c38af9418b29c5335ee4d010ace47",
-    "site.css": "bfaed40170c265ea36581a733094fdb8746b9779ef763b5c5b5d0b551fbf003d",
+    "index.html": "9141f8de0dc2116c60c4e5215550ffdc20652201926d4831418e70c5079466ef",
+    "site.css": "9626ab4839a72e9bfa12442856d7ee344c15be6aaa21c28169488a2f30a2e4de",
     "site.js": "eccc671773ee1adfb8f9ec171546752ad5757f231c9aa6e17d9cd18b82127ea5"
   }
 }

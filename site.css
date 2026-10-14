@@ -277,3 +277,6 @@ button { font: inherit; }
 }
 
 @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+
+/* Preserve intentional line breaks in article summaries. */
+.article-summary { white-space: pre-line; }
