@@ -1,7 +1,7 @@
 {
   "version": 1,
   "sourceRepository": "Eurus07e/personal-website",
-  "sourceCommit": "f5019e6cfc7c4292505ccf0f30edbf20f7c5317a",
+  "sourceCommit": "0b70a2f56247c88958ac2f81b1bf01f44fdf6286",
   "files": {
     ".nojekyll": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
     "assets/downloads/python-for-deep-learning/plot_results.py": "d975ba3ab43d876545bdfc1d4581586411361ec111fbe2a0ff82c7f2f13d8b9a",
@@ -27,13 +27,15 @@
     "blog/conditionalprobability/index.html": "53c90b2f4953fc41beb7247c2cc4a4cbfcc9c6019df7d41ba22035f0bb5e690e",
     "blog/derangement-methods/index.html": "dd40d62f270b2353b8ec7d03371bcd34b510e8ddf02bdaf9449592f54e389285",
     "blog/dl/index.html": "e9652b166ddb15fbe53281b0adc796088041fda408b600ff91439ee16cad39ff",
-    "blog/feed.xml": "e26b1474d427e388be85f9e93c13ffa293934a18aba053bdcbaf843fd4ebfe98",
+    "blog/feed.xml": "0fdea68bee8bc48ba87a6beb9659ced8d615e2cdb9355818b787a37a500c9390",
     "blog/hanota/index.html": "c2da69686879503c47315560adb53ba9ef7beddd7107cbb18df47dd8d6bd92fe",
-    "blog/index.html": "bf7d7c29976f1db7aefd3fae479271db53dc357e7c0a2098893d7e34f4d00fa7",
+    "blog/index.html": "caa6f39e4aa99c0a743af26b7279f3b3ff2e9e0a75aa83188ff848c235313162",
     "blog/kmp/index.html": "43ea2b848e1b10fcebecd7c4e580bede3bd601f960b6c2a98cbbdd75b0fd88d6",
     "blog/logic2p2/index.html": "87b7e3076ad9142064c5f1c107e330248e75e2aad7884cfa6d00b9bd36bd8911",
     "blog/machine-learning-01/index.html": "0a28128d96344f8d6a00d9a3413f6421e985522f7a806e6c7d9e7f300a99b6f5",
     "blog/nju-jokes/index.html": "6f3a6890b1983c224e53a7b1d7eea43e30eea10518e3e4aeed84fb8e42a9e701",
+    "blog/ps-04-conditional-probability-independence/index.html": "d460eba94989964f551e465d804e6d8bd17a2dd086b2b2aa5cb6204cb8adc6f1",
+    "blog/ps-05-total-probability-bayes/index.html": "d9bab9d9d3c6b7ce3cd218d57c3b02b5bd494d33ae4204e6fc262d31060d35b4",
     "blog/ps-06-discrete-random-variables/index.html": "eabec9cc5d6e070cd7f932ac84ca22188915a519933444d24bbd1af160695d16",
     "blog/ps-07-continuous-random-variables/index.html": "10c7822c9fcb19a0bf59abdff9e33b8fff9b17acdffa59fbae8736b6b3e1d05c",
     "blog/ps-08-joint-distributions/index.html": "de25b025dd7c3bd87e190a9fd4a81baa312efd2499ece153cd40f853f97976b4",
@@ -50,7 +52,7 @@
     "fonts/Lato-Regular-Latin.woff2": "d4ae5188a65370ecfe28f42293bbee8297cfd5712c6aadfdb270d48f2bcd88b0",
     "fonts/Lato-Regular-LatinExt.woff2": "b85c84c655bcbba3bd628b2c1fea0fbdb5b158a9022281a2f910e82fd6da5098",
     "fonts/OFL.txt": "19e7e97ffc31e58fa0e54919b8189b2ddcc6fd75539f387e2822b107b6a51423",
-    "index.html": "6ed50372ecc7ff54b73a8d6c1c27d8cbd840ecd979629354f6848a4eb7f6b13c",
+    "index.html": "57f4916d1de7d278361f0b0882cbc27815fa6634f9d78867148b57aa47bacd1f",
     "site.css": "9626ab4839a72e9bfa12442856d7ee344c15be6aaa21c28169488a2f30a2e4de",
     "site.js": "eccc671773ee1adfb8f9ec171546752ad5757f231c9aa6e17d9cd18b82127ea5"
   }
