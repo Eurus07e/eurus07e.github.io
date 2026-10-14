@@ -1,0 +1,126 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light">
+  <meta name="theme-color" content="#ffffff">
+  <meta name="description" content="概率论与数理统计：学习路线与章节目录
+按先导案例、事件、随机变量和多元分布组织学习，说明各部分需要的基础、练习方法与课程安排，并汇总本系列各讲入口。">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Preface : Probability and Statistics | Yuxuan Shu">
+  <meta property="og:description" content="概率论与数理统计：学习路线与章节目录
+按先导案例、事件、随机变量和多元分布组织学习，说明各部分需要的基础、练习方法与课程安排，并汇总本系列各讲入口。">
+  <link rel="canonical" href="https://eurus07e.github.io/blog/ps-preface-course-guide/"><link rel="alternate" type="application/rss+xml" title="Yuxuan Shu Blog" href="/blog/feed.xml">
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="/site.css">
+  <script src="/site.js" defer></script>
+  <title>Preface : Probability and Statistics | Yuxuan Shu</title>
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+  <div class="page post-page"><header class="interior-header">
+    <a class="site-name" href="/">Yuxuan Shu</a>
+    <nav aria-label="Main navigation"><a href="/">Home</a><span>/</span><a href="/blog/">Blog</a></nav>
+  </header><main id="main" class="article-main">
+    <a class="back-link" href="/blog/">← All articles</a>
+    <article lang="zh-CN">
+      <header class="article-header"><h1 lang="en">Preface : Probability and Statistics</h1>
+        <p class="article-summary" lang="zh-CN">概率论与数理统计：学习路线与章节目录
+按先导案例、事件、随机变量和多元分布组织学习，说明各部分需要的基础、练习方法与课程安排，并汇总本系列各讲入口。</p>
+        <p class="article-meta"><time datetime="2026-10-14">Oct 14, 2026</time><span>·</span><span>Mathematics</span><span class="tag" lang="zh-CN">#概率论与数理统计</span><span class="tag" lang="zh-CN">#学习笔记</span></p>
+      </header>
+      <details class="article-toc"><summary>On this page</summary><ol><li class=""><a href="#一-先准备哪些基础" lang="zh-CN">一、先准备哪些基础</a></li><li class=""><a href="#二-已完成的章节" lang="zh-CN">二、已完成的章节</a></li><li class=""><a href="#三-完整课程的后续结构" lang="zh-CN">三、完整课程的后续结构</a></li><li class=""><a href="#四-怎样做一份可以复查的解答" lang="zh-CN">四、怎样做一份可以复查的解答</a></li><li class=""><a href="#五-2026-年秋季课程安排备忘" lang="zh-CN">五、2026 年秋季课程安排备忘</a></li></ol></details><div class="article-body"><h2 id="一-先准备哪些基础">一、先准备哪些基础</h2>
+<p>这门课同时使用三类工具。</p>
+<p>微积分用于累积概率、密度、期望和极限。开始学习事件与离散变量时，只需有限求和、排列组合和基本代数；进入连续分布以后，需要熟悉定积分、换元和分部积分。</p>
+<p>线性代数主要出现在多元随机向量部分：向量、矩阵乘法、二次型、正定矩阵、特征值与正交对角化。协方差矩阵和多元正态的推导会直接使用这些知识。</p>
+<p>编程用于抽样模拟和数据核对。要能实现重复试验、统计频率、画分布图，并检查随机数、循环和边界条件。模拟能够帮助发现问题，数学结论仍需要对应的证明或误差分析。</p>
+<p>学习目标可以分三层：先准确使用术语、公式与定理；再把实际问题写成模型，说明假设；最后通过交互实验检查模型与数据是否一致。只记公式而没有识别适用条件，遇到题目变化时容易用错。</p>
+<h2 id="二-已完成的章节">二、已完成的章节</h2>
+<p>正文按内容的依赖顺序排列。每篇独立说明所需定义，例题分别列出题目和解答。</p>
+<table>
+<thead>
+<tr>
+<th>章节</th>
+<th>主要内容</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="/blog/ps-00-introduction/">Lecture 0 : Introduction to Probability and Statistics</a></td>
+<td>奖金分配、概率史、统计案例、关联与因果、概率与统计的关系</td>
+</tr>
+<tr>
+<td><a href="/blog/ps-01-random-events/">Lecture 1 : Random Events and Inclusion-Exclusion Principle</a></td>
+<td>样本空间、事件运算、频率、概率公理、容斥及其上下界</td>
+</tr>
+<tr>
+<td><a href="/blog/ps-02-probability-models/">Lecture 2 : Probability Models and Calculation</a></td>
+<td>古典与几何概型、超几何概率、生日与匹配、随机弦</td>
+</tr>
+<tr>
+<td><a href="/blog/ps-03-twelvefold-way/">Lecture 3 : The Twelvefold Way</a></td>
+<td>十二种放球模型、排列组合、Stirling 数、整数分拆</td>
+</tr>
+<tr>
+<td><a href="/blog/ps-04-conditional-probability-independence/">Lecture 4 : Conditional Probability and Independence</a></td>
+<td>条件概率、乘法公式、事件独立性、重复试验与可靠性</td>
+</tr>
+<tr>
+<td><a href="/blog/ps-05-total-probability-bayes/">Lecture 5 : Law of Total Probability and Bayesian Formula</a></td>
+<td>全概率、贝叶斯更新、随机验证、概率方法及建模边界</td>
+</tr>
+<tr>
+<td><a href="/blog/ps-06-discrete-random-variables/">Lecture 6 : Discrete Random Variables</a></td>
+<td>分布列、期望方差、二项、几何、负二项、泊松与超几何分布</td>
+</tr>
+<tr>
+<td><a href="/blog/ps-07-continuous-random-variables/">Lecture 7 : Continuous Random Variables</a></td>
+<td>分布函数、密度、均匀、指数、正态、函数变换与数字特征</td>
+</tr>
+<tr>
+<td><a href="/blog/ps-08-joint-distributions/">Lecture 8 : Multi-dimensional Random Vector &amp; Distribution Function</a></td>
+<td>联合分布、边缘分布、离散与连续多元模型</td>
+</tr>
+<tr>
+<td><a href="/blog/ps-09-independence-conditional-distributions/">Lecture 9 : Independence of Random Variables &amp; Conditional Distribution</a></td>
+<td>随机变量独立性、条件分布及条件密度</td>
+</tr>
+<tr>
+<td><a href="/blog/ps-10-transformations/">Lecture 10 : Operations on Multi-dimensional Random Variables</a></td>
+<td>和、积、商、极值、卷积与 Jacobian 变换</td>
+</tr>
+<tr>
+<td><a href="/blog/ps-11-numerical-characteristics/">Lecture 11 : Numerical Characteristics of Multi-dimensional Random Vectors</a></td>
+<td>期望、条件期望、协方差、相关系数、协方差矩阵与多元正态</td>
+</tr>
+</tbody>
+</table>
+<p>若从未学过概率，按上述次序阅读。只想复习某一讲时，可以先做例题，遇到定义不清楚再回查相关章节。第 11 讲按多元正态、期望、协方差等主题展开，涉及前几讲的联合密度与矩阵运算。</p>
+<h2 id="三-完整课程的后续结构">三、完整课程的后续结构</h2>
+<p>事件语言建立以后，随机变量将结果映射为数值，分布描述这些数值如何出现。单变量进一步扩展到联合分布、独立性、条件分布、函数变换和数字特征。</p>
+<p>接下来，集中不等式、大数定律和中心极限定理研究随机量的偏离程度与样本量增大后的规律。这些内容连接概率与统计：解释频率为什么可用来估计概率、样本均值如何波动、正态近似何时合理。</p>
+<p>统计部分依次包括统计基础概念、抽样分布及其应用、点估计、区间估计和假设检验。参数估计与检验都安排应用案例，需要将“计算了哪个数”与“这个数能支持什么结论”联系起来。</p>
+<p>再往后是随机过程、平稳性与时间序列、Markov 链及应用，用来研究随时间变化且可能相关的随机量。这些是后续学习方向，本系列当前正文截至第 11 讲，目录中未列出的内容不视为已经讲完。</p>
+<p>课程安排还包括习题课、两次交互练习、期中复盘和期末总结。知识密集的部分需要课外阅读与基础练习，交互练习则用于把概率模型和计算机、机器学习等问题连接起来。</p>
+<h2 id="四-怎样做一份可以复查的解答">四、怎样做一份可以复查的解答</h2>
+<p>一个完整解答通常需要写清楚四件事：样本空间或随机变量是什么，采用了哪些假设，公式为什么适用，结果在题目中表示什么。</p>
+<p>例如用“有利结果数除以总结果数”时，要说明基本结果等可能；把交集概率拆成乘积时，要说明独立性；用连续密度时，要写支持域；进行变量变换时，要检查映射是否一一对应，若有多个原像就逐支求和。</p>
+<p>练习可以分成基础、强化与思考三类。基础题检查定义和计算；强化题练习在多个模型之间作选择；思考题检查边界、反例或实际假设。解完以后可以改一个条件，观察原方法哪一步需要调整。</p>
+<p>阅读图表时也要练习相同的检查。成绩直方图展示分布形状，均值反映位置，标准差反映离散程度，箱线图描述中位数和四分位数。单看均值无法判断高分、低分人数，也无法判断考试难度与学生掌握情况之间的因果关系。比较两次考试时应同时检查参与人数、试卷结构和评分口径。</p>
+<h2 id="五-2026-年秋季课程安排备忘">五、2026 年秋季课程安排备忘</h2>
+<p>课程由张绍群、徐科授课，地点为南京大学苏州校区苏教 A207，时间为周一第 5—6 节、周三第 7—8 节。学期安排覆盖 8 月 24 日至 12 月 27 日，授课计划约 17 个教学周、33 次课，其中约 24—25 次讲授、5 次习题课，第 17 周安排答疑。详细进度表还列有复盘和交互练习，实际节次应以课程通知为准。</p>
+<p>助教为张书豪、陈宗奕、胡新宇、喻重阳。课外交流需预约，联系邮箱为 <a href="mailto:zhangsq@nju.edu.cn">zhangsq@nju.edu.cn</a>，办公室为南雍楼东区 524。研究与应用方向涉及机器学习、模式挖掘、边缘智能、时空建模、表达能力与泛化、逆问题以及可信人工智能中的不确定性分析。</p>
+<p>教材包括盛骤、谢式千等编写的《概率论与数理统计》、M. H. DeGroot 与 M. J. Schervish 的 Probability and Statistics，以及课程讲义。不同教材的符号、章节顺序可能不同，阅读时应按定义对应。</p>
+<p>课程鼓励课堂互动，不以点名为主要管理方式。每周通常安排 1—2 次作业，上一周作业在周一上课前提交；学习材料在课前发布，并在课后更新。课外阅读、基础计算与课堂讨论共同构成学习过程。</p>
+<p>成绩结构为</p>
+<mjx-container class="MathJax" jax="SVG" display="true" style="direction: ltr; display: block; text-align: center; margin: 1em 0; position: relative;"><svg style="overflow: visible; min-height: 1px; min-width: 1px; vertical-align: -0.452ex;" xmlns="http://www.w3.org/2000/svg" width="57.823ex" height="2.149ex" role="img" focusable="false" viewBox="0 -750 25557.8 950" aria-hidden="true"><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="scale(1,-1)"><g data-mml-node="math"><g data-mml-node="mtext"><text data-variant="normal" transform="scale(1,-1)" font-size="884px" font-family="serif">总</text><text data-variant="normal" transform="translate(1000,0) scale(1,-1)" font-size="884px" font-family="serif">评</text></g><g data-mml-node="mo" transform="translate(2277.8,0)"><path data-c="3D" d="M56 347Q56 360 70 367H707Q722 359 722 347Q722 336 708 328L390 327H72Q56 332 56 347ZM56 153Q56 168 72 173H708Q722 163 722 153Q722 140 707 133H70Q56 140 56 153Z" style="stroke-width: 3;"/></g><g data-mml-node="mn" transform="translate(3333.6,0)"><path data-c="30" d="M96 585Q152 666 249 666Q297 666 345 640T423 548Q460 465 460 320Q460 165 417 83Q397 41 362 16T301 -15T250 -22Q224 -22 198 -16T137 16T82 83Q39 165 39 320Q39 494 96 585ZM321 597Q291 629 250 629Q208 629 178 597Q153 571 145 525T137 333Q137 175 145 125T181 46Q209 16 250 16Q290 16 318 46Q347 76 354 130T362 333Q362 478 354 524T321 597Z" style="stroke-width: 3;"/><path data-c="2E" d="M78 60Q78 84 95 102T138 120Q162 120 180 104T199 61Q199 36 182 18T139 0T96 17T78 60Z" transform="translate(500,0)" style="stroke-width: 3;"/><path data-c="34" d="M462 0Q444 3 333 3Q217 3 199 0H190V46H221Q241 46 248 46T265 48T279 53T286 61Q287 63 287 115V165H28V211L179 442Q332 674 334 675Q336 677 355 677H373L379 671V211H471V165H379V114Q379 73 379 66T385 54Q393 47 442 46H471V0H462ZM293 211V545L74 212L183 211H293Z" transform="translate(778,0)" style="stroke-width: 3;"/></g><g data-mml-node="mo" transform="translate(4833.8,0)"><path data-c="D7" d="M630 29Q630 9 609 9Q604 9 587 25T493 118L389 222L284 117Q178 13 175 11Q171 9 168 9Q160 9 154 15T147 29Q147 36 161 51T255 146L359 250L255 354Q174 435 161 449T147 471Q147 480 153 485T168 490Q173 490 175 489Q178 487 284 383L389 278L493 382Q570 459 587 475T609 491Q630 491 630 471Q630 464 620 453T522 355L418 250L522 145Q606 61 618 48T630 29Z" style="stroke-width: 3;"/></g><g data-mml-node="mtext" transform="translate(5834,0)"><text data-variant="normal" transform="scale(1,-1)" font-size="884px" font-family="serif">平</text><text data-variant="normal" transform="translate(1000,0) scale(1,-1)" font-size="884px" font-family="serif">时</text><text data-variant="normal" transform="translate(2000,0) scale(1,-1)" font-size="884px" font-family="serif">成</text><text data-variant="normal" transform="translate(3000,0) scale(1,-1)" font-size="884px" font-family="serif">绩</text></g><g data-mml-node="mo" transform="translate(10056.2,0)"><path data-c="2B" d="M56 237T56 250T70 270H369V420L370 570Q380 583 389 583Q402 583 409 568V270H707Q722 262 722 250T707 230H409V-68Q401 -82 391 -82H389H387Q375 -82 369 -68V230H70Q56 237 56 250Z" style="stroke-width: 3;"/></g><g data-mml-node="mn" transform="translate(11056.4,0)"><path data-c="30" d="M96 585Q152 666 249 666Q297 666 345 640T423 548Q460 465 460 320Q460 165 417 83Q397 41 362 16T301 -15T250 -22Q224 -22 198 -16T137 16T82 83Q39 165 39 320Q39 494 96 585ZM321 597Q291 629 250 629Q208 629 178 597Q153 571 145 525T137 333Q137 175 145 125T181 46Q209 16 250 16Q290 16 318 46Q347 76 354 130T362 333Q362 478 354 524T321 597Z" style="stroke-width: 3;"/><path data-c="2E" d="M78 60Q78 84 95 102T138 120Q162 120 180 104T199 61Q199 36 182 18T139 0T96 17T78 60Z" transform="translate(500,0)" style="stroke-width: 3;"/><path data-c="32" d="M109 429Q82 429 66 447T50 491Q50 562 103 614T235 666Q326 666 387 610T449 465Q449 422 429 383T381 315T301 241Q265 210 201 149L142 93L218 92Q375 92 385 97Q392 99 409 186V189H449V186Q448 183 436 95T421 3V0H50V19V31Q50 38 56 46T86 81Q115 113 136 137Q145 147 170 174T204 211T233 244T261 278T284 308T305 340T320 369T333 401T340 431T343 464Q343 527 309 573T212 619Q179 619 154 602T119 569T109 550Q109 549 114 549Q132 549 151 535T170 489Q170 464 154 447T109 429Z" transform="translate(778,0)" style="stroke-width: 3;"/></g><g data-mml-node="mo" transform="translate(12556.7,0)"><path data-c="D7" d="M630 29Q630 9 609 9Q604 9 587 25T493 118L389 222L284 117Q178 13 175 11Q171 9 168 9Q160 9 154 15T147 29Q147 36 161 51T255 146L359 250L255 354Q174 435 161 449T147 471Q147 480 153 485T168 490Q173 490 175 489Q178 487 284 383L389 278L493 382Q570 459 587 475T609 491Q630 491 630 471Q630 464 620 453T522 355L418 250L522 145Q606 61 618 48T630 29Z" style="stroke-width: 3;"/></g><g data-mml-node="mtext" transform="translate(13556.9,0)"><text data-variant="normal" transform="scale(1,-1)" font-size="884px" font-family="serif">期</text><text data-variant="normal" transform="translate(1000,0) scale(1,-1)" font-size="884px" font-family="serif">中</text><text data-variant="normal" transform="translate(2000,0) scale(1,-1)" font-size="884px" font-family="serif">成</text><text data-variant="normal" transform="translate(3000,0) scale(1,-1)" font-size="884px" font-family="serif">绩</text></g><g data-mml-node="mo" transform="translate(17779.1,0)"><path data-c="2B" d="M56 237T56 250T70 270H369V420L370 570Q380 583 389 583Q402 583 409 568V270H707Q722 262 722 250T707 230H409V-68Q401 -82 391 -82H389H387Q375 -82 369 -68V230H70Q56 237 56 250Z" style="stroke-width: 3;"/></g><g data-mml-node="mn" transform="translate(18779.3,0)"><path data-c="30" d="M96 585Q152 666 249 666Q297 666 345 640T423 548Q460 465 460 320Q460 165 417 83Q397 41 362 16T301 -15T250 -22Q224 -22 198 -16T137 16T82 83Q39 165 39 320Q39 494 96 585ZM321 597Q291 629 250 629Q208 629 178 597Q153 571 145 525T137 333Q137 175 145 125T181 46Q209 16 250 16Q290 16 318 46Q347 76 354 130T362 333Q362 478 354 524T321 597Z" style="stroke-width: 3;"/><path data-c="2E" d="M78 60Q78 84 95 102T138 120Q162 120 180 104T199 61Q199 36 182 18T139 0T96 17T78 60Z" transform="translate(500,0)" style="stroke-width: 3;"/><path data-c="34" d="M462 0Q444 3 333 3Q217 3 199 0H190V46H221Q241 46 248 46T265 48T279 53T286 61Q287 63 287 115V165H28V211L179 442Q332 674 334 675Q336 677 355 677H373L379 671V211H471V165H379V114Q379 73 379 66T385 54Q393 47 442 46H471V0H462ZM293 211V545L74 212L183 211H293Z" transform="translate(778,0)" style="stroke-width: 3;"/></g><g data-mml-node="mo" transform="translate(20279.6,0)"><path data-c="D7" d="M630 29Q630 9 609 9Q604 9 587 25T493 118L389 222L284 117Q178 13 175 11Q171 9 168 9Q160 9 154 15T147 29Q147 36 161 51T255 146L359 250L255 354Q174 435 161 449T147 471Q147 480 153 485T168 490Q173 490 175 489Q178 487 284 383L389 278L493 382Q570 459 587 475T609 491Q630 491 630 471Q630 464 620 453T522 355L418 250L522 145Q606 61 618 48T630 29Z" style="stroke-width: 3;"/></g><g data-mml-node="mtext" transform="translate(21279.8,0)"><text data-variant="normal" transform="scale(1,-1)" font-size="884px" font-family="serif">期</text><text data-variant="normal" transform="translate(1000,0) scale(1,-1)" font-size="884px" font-family="serif">末</text><text data-variant="normal" transform="translate(2000,0) scale(1,-1)" font-size="884px" font-family="serif">成</text><text data-variant="normal" transform="translate(3000,0) scale(1,-1)" font-size="884px" font-family="serif">绩</text></g><g data-mml-node="mo" transform="translate(25279.8,0)"><path data-c="2E" d="M78 60Q78 84 95 102T138 120Q162 120 180 104T199 61Q199 36 182 18T139 0T96 17T78 60Z" style="stroke-width: 3;"/></g></g></g></svg><mjx-assistive-mml unselectable="on" display="block" style="top: 0px; left: 0px; clip: rect(1px, 1px, 1px, 1px); -webkit-touch-callout: none; -webkit-user-select: none; -khtml-user-select: none; -moz-user-select: none; -ms-user-select: none; user-select: none; position: absolute; padding: 1px 0px 0px 0px; border: 0px; display: block; overflow: hidden; width: 100%;"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><mtext>总评</mtext><mo>=</mo><mn>0.4</mn><mo>×</mo><mtext>平时成绩</mtext><mo>+</mo><mn>0.2</mn><mo>×</mo><mtext>期中成绩</mtext><mo>+</mo><mn>0.4</mn><mo>×</mo><mtext>期末成绩</mtext><mo>.</mo></math></mjx-assistive-mml></mjx-container><p>平时成绩主要来自作业，题目约按 60% 基础、30% 强化、10% 思考安排；考试约按 60% 基础、30% 提升、10% 挑战组织。过程分关注思路是否清楚，结果分关注计算是否正确，不能把“步骤写得多”当作推理充分。课程也计划定期收集反馈，便于调整讲解和练习。</p>
+</div>
+    </article>
+    <p class="article-end"><a href="/blog/">← Back to all articles</a></p>
+  </main><footer class="site-footer">
+    <span>© 2026 Yuxuan Shu</span>
+    <span>Design inspired by <a href="https://jonbarron.info/">Jon Barron</a>.</span>
+  </footer></div>
+</body>
+</html>

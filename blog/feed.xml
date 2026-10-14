@@ -22,6 +22,8 @@
 从合并离散取值与积分区域出发，推导卷积、乘积、比值、最大值与最小值的分布，讲解雅可比变换和多元正态分布，并处理寿命与随机人数模型。</description></item>
 <item><title>Lecture 11 : Numerical Characteristics of Multi-dimensional Random Vectors</title><link>https://eurus07e.github.io/blog/ps-11-numerical-characteristics/</link><guid>https://eurus07e.github.io/blog/ps-11-numerical-characteristics/</guid><pubDate>Wed, 14 Oct 2026 00:00:00 GMT</pubDate><description>期望、协方差与多元正态分布
 从联合分布计算期望，用条件期望处理分步试验，再通过协方差、相关系数和协方差矩阵研究多个随机变量的关系，推导多元正态分布的标准化与条件分布。</description></item>
+<item><title>Preface : Probability and Statistics</title><link>https://eurus07e.github.io/blog/ps-preface-course-guide/</link><guid>https://eurus07e.github.io/blog/ps-preface-course-guide/</guid><pubDate>Wed, 14 Oct 2026 00:00:00 GMT</pubDate><description>概率论与数理统计：学习路线与章节目录
+按先导案例、事件、随机变量和多元分布组织学习，说明各部分需要的基础、练习方法与课程安排，并汇总本系列各讲入口。</description></item>
 <item><title>关系与结构 - 逻辑与推理 2.2</title><link>https://eurus07e.github.io/blog/logic2p2/</link><guid>https://eurus07e.github.io/blog/logic2p2/</guid><pubDate>Sun, 11 Oct 2026 00:00:00 GMT</pubDate><description>关系与结构：函数、同胚、无穷集合与商集</description></item>
 <item><title>二叉树的遍历、构造与线索化</title><link>https://eurus07e.github.io/blog/bintree/</link><guid>https://eurus07e.github.io/blog/bintree/</guid><pubDate>Sat, 10 Oct 2026 00:00:00 GMT</pubDate><description></description></item>
 <item><title>随机变量及其分布</title><link>https://eurus07e.github.io/blog/rv/</link><guid>https://eurus07e.github.io/blog/rv/</guid><pubDate>Tue, 29 Sep 2026 00:00:00 GMT</pubDate><description></description></item>
