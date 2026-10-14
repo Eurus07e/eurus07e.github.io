@@ -1,7 +1,7 @@
 {
   "version": 1,
   "sourceRepository": "Eurus07e/personal-website",
-  "sourceCommit": "dde21ba07a027d36830701160fcd9b2b44290c3b",
+  "sourceCommit": "bb964653e9921be37228ca3456d8c8e003de223d",
   "files": {
     ".nojekyll": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
     "assets/downloads/python-for-deep-learning/plot_results.py": "d975ba3ab43d876545bdfc1d4581586411361ec111fbe2a0ff82c7f2f13d8b9a",
@@ -27,13 +27,15 @@
     "blog/conditionalprobability/index.html": "53c90b2f4953fc41beb7247c2cc4a4cbfcc9c6019df7d41ba22035f0bb5e690e",
     "blog/derangement-methods/index.html": "dd40d62f270b2353b8ec7d03371bcd34b510e8ddf02bdaf9449592f54e389285",
     "blog/dl/index.html": "e9652b166ddb15fbe53281b0adc796088041fda408b600ff91439ee16cad39ff",
-    "blog/feed.xml": "a138a46378f6bdc5e4523d95c595e64aed3c0da09464dddb2a46af3723bf2891",
+    "blog/feed.xml": "9b894414efd53e884451f9685d767201572642a2f3c28e5e9c99dffa8f5b14f3",
     "blog/hanota/index.html": "c2da69686879503c47315560adb53ba9ef7beddd7107cbb18df47dd8d6bd92fe",
-    "blog/index.html": "64989f1a3f0111a3c6ac813837274ceb729923b70d28c27440f2e92da40eb686",
+    "blog/index.html": "3a6e392c52f2d55079b4363a728246498d5e6536630827e3ada780e1e041a90b",
     "blog/kmp/index.html": "43ea2b848e1b10fcebecd7c4e580bede3bd601f960b6c2a98cbbdd75b0fd88d6",
     "blog/logic2p2/index.html": "87b7e3076ad9142064c5f1c107e330248e75e2aad7884cfa6d00b9bd36bd8911",
     "blog/machine-learning-01/index.html": "0a28128d96344f8d6a00d9a3413f6421e985522f7a806e6c7d9e7f300a99b6f5",
     "blog/nju-jokes/index.html": "6f3a6890b1983c224e53a7b1d7eea43e30eea10518e3e4aeed84fb8e42a9e701",
+    "blog/ps-00-introduction/index.html": "ad21b2f9c22d11f51ba547c0724743649fbe3d9eeca370b543c0003287b32909",
+    "blog/ps-01-random-events/index.html": "f9875974fbe028890fcc2bb0b1adb2c7021fde0080f6561e832f47259b2449f6",
     "blog/ps-02-probability-models/index.html": "1f8663d6db022cf10062b73ef688929451b5dbc2aece8a8d71f4237bd6e11546",
     "blog/ps-03-twelvefold-way/index.html": "e32ae33a83c4491275c2d1f4a4f6cfb7056934c582155476bd1d03e200934d63",
     "blog/ps-04-conditional-probability-independence/index.html": "d460eba94989964f551e465d804e6d8bd17a2dd086b2b2aa5cb6204cb8adc6f1",
@@ -54,7 +56,7 @@
     "fonts/Lato-Regular-Latin.woff2": "d4ae5188a65370ecfe28f42293bbee8297cfd5712c6aadfdb270d48f2bcd88b0",
     "fonts/Lato-Regular-LatinExt.woff2": "b85c84c655bcbba3bd628b2c1fea0fbdb5b158a9022281a2f910e82fd6da5098",
     "fonts/OFL.txt": "19e7e97ffc31e58fa0e54919b8189b2ddcc6fd75539f387e2822b107b6a51423",
-    "index.html": "356cae896c7610a7d09bc9006ec4079d82274d26dd3746d92e9bb4c7eb6ce8a7",
+    "index.html": "3c3b367810733f0d8e1843e27a332d33f491f71f590014bfbecc58e8a3356d5c",
     "site.css": "9626ab4839a72e9bfa12442856d7ee344c15be6aaa21c28169488a2f30a2e4de",
     "site.js": "eccc671773ee1adfb8f9ec171546752ad5757f231c9aa6e17d9cd18b82127ea5"
   }
