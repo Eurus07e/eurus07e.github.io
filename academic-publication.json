@@ -1,7 +1,7 @@
 {
   "version": 1,
   "sourceRepository": "Eurus07e/personal-website",
-  "sourceCommit": "b8cad792b587acb3d40395ce58ec8a3fdeeb3aba",
+  "sourceCommit": "9f1ea56362b3e486a77be42640a1fa721d4abf2f",
   "files": {
     ".nojekyll": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
     "assets/downloads/python-for-deep-learning/plot_results.py": "d975ba3ab43d876545bdfc1d4581586411361ec111fbe2a0ff82c7f2f13d8b9a",
@@ -27,13 +27,14 @@
     "blog/conditionalprobability/index.html": "53c90b2f4953fc41beb7247c2cc4a4cbfcc9c6019df7d41ba22035f0bb5e690e",
     "blog/derangement-methods/index.html": "dd40d62f270b2353b8ec7d03371bcd34b510e8ddf02bdaf9449592f54e389285",
     "blog/dl/index.html": "e9652b166ddb15fbe53281b0adc796088041fda408b600ff91439ee16cad39ff",
-    "blog/feed.xml": "56ca0e6e98e49336ddff76cde38ed83d9c3ab97d9e2774f645f6e1631a2f0ccf",
+    "blog/feed.xml": "ade5543e5a7a27aef7589ab8e7fd898807d6b37f64c5fa0b5e920e97356d4392",
     "blog/hanota/index.html": "c2da69686879503c47315560adb53ba9ef7beddd7107cbb18df47dd8d6bd92fe",
-    "blog/index.html": "2d972d9823f68ffe05a50720ff56ef330a2181f2387fdc16a86f728dd2f6adc7",
+    "blog/index.html": "8ce3de8b8dabd842489a4db251993e8c2c3e0eed83a5ac68e958a6f8ff15e70d",
     "blog/kmp/index.html": "43ea2b848e1b10fcebecd7c4e580bede3bd601f960b6c2a98cbbdd75b0fd88d6",
     "blog/logic2p2/index.html": "87b7e3076ad9142064c5f1c107e330248e75e2aad7884cfa6d00b9bd36bd8911",
     "blog/machine-learning-01/index.html": "0a28128d96344f8d6a00d9a3413f6421e985522f7a806e6c7d9e7f300a99b6f5",
     "blog/nju-jokes/index.html": "6f3a6890b1983c224e53a7b1d7eea43e30eea10518e3e4aeed84fb8e42a9e701",
+    "blog/ps-07-continuous-random-variables/index.html": "10c7822c9fcb19a0bf59abdff9e33b8fff9b17acdffa59fbae8736b6b3e1d05c",
     "blog/ps-08-joint-distributions/index.html": "de25b025dd7c3bd87e190a9fd4a81baa312efd2499ece153cd40f853f97976b4",
     "blog/ps-09-independence-conditional-distributions/index.html": "7ee27184d024d565eecc8762bc823c8e450a8d621e0c3421a2b62ed3830f4b7f",
     "blog/ps-10-transformations/index.html": "e5321282dbb03cfd8ba633f979560fe0c4f0e5f9db0dbf98d3569a5e73b1c28a",
@@ -48,7 +49,7 @@
     "fonts/Lato-Regular-Latin.woff2": "d4ae5188a65370ecfe28f42293bbee8297cfd5712c6aadfdb270d48f2bcd88b0",
     "fonts/Lato-Regular-LatinExt.woff2": "b85c84c655bcbba3bd628b2c1fea0fbdb5b158a9022281a2f910e82fd6da5098",
     "fonts/OFL.txt": "19e7e97ffc31e58fa0e54919b8189b2ddcc6fd75539f387e2822b107b6a51423",
-    "index.html": "df7559c3d23ac4ba28caace88e0d711a34176caa0bf0d35b4d86996e0bd79370",
+    "index.html": "45874a7f713e379e7d28f909420f747830d0b7f7943249773feaae115c11893d",
     "site.css": "9626ab4839a72e9bfa12442856d7ee344c15be6aaa21c28169488a2f30a2e4de",
     "site.js": "eccc671773ee1adfb8f9ec171546752ad5757f231c9aa6e17d9cd18b82127ea5"
   }
