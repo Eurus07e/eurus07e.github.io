@@ -1,7 +1,7 @@
 {
   "version": 1,
   "sourceRepository": "Eurus07e/personal-website",
-  "sourceCommit": "7e19ebeb9e4eca7dec222ae4f1e4ddadcef11a58",
+  "sourceCommit": "411dc890f6d7341e30e90fff5e7e127c81a7abec",
   "files": {
     ".nojekyll": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
     "assets/downloads/python-for-deep-learning/plot_results.py": "d975ba3ab43d876545bdfc1d4581586411361ec111fbe2a0ff82c7f2f13d8b9a",
@@ -39,7 +39,7 @@
     "blog/ps-02-probability-models/index.html": "030b49fd45059ec9b1f1075e085e157aae34d817d140f99be64c110db93c4c8d",
     "blog/ps-03-twelvefold-way/index.html": "da8f04afb8aa1740aaac4e578ed6cae3a6efac57dbd96cf97dc505488f1db7ea",
     "blog/ps-04-conditional-probability-independence/index.html": "3fff50d3a8fb20173094a486ba10f468f8f37c068565cc806268658758c4b3c1",
-    "blog/ps-05-total-probability-bayes/index.html": "a08d307813af7eb40eff0387fe1ba36d4f6e9fa9a8968eb2b4ea7084460b9f53",
+    "blog/ps-05-total-probability-bayes/index.html": "cbd4e028def97dab20b8e4d843bf8810bc3f6ff3bd7848342a59ecc102d53484",
     "blog/ps-06-discrete-random-variables/index.html": "acb2dee6e9f4cd051077f2dd617ecadf5893cd3d709ec3a8d177290a9eb5b2e0",
     "blog/ps-07-continuous-random-variables/index.html": "31345f29dab41df102344a621df642da3aec57ba8934922de67bdf7676f468c8",
     "blog/ps-08-joint-distributions/index.html": "39d8b05972dbd0dae495d92ea14a9abe59117c7985a1b837077ca97c4984ce41",
