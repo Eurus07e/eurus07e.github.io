@@ -242,7 +242,7 @@ button { font: inherit; }
 .article-body li > ul, .article-body li > ol { margin-top: .35em; }
 .article-body blockquote { border-left: 3px solid #c4d2df; padding: .15em 0 .15em 1em; color: #505c66; }
 .article-body img { display: block; max-width: 100%; height: auto; margin: 1.4em auto; }
-.article-body a { text-decoration: underline; text-underline-offset: 2px; }
+.article-body a { text-decoration: underline; text-underline-offset: .18em; -webkit-text-decoration-skip: none; text-decoration-skip-ink: none; }
 .article-body pre { overflow-x: auto; background: #f5f6f7; border: 1px solid #e7e9ea; padding: 14px 16px; border-radius: 4px; font-size: 13px; line-height: 1.5; tab-size: 2; }
 .article-body code { font: .88em/1.45 SFMono-Regular, Consolas, "Liberation Mono", monospace; background: #f2f4f5; padding: .13em .28em; border-radius: 3px; }
 .article-body pre code { background: transparent; padding: 0; font-size: inherit; }
