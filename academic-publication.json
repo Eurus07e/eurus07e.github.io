@@ -1,7 +1,7 @@
 {
   "version": 1,
   "sourceRepository": "Eurus07e/personal-website",
-  "sourceCommit": "e3328ef54d3a9dfd2d564d9857a6dfb9c06c132d",
+  "sourceCommit": "c289e7d8325ea6764d3b6f3d0ba5a4e93cab816d",
   "files": {
     ".nojekyll": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
     "assets/downloads/python-for-deep-learning/plot_results.py": "d975ba3ab43d876545bdfc1d4581586411361ec111fbe2a0ff82c7f2f13d8b9a",
@@ -45,7 +45,7 @@
     "blog/ps-07-continuous-random-variables/index.html": "18ba7c129fe287eabedd6b5b4368cd74df4b3ef1a577c9e0cd32165693cae9b5",
     "blog/ps-08-joint-distributions/index.html": "bc6a6e325a5d06cae4be36eb82313f7b8a71016aae06bbc2e31686b266253dc1",
     "blog/ps-09-independence-conditional-distributions/index.html": "60784169acb8ce0fb8a5a8398c4865bd947f024829a5e4801fab400d7872d50e",
-    "blog/ps-10-transformations/index.html": "f702fc53363d3de72db84cd29bbcb5f5d9ea9f711c4c6c5525e7ad7ff0b99a00",
+    "blog/ps-10-transformations/index.html": "6fc0638ceca0a4db294ebef8eb5cfbd96aacf541d1448d466622fc8e7f10fb9e",
     "blog/ps-11-numerical-characteristics/index.html": "f41d3f7b070bb3ef9f44c4fd75532ec0c23013f70fefc06a143c00bc121d04d5",
     "blog/ps-preface-course-guide/index.html": "45293ce1bed3a96ed12d5e6ba5107a525179ade7c0faf50991d110df9a34f43f",
     "blog/python/index.html": "786e9b20afc99d6104a8647bf822f5b960674d3daea57ab8b43c712a23ad233c",
