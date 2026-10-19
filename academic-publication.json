@@ -1,7 +1,7 @@
 {
   "version": 1,
   "sourceRepository": "Eurus07e/personal-website",
-  "sourceCommit": "3381266dc1fd0f724e51ddc100fff425ada3067f",
+  "sourceCommit": "c10b2410fb9c6357c5aa5d4d708061afcba6af1f",
   "files": {
     ".nojekyll": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
     "assets/downloads/python-for-deep-learning/plot_results.py": "d975ba3ab43d876545bdfc1d4581586411361ec111fbe2a0ff82c7f2f13d8b9a",
@@ -43,7 +43,7 @@
     "blog/ps-05-total-probability-bayes/index.html": "6605b0430716889c18aa15a01720c9dffe583100a09f3ef262d779a299c5c875",
     "blog/ps-06-discrete-random-variables/index.html": "97cd067ba3d9448478d4e9202b45351b00c7b63082ef3225c3de7e0f6e4d5f96",
     "blog/ps-07-continuous-random-variables/index.html": "18ba7c129fe287eabedd6b5b4368cd74df4b3ef1a577c9e0cd32165693cae9b5",
-    "blog/ps-08-joint-distributions/index.html": "bc6a6e325a5d06cae4be36eb82313f7b8a71016aae06bbc2e31686b266253dc1",
+    "blog/ps-08-joint-distributions/index.html": "28e97142409453ecdf691f0474e0ec0401b6ae29d086f3ae23bee01946654f12",
     "blog/ps-09-independence-conditional-distributions/index.html": "db1da2f07de73163009ea7c87fca8708244cb3eafb5bf893793776a20e6f117c",
     "blog/ps-10-transformations/index.html": "704c78665ed71f60504c63851af198e22e8cfc407b2d96d2610ebb9a05ed1345",
     "blog/ps-11-numerical-characteristics/index.html": "2307ff3f0be077c905e1d2fc7cbbb4e40826919fa58194e6d62375eef03d8cd6",
