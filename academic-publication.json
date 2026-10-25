@@ -1,7 +1,7 @@
 {
   "version": 1,
   "sourceRepository": "Eurus07e/personal-website",
-  "sourceCommit": "635643ce3575acf79b0d32b003ae5839e8ff64e6",
+  "sourceCommit": "97e915fcc633370727a6ce3f5d677033619a1869",
   "files": {
     ".nojekyll": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
     "assets/downloads/python-for-deep-learning/plot_results.py": "d975ba3ab43d876545bdfc1d4581586411361ec111fbe2a0ff82c7f2f13d8b9a",
@@ -25,7 +25,7 @@
     "blog/ai/index.html": "bf777ba85f0e3420ad94cee86bb6ccb494fb7f92eee6a196ad5f6e1d5beb3131",
     "blog/bintree/index.html": "9a596226c0551e15c90f261f89f75a6f12529ef3d7a7381a2aec743c8500b01f",
     "blog/conditionalprobability/index.html": "53c90b2f4953fc41beb7247c2cc4a4cbfcc9c6019df7d41ba22035f0bb5e690e",
-    "blog/derangement-methods/index.html": "dd40d62f270b2353b8ec7d03371bcd34b510e8ddf02bdaf9449592f54e389285",
+    "blog/derangement-methods/index.html": "5e92d96d6ae41948df86943a5a309ff1bf8dc55089b87409ea179f159c3b7c71",
     "blog/dl/index.html": "e9652b166ddb15fbe53281b0adc796088041fda408b600ff91439ee16cad39ff",
     "blog/feed.xml": "88fd345d2e85dcd36f1f366c6ee5630b13103f3cd992baafc8b3189040d2207f",
     "blog/hanota/index.html": "c2da69686879503c47315560adb53ba9ef7beddd7107cbb18df47dd8d6bd92fe",
