@@ -1,7 +1,7 @@
 {
   "version": 1,
   "sourceRepository": "Eurus07e/personal-website",
-  "sourceCommit": "83e0560a91ec59921c8025a579c45245aaf8a3a9",
+  "sourceCommit": "51079706b7f1b9540744afd18bbc6197c8a59aa6",
   "files": {
     ".nojekyll": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
     "assets/downloads/python-for-deep-learning/plot_results.py": "d975ba3ab43d876545bdfc1d4581586411361ec111fbe2a0ff82c7f2f13d8b9a",
@@ -16,6 +16,7 @@
     "assets/uploads/note-1789293243457-9b15c038.png": "d53d05b7d990970fb27cbfd606b6601703df1f5ae79495193159f407e4fd7110",
     "assets/uploads/note-1789298439543-0e0d003d.png": "501ba46cee40d5de2239b97364a81f1d31b43e206ce1e74130152a70eec40712",
     "assets/uploads/note-1789738482442-d464a178.png": "be0cad39c7b641b86b1c9f5434b83be10b21002e3c87537f56ee8fed0a1aaefc",
+    "assets/uploads/note-1793023123739-19131a24.png": "f90550dbb86c42c2d0c57a05af80537b1a28f08769a313a4131bc60e4574ca96",
     "assets/uploads/python-tutorial/predictions.png": "03383e2655bc9e76da4d6aae08f4c88e5cd7a1e3cd52bdcda8bbc4643a27b568",
     "assets/uploads/python-tutorial/samples.png": "dc2f6d1304e5d954446b475ad2796e9f3fc20f823fb2d96d49b6f84a9828eaaf",
     "assets/uploads/python-tutorial/training-loss.png": "e96b9aa22fc35de299a985476c7a307cdf226d524147ed7ee9b10af93798b487",
@@ -33,7 +34,7 @@
     "blog/heap/index.html": "222bb001812472e94c7e6a36a795641d9b764476f99dad3f50c62bff99e13965",
     "blog/index.html": "98066e1075b9eedf32f4535f4a07d36031394e0556c0540016dbebca5aa24ff9",
     "blog/kmp/index.html": "43ea2b848e1b10fcebecd7c4e580bede3bd601f960b6c2a98cbbdd75b0fd88d6",
-    "blog/logic2p2/index.html": "a8c9649ecc9dcd5d9d724c743ff5563714ce6617e4573b129a490b3c231ede22",
+    "blog/logic2p2/index.html": "7b9baf84236d3d88ff8cc6e13ff4a6a08d09956f17e6849cd217dc5589a4c727",
     "blog/machine-learning-01/index.html": "0a28128d96344f8d6a00d9a3413f6421e985522f7a806e6c7d9e7f300a99b6f5",
     "blog/nju-jokes/index.html": "6f3a6890b1983c224e53a7b1d7eea43e30eea10518e3e4aeed84fb8e42a9e701",
     "blog/ps-00-introduction/index.html": "f50a54cdc6d2215a818322d5bd2bbed8a4c4e45199e73c001643537a23b07ea0",
