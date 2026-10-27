@@ -1,7 +1,7 @@
 {
   "version": 1,
   "sourceRepository": "Eurus07e/personal-website",
-  "sourceCommit": "419c4a6474a6e83ee28b2dc04caa763b1f53f6ea",
+  "sourceCommit": "10fbb1006d4b04fe08b4b181b9dcc40b04c4a039",
   "files": {
     ".nojekyll": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
     "assets/downloads/python-for-deep-learning/plot_results.py": "d975ba3ab43d876545bdfc1d4581586411361ec111fbe2a0ff82c7f2f13d8b9a",
@@ -29,10 +29,10 @@
     "blog/conditionalprobability/index.html": "53c90b2f4953fc41beb7247c2cc4a4cbfcc9c6019df7d41ba22035f0bb5e690e",
     "blog/derangement-methods/index.html": "85416b5f67ca7eac5028cacdf397a26bcabd696854b885aa50a97ab0772406b3",
     "blog/dl/index.html": "e9652b166ddb15fbe53281b0adc796088041fda408b600ff91439ee16cad39ff",
-    "blog/feed.xml": "fb6ba2d456498f66c678d7d01b46ecb7596d87822d321fd72073ecee02ec26e0",
+    "blog/feed.xml": "efc2c2b0035a0afa078785d2b15943a64b04ad87b8e0b4ef5bc35ce3d5ff6ce5",
     "blog/hanota/index.html": "c2da69686879503c47315560adb53ba9ef7beddd7107cbb18df47dd8d6bd92fe",
     "blog/heap/index.html": "222bb001812472e94c7e6a36a795641d9b764476f99dad3f50c62bff99e13965",
-    "blog/index.html": "b13f4da92260e2188e6b030dfe20e949101d0f562e7ec9c61bbf944407029518",
+    "blog/index.html": "f0e9e3c34eff1b9cbb8e950ea06a3612467f5c8172dd8a287b9c429dcce8dedf",
     "blog/kmp/index.html": "43ea2b848e1b10fcebecd7c4e580bede3bd601f960b6c2a98cbbdd75b0fd88d6",
     "blog/logic2p2/index.html": "e7e72b70084dae0921f150558f8bc2883d6a85a362b753d3e4195186638a0dfe",
     "blog/machine-learning-01/index.html": "0a28128d96344f8d6a00d9a3413f6421e985522f7a806e6c7d9e7f300a99b6f5",
@@ -53,6 +53,7 @@
     "blog/python/index.html": "786e9b20afc99d6104a8647bf822f5b960674d3daea57ab8b43c712a23ad233c",
     "blog/rpn/index.html": "fdb0171b1f2b2f7b5023d4ab1bb13dfee20d4f2638b6f9725295e8cabca409a4",
     "blog/rv/index.html": "08a6c4b9bf62bb0c8a985e52535696f80a1676a3f88039966f0f89cdcc434a82",
+    "blog/scireading/index.html": "33759173b39cb9a328b76cf18d2a3494d7f667897532e73763c507812583c9c6",
     "blog/twelvefold-way/index.html": "2f00bfbf21ba0d0f48fb9fb9f5e9a062565997e7f83985758dc4760ae006ea4b",
     "blog/xsx/index.html": "90d69f83d4eba258cce1b669c68620369707afec1fbf0cc60a4784f4903a816a",
     "favicon.svg": "d26f98a9de24940a1e61b722fe304b5fd3c2cfa3eb2f57c5670a1a5c991c1a0d",
@@ -61,7 +62,7 @@
     "fonts/Lato-Regular-Latin.woff2": "d4ae5188a65370ecfe28f42293bbee8297cfd5712c6aadfdb270d48f2bcd88b0",
     "fonts/Lato-Regular-LatinExt.woff2": "b85c84c655bcbba3bd628b2c1fea0fbdb5b158a9022281a2f910e82fd6da5098",
     "fonts/OFL.txt": "19e7e97ffc31e58fa0e54919b8189b2ddcc6fd75539f387e2822b107b6a51423",
-    "index.html": "19f1a966a48a6ab5c969dace9bbfa717c87e52fac2d73f49ef4ff86a9a0cf707",
+    "index.html": "20b87395b3b8e5377f334a653329e6e87fefb5d43a0e1513701fb0821999ed2c",
     "site.css": "2991609cfa9f27d1817fc385c39fa7bb05717ebbe892b113b48e4edd9d6761cf",
     "site.js": "eccc671773ee1adfb8f9ec171546752ad5757f231c9aa6e17d9cd18b82127ea5"
   }
