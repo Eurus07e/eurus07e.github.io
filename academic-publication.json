@@ -1,7 +1,7 @@
 {
   "version": 1,
   "sourceRepository": "Eurus07e/personal-website",
-  "sourceCommit": "5d2c7ba7a262121f6c1bd3418890f5a505783621",
+  "sourceCommit": "112735251106d03ba12f0ea93060bbbe16b6c883",
   "files": {
     ".nojekyll": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
     "assets/downloads/python-for-deep-learning/plot_results.py": "d975ba3ab43d876545bdfc1d4581586411361ec111fbe2a0ff82c7f2f13d8b9a",
@@ -29,10 +29,10 @@
     "blog/conditionalprobability/index.html": "53c90b2f4953fc41beb7247c2cc4a4cbfcc9c6019df7d41ba22035f0bb5e690e",
     "blog/derangement-methods/index.html": "85416b5f67ca7eac5028cacdf397a26bcabd696854b885aa50a97ab0772406b3",
     "blog/dl/index.html": "e9652b166ddb15fbe53281b0adc796088041fda408b600ff91439ee16cad39ff",
-    "blog/feed.xml": "96d4a392be6a9bc4c416b961bd9de9df5b419730352f5324fc3b2c54cf0c2cc0",
+    "blog/feed.xml": "fb6ba2d456498f66c678d7d01b46ecb7596d87822d321fd72073ecee02ec26e0",
     "blog/hanota/index.html": "c2da69686879503c47315560adb53ba9ef7beddd7107cbb18df47dd8d6bd92fe",
     "blog/heap/index.html": "222bb001812472e94c7e6a36a795641d9b764476f99dad3f50c62bff99e13965",
-    "blog/index.html": "c2eda74e4549fbfbc7cf91770702dd3b6b43db69cf0a69d88109eb71ddec1e85",
+    "blog/index.html": "b13f4da92260e2188e6b030dfe20e949101d0f562e7ec9c61bbf944407029518",
     "blog/kmp/index.html": "43ea2b848e1b10fcebecd7c4e580bede3bd601f960b6c2a98cbbdd75b0fd88d6",
     "blog/logic2p2/index.html": "e7e72b70084dae0921f150558f8bc2883d6a85a362b753d3e4195186638a0dfe",
     "blog/machine-learning-01/index.html": "0a28128d96344f8d6a00d9a3413f6421e985522f7a806e6c7d9e7f300a99b6f5",
@@ -54,13 +54,14 @@
     "blog/rpn/index.html": "fdb0171b1f2b2f7b5023d4ab1bb13dfee20d4f2638b6f9725295e8cabca409a4",
     "blog/rv/index.html": "08a6c4b9bf62bb0c8a985e52535696f80a1676a3f88039966f0f89cdcc434a82",
     "blog/twelvefold-way/index.html": "2f00bfbf21ba0d0f48fb9fb9f5e9a062565997e7f83985758dc4760ae006ea4b",
+    "blog/xsx/index.html": "17fd1f1a80612160ea8c453f5619a1609f04b8793c5810d467f6e841d5387ace",
     "favicon.svg": "d26f98a9de24940a1e61b722fe304b5fd3c2cfa3eb2f57c5670a1a5c991c1a0d",
     "fonts/Lato-Bold-Latin.woff2": "7a7ce1a34f3e9944fe88fc61abbc93b6db383afa2b90815fd7ccea456fbce4e5",
     "fonts/Lato-Bold-LatinExt.woff2": "78e850d569834892d3f4bdfd2084c7a7c0dc64ae4226f3231af30dae706400e2",
     "fonts/Lato-Regular-Latin.woff2": "d4ae5188a65370ecfe28f42293bbee8297cfd5712c6aadfdb270d48f2bcd88b0",
     "fonts/Lato-Regular-LatinExt.woff2": "b85c84c655bcbba3bd628b2c1fea0fbdb5b158a9022281a2f910e82fd6da5098",
     "fonts/OFL.txt": "19e7e97ffc31e58fa0e54919b8189b2ddcc6fd75539f387e2822b107b6a51423",
-    "index.html": "8f2bb079a40d0d47358bd6205cb58e53d855e6724a4e2e6c6575948f67f9d7f2",
+    "index.html": "19f1a966a48a6ab5c969dace9bbfa717c87e52fac2d73f49ef4ff86a9a0cf707",
     "site.css": "2991609cfa9f27d1817fc385c39fa7bb05717ebbe892b113b48e4edd9d6761cf",
     "site.js": "eccc671773ee1adfb8f9ec171546752ad5757f231c9aa6e17d9cd18b82127ea5"
   }
