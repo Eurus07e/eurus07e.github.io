@@ -1,7 +1,7 @@
 {
   "version": 1,
   "sourceRepository": "Eurus07e/personal-website",
-  "sourceCommit": "a81f2860d8a6bc8697e474ba92de31f8360f82b7",
+  "sourceCommit": "5b2ffedf3e8f8639262eeed2ef518f5d9d5f6a3e",
   "files": {
     ".nojekyll": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
     "assets/downloads/python-for-deep-learning/plot_results.py": "d975ba3ab43d876545bdfc1d4581586411361ec111fbe2a0ff82c7f2f13d8b9a",
@@ -54,7 +54,7 @@
     "blog/python/index.html": "786e9b20afc99d6104a8647bf822f5b960674d3daea57ab8b43c712a23ad233c",
     "blog/rpn/index.html": "fdb0171b1f2b2f7b5023d4ab1bb13dfee20d4f2638b6f9725295e8cabca409a4",
     "blog/rv/index.html": "08a6c4b9bf62bb0c8a985e52535696f80a1676a3f88039966f0f89cdcc434a82",
-    "blog/scireading/index.html": "92be6626663ffcb640d18e3789d11090b2714f18d7c153fabf57bbc093e7692f",
+    "blog/scireading/index.html": "7e6049b192818159d35c515cdfde9c20da07fce2aa40ffbb96a624045a665400",
     "blog/twelvefold-way/index.html": "2f00bfbf21ba0d0f48fb9fb9f5e9a062565997e7f83985758dc4760ae006ea4b",
     "favicon.svg": "d26f98a9de24940a1e61b722fe304b5fd3c2cfa3eb2f57c5670a1a5c991c1a0d",
     "fonts/Lato-Bold-Latin.woff2": "7a7ce1a34f3e9944fe88fc61abbc93b6db383afa2b90815fd7ccea456fbce4e5",
