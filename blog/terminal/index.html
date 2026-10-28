@@ -1,0 +1,699 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light">
+  <meta name="theme-color" content="#ffffff">
+  <meta name="description" content="An article by Yuxuan Shu: Terminal Notes">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Terminal Notes | Yuxuan Shu">
+  <meta property="og:description" content="An article by Yuxuan Shu: Terminal Notes">
+  <link rel="canonical" href="https://eurus07e.github.io/blog/terminal/"><link rel="alternate" type="application/rss+xml" title="Yuxuan Shu Blog" href="/blog/feed.xml">
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="/site.css">
+  <script src="/site.js" defer></script>
+  <title>Terminal Notes | Yuxuan Shu</title>
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+  <div class="page post-page"><header class="interior-header">
+    <a class="site-name" href="/">Yuxuan Shu</a>
+    <nav aria-label="Main navigation"><a href="/">Home</a><span>/</span><a href="/blog/">Blog</a></nav>
+  </header><main id="main" class="article-main">
+    <a class="back-link" href="/blog/">← All articles</a>
+    <article lang="zh-CN">
+      <header class="article-header"><h1 lang="en">Terminal Notes</h1>
+        
+        <p class="article-meta"><time datetime="2026-10-28">Oct 28, 2026</time><span>·</span><span>common sense</span><span class="tag" lang="zh-CN">#笔记</span><span class="tag" lang="en">#note</span></p>
+      </header>
+      <details class="article-toc"><summary>On this page</summary><ol><li class=""><a href="#一-终端基础命令" lang="zh-CN">一、终端基础命令</a></li><li class=""><a href="#二-文件与文件夹操作" lang="zh-CN">二、文件与文件夹操作</a></li><li class=""><a href="#三-查看文件内容" lang="zh-CN">三、查看文件内容</a></li><li class=""><a href="#四-路径与环境变量" lang="zh-CN">四、路径与环境变量</a></li><li class=""><a href="#五-编译与运行-c" lang="zh-CN">五、编译与运行 C++</a></li><li class=""><a href="#六-python-常用命令" lang="zh-CN">六、Python 常用命令</a></li><li class=""><a href="#七-git-基础命令" lang="zh-CN">七、Git 基础命令</a></li><li class=""><a href="#八-git-分支命令" lang="zh-CN">八、Git 分支命令</a></li><li class=""><a href="#九-github-远程仓库命令" lang="zh-CN">九、GitHub 远程仓库命令</a></li><li class=""><a href="#十-github-常见工作流" lang="zh-CN">十、GitHub 常见工作流</a></li><li class=""><a href="#十一-git-配置命令" lang="zh-CN">十一、Git 配置命令</a></li><li class=""><a href="#十二-git-撤销与恢复" lang="zh-CN">十二、Git 撤销与恢复</a></li><li class=""><a href="#十三-进程与系统信息" lang="zh-CN">十三、进程与系统信息</a></li><li class=""><a href="#十四-网络与远程连接" lang="zh-CN">十四、网络与远程连接</a></li><li class=""><a href="#十五-最推荐优先掌握" lang="zh-CN">十五、最推荐优先掌握</a></li></ol></details><div class="article-body"><h2 id="一-终端基础命令">一、终端基础命令</h2>
+<table>
+<thead>
+<tr>
+<th>命令</th>
+<th>作用</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>pwd</code></td>
+<td>显示当前所在目录</td>
+</tr>
+<tr>
+<td><code>ls</code></td>
+<td>查看当前目录下的文件</td>
+</tr>
+<tr>
+<td><code>ls -l</code></td>
+<td>以详细列表形式查看文件</td>
+</tr>
+<tr>
+<td><code>ls -a</code></td>
+<td>显示隐藏文件</td>
+</tr>
+<tr>
+<td><code>ls -lh</code></td>
+<td>以易读大小显示文件信息</td>
+</tr>
+<tr>
+<td><code>cd 文件夹名</code></td>
+<td>进入指定文件夹</td>
+</tr>
+<tr>
+<td><code>cd ..</code></td>
+<td>返回上一级目录</td>
+</tr>
+<tr>
+<td><code>cd ~</code></td>
+<td>返回用户主目录</td>
+</tr>
+<tr>
+<td><code>clear</code></td>
+<td>清屏</td>
+</tr>
+<tr>
+<td><code>open .</code></td>
+<td>在 Finder 中打开当前目录</td>
+</tr>
+</tbody>
+</table>
+<h2 id="二-文件与文件夹操作">二、文件与文件夹操作</h2>
+<table>
+<thead>
+<tr>
+<th>命令</th>
+<th>作用</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>mkdir dir</code></td>
+<td>新建文件夹 dir</td>
+</tr>
+<tr>
+<td><code>touch a.txt</code></td>
+<td>新建空文件 a.txt</td>
+</tr>
+<tr>
+<td><code>cp a.txt b.txt</code></td>
+<td>复制文件</td>
+</tr>
+<tr>
+<td><code>cp -r dir1 dir2</code></td>
+<td>复制文件夹</td>
+</tr>
+<tr>
+<td><code>mv old.txt new.txt</code></td>
+<td>重命名文件</td>
+</tr>
+<tr>
+<td><code>mv a.txt dir/</code></td>
+<td>移动文件到指定文件夹</td>
+</tr>
+<tr>
+<td><code>rm a.txt</code></td>
+<td>删除文件</td>
+</tr>
+<tr>
+<td><code>rm -r dir</code></td>
+<td>删除文件夹</td>
+</tr>
+<tr>
+<td><code>rm -rf dir</code></td>
+<td>强制删除文件夹，需谨慎使用</td>
+</tr>
+<tr>
+<td><code>open a.pdf</code></td>
+<td>用默认应用打开文件</td>
+</tr>
+</tbody>
+</table>
+<h2 id="三-查看文件内容">三、查看文件内容</h2>
+<table>
+<thead>
+<tr>
+<th>命令</th>
+<th>作用</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>cat a.txt</code></td>
+<td>一次性显示整个文件内容</td>
+</tr>
+<tr>
+<td><code>less a.txt</code></td>
+<td>分页查看文件内容</td>
+</tr>
+<tr>
+<td><code>head a.txt</code></td>
+<td>查看文件前 10 行</td>
+</tr>
+<tr>
+<td><code>tail a.txt</code></td>
+<td>查看文件后 10 行</td>
+</tr>
+<tr>
+<td><code>tail -f log.txt</code></td>
+<td>实时查看日志文件更新</td>
+</tr>
+<tr>
+<td><code>grep &quot;hello&quot; a.txt</code></td>
+<td>在文件中搜索 hello</td>
+</tr>
+<tr>
+<td><code>grep -r &quot;hello&quot; .</code></td>
+<td>在当前目录递归搜索 hello</td>
+</tr>
+</tbody>
+</table>
+<h2 id="四-路径与环境变量">四、路径与环境变量</h2>
+<table>
+<thead>
+<tr>
+<th>命令</th>
+<th>作用</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>which python3</code></td>
+<td>查看 python3 的路径</td>
+</tr>
+<tr>
+<td><code>which g++</code></td>
+<td>查看 g++ 的路径</td>
+</tr>
+<tr>
+<td><code>echo $PATH</code></td>
+<td>查看环境变量 PATH</td>
+</tr>
+<tr>
+<td><code>export PATH=路径:$PATH</code></td>
+<td>临时添加环境变量路径</td>
+</tr>
+<tr>
+<td><code>source ~/.zshrc</code></td>
+<td>重新加载 zsh 配置文件</td>
+</tr>
+<tr>
+<td><code>nano ~/.zshrc</code></td>
+<td>编辑 zsh 配置文件</td>
+</tr>
+</tbody>
+</table>
+<h2 id="五-编译与运行-c">五、编译与运行 C++</h2>
+<table>
+<thead>
+<tr>
+<th>命令</th>
+<th>作用</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>g++ main.cpp</code></td>
+<td>编译 main.cpp，默认生成 a.out</td>
+</tr>
+<tr>
+<td><code>./a.out</code></td>
+<td>运行默认生成的程序</td>
+</tr>
+<tr>
+<td><code>g++ main.cpp -o main</code></td>
+<td>编译并指定输出文件名为 main</td>
+</tr>
+<tr>
+<td><code>./main</code></td>
+<td>运行当前目录下的 main 程序</td>
+</tr>
+<tr>
+<td><code>g++ main.cpp -std=c++17 -o main</code></td>
+<td>使用 C++17 标准编译</td>
+</tr>
+<tr>
+<td><code>g++ main.cpp -Wall -Wextra -o main</code></td>
+<td>开启常用警告信息编译</td>
+</tr>
+<tr>
+<td><code>clang++ main.cpp -std=c++17 -o main</code></td>
+<td>使用 clang++ 编译 C++ 程序</td>
+</tr>
+</tbody>
+</table>
+<h2 id="六-python-常用命令">六、Python 常用命令</h2>
+<table>
+<thead>
+<tr>
+<th>命令</th>
+<th>作用</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>python3 --version</code></td>
+<td>查看 Python 版本</td>
+</tr>
+<tr>
+<td><code>python3 main.py</code></td>
+<td>运行 Python 文件</td>
+</tr>
+<tr>
+<td><code>python3 -m venv .venv</code></td>
+<td>创建虚拟环境</td>
+</tr>
+<tr>
+<td><code>source .venv/bin/activate</code></td>
+<td>激活虚拟环境</td>
+</tr>
+<tr>
+<td><code>deactivate</code></td>
+<td>退出虚拟环境</td>
+</tr>
+<tr>
+<td><code>pip install package</code></td>
+<td>安装 Python 包</td>
+</tr>
+<tr>
+<td><code>pip list</code></td>
+<td>查看已安装包</td>
+</tr>
+<tr>
+<td><code>pip freeze &gt; requirements.txt</code></td>
+<td>导出依赖列表</td>
+</tr>
+<tr>
+<td><code>pip install -r requirements.txt</code></td>
+<td>按依赖文件安装包</td>
+</tr>
+</tbody>
+</table>
+<h2 id="七-git-基础命令">七、Git 基础命令</h2>
+<table>
+<thead>
+<tr>
+<th>命令</th>
+<th>作用</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>git init</code></td>
+<td>在当前目录初始化 Git 仓库</td>
+</tr>
+<tr>
+<td><code>git status</code></td>
+<td>查看仓库当前状态</td>
+</tr>
+<tr>
+<td><code>git add .</code></td>
+<td>添加所有改动到暂存区</td>
+</tr>
+<tr>
+<td><code>git add file.cpp</code></td>
+<td>添加指定文件到暂存区</td>
+</tr>
+<tr>
+<td><code>git commit -m &quot;message&quot;</code></td>
+<td>提交代码并写提交说明</td>
+</tr>
+<tr>
+<td><code>git log</code></td>
+<td>查看完整提交记录</td>
+</tr>
+<tr>
+<td><code>git log --oneline</code></td>
+<td>查看简洁提交记录</td>
+</tr>
+<tr>
+<td><code>git diff</code></td>
+<td>查看工作区尚未暂存的改动</td>
+</tr>
+<tr>
+<td><code>git diff --staged</code></td>
+<td>查看已暂存但未提交的改动</td>
+</tr>
+</tbody>
+</table>
+<h2 id="八-git-分支命令">八、Git 分支命令</h2>
+<table>
+<thead>
+<tr>
+<th>命令</th>
+<th>作用</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>git branch</code></td>
+<td>查看本地分支</td>
+</tr>
+<tr>
+<td><code>git branch new-branch</code></td>
+<td>创建新分支</td>
+</tr>
+<tr>
+<td><code>git checkout 分支名</code></td>
+<td>切换到指定分支</td>
+</tr>
+<tr>
+<td><code>git checkout -b new-branch</code></td>
+<td>创建并切换到新分支</td>
+</tr>
+<tr>
+<td><code>git switch 分支名</code></td>
+<td>切换分支，新版本推荐用法</td>
+</tr>
+<tr>
+<td><code>git switch -c new-branch</code></td>
+<td>创建并切换到新分支</td>
+</tr>
+<tr>
+<td><code>git merge 分支名</code></td>
+<td>将指定分支合并到当前分支</td>
+</tr>
+<tr>
+<td><code>git branch -d 分支名</code></td>
+<td>删除本地分支</td>
+</tr>
+</tbody>
+</table>
+<h2 id="九-github-远程仓库命令">九、GitHub 远程仓库命令</h2>
+<table>
+<thead>
+<tr>
+<th>命令</th>
+<th>作用</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>git clone 仓库地址</code></td>
+<td>克隆 GitHub 远程仓库到本地</td>
+</tr>
+<tr>
+<td><code>git remote -v</code></td>
+<td>查看当前绑定的远程仓库地址</td>
+</tr>
+<tr>
+<td><code>git remote add origin 仓库地址</code></td>
+<td>绑定远程仓库并命名为 origin</td>
+</tr>
+<tr>
+<td><code>git push -u origin main</code></td>
+<td>第一次推送 main 分支到 GitHub</td>
+</tr>
+<tr>
+<td><code>git push</code></td>
+<td>推送本地提交到远程仓库</td>
+</tr>
+<tr>
+<td><code>git pull</code></td>
+<td>拉取远程更新并合并到本地</td>
+</tr>
+<tr>
+<td><code>git fetch</code></td>
+<td>只拉取远程信息，不自动合并</td>
+</tr>
+<tr>
+<td><code>git pull origin main</code></td>
+<td>从远程 main 分支拉取更新</td>
+</tr>
+</tbody>
+</table>
+<h2 id="十-github-常见工作流">十、GitHub 常见工作流</h2>
+<table>
+<thead>
+<tr>
+<th>命令</th>
+<th>作用</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>git clone url</code></td>
+<td>从 GitHub 下载项目</td>
+</tr>
+<tr>
+<td><code>cd project</code></td>
+<td>进入项目目录</td>
+</tr>
+<tr>
+<td><code>git status</code></td>
+<td>查看当前是否有改动</td>
+</tr>
+<tr>
+<td><code>git add .</code></td>
+<td>添加所有修改</td>
+</tr>
+<tr>
+<td><code>git commit -m &quot;feat: add feature&quot;</code></td>
+<td>提交本地修改</td>
+</tr>
+<tr>
+<td><code>git push</code></td>
+<td>推送到 GitHub</td>
+</tr>
+<tr>
+<td><code>git pull</code></td>
+<td>提交前先同步远程更新</td>
+</tr>
+</tbody>
+</table>
+<h2 id="十一-git-配置命令">十一、Git 配置命令</h2>
+<table>
+<thead>
+<tr>
+<th>命令</th>
+<th>作用</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>git config --global user.name &quot;Your Name&quot;</code></td>
+<td>设置 Git 用户名</td>
+</tr>
+<tr>
+<td><code>git config --global user.email &quot;email@example.com&quot;</code></td>
+<td>设置 Git 邮箱</td>
+</tr>
+<tr>
+<td><code>git config --global --list</code></td>
+<td>查看全局 Git 配置</td>
+</tr>
+<tr>
+<td><code>git config user.name</code></td>
+<td>查看当前仓库用户名</td>
+</tr>
+<tr>
+<td><code>git config user.email</code></td>
+<td>查看当前仓库邮箱</td>
+</tr>
+</tbody>
+</table>
+<h2 id="十二-git-撤销与恢复">十二、Git 撤销与恢复</h2>
+<table>
+<thead>
+<tr>
+<th>命令</th>
+<th>作用</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>git restore file.cpp</code></td>
+<td>丢弃工作区中指定文件的改动</td>
+</tr>
+<tr>
+<td><code>git restore .</code></td>
+<td>丢弃当前目录下所有未暂存改动</td>
+</tr>
+<tr>
+<td><code>git restore --staged file.cpp</code></td>
+<td>取消暂存指定文件</td>
+</tr>
+<tr>
+<td><code>git reset --soft HEAD~1</code></td>
+<td>撤销最近一次提交，但保留改动</td>
+</tr>
+<tr>
+<td><code>git reset --hard HEAD~1</code></td>
+<td>删除最近一次提交和改动，慎用</td>
+</tr>
+<tr>
+<td><code>git revert 提交ID</code></td>
+<td>生成一次新的提交来撤销旧提交</td>
+</tr>
+</tbody>
+</table>
+<h2 id="十三-进程与系统信息">十三、进程与系统信息</h2>
+<table>
+<thead>
+<tr>
+<th>命令</th>
+<th>作用</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>top</code></td>
+<td>查看系统进程与资源占用</td>
+</tr>
+<tr>
+<td><code>ps aux</code></td>
+<td>查看所有进程</td>
+</tr>
+<tr>
+<td><code>ps aux | grep name</code></td>
+<td>搜索指定进程</td>
+</tr>
+<tr>
+<td><code>kill PID</code></td>
+<td>结束指定进程</td>
+</tr>
+<tr>
+<td><code>kill -9 PID</code></td>
+<td>强制结束指定进程</td>
+</tr>
+<tr>
+<td><code>df -h</code></td>
+<td>查看磁盘空间</td>
+</tr>
+<tr>
+<td><code>du -sh dir</code></td>
+<td>查看文件夹大小</td>
+</tr>
+<tr>
+<td><code>whoami</code></td>
+<td>查看当前用户名</td>
+</tr>
+<tr>
+<td><code>uname -a</code></td>
+<td>查看系统信息</td>
+</tr>
+</tbody>
+</table>
+<h2 id="十四-网络与远程连接">十四、网络与远程连接</h2>
+<table>
+<thead>
+<tr>
+<th>命令</th>
+<th>作用</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>ping baidu.com</code></td>
+<td>测试网络连通性</td>
+</tr>
+<tr>
+<td><code>curl url</code></td>
+<td>请求网页或接口内容</td>
+</tr>
+<tr>
+<td><code>curl -O url</code></td>
+<td>下载文件并保留原文件名</td>
+</tr>
+<tr>
+<td><code>wget url</code></td>
+<td>下载文件，需额外安装 wget</td>
+</tr>
+<tr>
+<td><code>ssh user@host</code></td>
+<td>连接远程服务器</td>
+</tr>
+<tr>
+<td><code>scp file user@host:path</code></td>
+<td>复制文件到远程服务器</td>
+</tr>
+<tr>
+<td><code>scp user@host:path file</code></td>
+<td>从远程服务器复制文件到本地</td>
+</tr>
+</tbody>
+</table>
+<h2 id="十五-最推荐优先掌握">十五、最推荐优先掌握</h2>
+<table>
+<thead>
+<tr>
+<th>命令</th>
+<th>作用</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>pwd</code></td>
+<td>看自己在哪个目录</td>
+</tr>
+<tr>
+<td><code>ls</code></td>
+<td>看当前目录有什么</td>
+</tr>
+<tr>
+<td><code>cd</code></td>
+<td>切换目录</td>
+</tr>
+<tr>
+<td><code>mkdir</code></td>
+<td>新建文件夹</td>
+</tr>
+<tr>
+<td><code>touch</code></td>
+<td>新建文件</td>
+</tr>
+<tr>
+<td><code>rm</code></td>
+<td>删除文件</td>
+</tr>
+<tr>
+<td><code>cp</code></td>
+<td>复制文件</td>
+</tr>
+<tr>
+<td><code>mv</code></td>
+<td>移动或重命名文件</td>
+</tr>
+<tr>
+<td><code>open .</code></td>
+<td>用 Finder 打开当前目录</td>
+</tr>
+<tr>
+<td><code>g++ main.cpp -std=c++17 -o main</code></td>
+<td>编译 C++ 程序</td>
+</tr>
+<tr>
+<td><code>./main</code></td>
+<td>运行程序</td>
+</tr>
+<tr>
+<td><code>git status</code></td>
+<td>查看 Git 状态</td>
+</tr>
+<tr>
+<td><code>git add .</code></td>
+<td>添加所有改动</td>
+</tr>
+<tr>
+<td><code>git commit -m &quot;message&quot;</code></td>
+<td>提交代码</td>
+</tr>
+<tr>
+<td><code>git push</code></td>
+<td>推送代码到 GitHub</td>
+</tr>
+<tr>
+<td><code>git pull</code></td>
+<td>拉取 GitHub 最新代码</td>
+</tr>
+</tbody>
+</table>
+</div>
+    </article>
+    <p class="article-end"><a href="/blog/">← Back to all articles</a></p>
+  </main><footer class="site-footer">
+    <span>© 2026 Yuxuan Shu</span>
+    <span>Design inspired by <a href="https://jonbarron.info/">Jon Barron</a>.</span>
+  </footer></div>
+</body>
+</html>
