@@ -1,7 +1,7 @@
 {
   "version": 1,
   "sourceRepository": "Eurus07e/personal-website",
-  "sourceCommit": "4a17f0fcdeafbd15d2e6f667e0374009d9c7f885",
+  "sourceCommit": "195341889f934ea4a98b50000cc746ac64a237c1",
   "files": {
     ".nojekyll": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
     "assets/downloads/python-for-deep-learning/plot_results.py": "d975ba3ab43d876545bdfc1d4581586411361ec111fbe2a0ff82c7f2f13d8b9a",
@@ -29,10 +29,11 @@
     "blog/conditionalprobability/index.html": "53c90b2f4953fc41beb7247c2cc4a4cbfcc9c6019df7d41ba22035f0bb5e690e",
     "blog/derangement-methods/index.html": "85416b5f67ca7eac5028cacdf397a26bcabd696854b885aa50a97ab0772406b3",
     "blog/dl/index.html": "e9652b166ddb15fbe53281b0adc796088041fda408b600ff91439ee16cad39ff",
-    "blog/feed.xml": "88762df87286df2599589894bc82b80d40ba05c891795a03afac8bfeb4f64477",
+    "blog/feed.xml": "ccf565211fce506251b1f3270609f1fa0c7e5ce2069e4338ddd30298658e7cb3",
     "blog/hanota/index.html": "c2da69686879503c47315560adb53ba9ef7beddd7107cbb18df47dd8d6bd92fe",
     "blog/heap/index.html": "222bb001812472e94c7e6a36a795641d9b764476f99dad3f50c62bff99e13965",
-    "blog/index.html": "9ac0633ea5f9d74e7a1db11e59d9b041d0650b2cc853ba7523d9856c514ff95b",
+    "blog/hotkeys/index.html": "115b7348f511ce0cb2d37b55471bc5b13aa06c8aa2a20ae29955279308e7e55b",
+    "blog/index.html": "fb99dc6407fabd2f36dc2cb42a7b3eac5cb1e5534d2d680c8e7fcbad617294e4",
     "blog/kmp/index.html": "43ea2b848e1b10fcebecd7c4e580bede3bd601f960b6c2a98cbbdd75b0fd88d6",
     "blog/logic2p2/index.html": "e7e72b70084dae0921f150558f8bc2883d6a85a362b753d3e4195186638a0dfe",
     "blog/machine-learning-01/index.html": "0a28128d96344f8d6a00d9a3413f6421e985522f7a806e6c7d9e7f300a99b6f5",
@@ -62,7 +63,7 @@
     "fonts/Lato-Regular-Latin.woff2": "d4ae5188a65370ecfe28f42293bbee8297cfd5712c6aadfdb270d48f2bcd88b0",
     "fonts/Lato-Regular-LatinExt.woff2": "b85c84c655bcbba3bd628b2c1fea0fbdb5b158a9022281a2f910e82fd6da5098",
     "fonts/OFL.txt": "19e7e97ffc31e58fa0e54919b8189b2ddcc6fd75539f387e2822b107b6a51423",
-    "index.html": "9af2ab119d1d91c1872d5480747de269c5fb914f25cc739a3f3096e6d6655a86",
+    "index.html": "c0599c262330259de2d918f9b15f550355803c5c7e4c1084f816a9df94bb3747",
     "site.css": "2991609cfa9f27d1817fc385c39fa7bb05717ebbe892b113b48e4edd9d6761cf",
     "site.js": "eccc671773ee1adfb8f9ec171546752ad5757f231c9aa6e17d9cd18b82127ea5"
   }
