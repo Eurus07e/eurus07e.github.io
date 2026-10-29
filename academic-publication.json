@@ -1,7 +1,7 @@
 {
   "version": 1,
   "sourceRepository": "Eurus07e/personal-website",
-  "sourceCommit": "9bafe58e588dfb3a7a30dae05f691b943fdfe289",
+  "sourceCommit": "0c3d469c66b45da79e0c37ac1020ac383990ddfe",
   "files": {
     ".nojekyll": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
     "assets/downloads/python-for-deep-learning/plot_results.py": "d975ba3ab43d876545bdfc1d4581586411361ec111fbe2a0ff82c7f2f13d8b9a",
@@ -39,7 +39,7 @@
     "blog/machine-learning-01/index.html": "0a28128d96344f8d6a00d9a3413f6421e985522f7a806e6c7d9e7f300a99b6f5",
     "blog/newthoughts/index.html": "fdb1dbd2848dadace6e3b00d1ac71d10d1ae1f7200cfbddfbcaeb8fd1dec85e5",
     "blog/nju-jokes/index.html": "6f3a6890b1983c224e53a7b1d7eea43e30eea10518e3e4aeed84fb8e42a9e701",
-    "blog/nxmxjh27/index.html": "972353bab1aaa4a6eaed6f7c1e4d990eca03f410ec66e4c8b0666432a64c73de",
+    "blog/nxmxjh27/index.html": "89ca195756cadffd9903ecf8c9c2aa0f40a48f46818feb8e33de03e9f9b8d749",
     "blog/ps-00-introduction/index.html": "f50a54cdc6d2215a818322d5bd2bbed8a4c4e45199e73c001643537a23b07ea0",
     "blog/ps-01-random-events/index.html": "c9f19a1c09da9d3e9a3cec7d1f4e3720bad749bdb7f6c3955ba2420436da9138",
     "blog/ps-02-probability-models/index.html": "3cc1d6f705a12748d516ac314c61603b49d8fb26ea8e22e4672147a358b716ad",
@@ -66,7 +66,7 @@
     "fonts/Lato-Regular-LatinExt.woff2": "b85c84c655bcbba3bd628b2c1fea0fbdb5b158a9022281a2f910e82fd6da5098",
     "fonts/OFL.txt": "19e7e97ffc31e58fa0e54919b8189b2ddcc6fd75539f387e2822b107b6a51423",
     "index.html": "32bfddd215c769fd383cf1ca662435b67fa2acc625a9a7875ae50495a5a3d827",
-    "nxmxjh27/index.html": "72cbdfa998587f441079e144d5227bbbd47ab3a1108cda82f3df602d2a5a813b",
+    "nxmxjh27/index.html": "aab899ae6b720088a24accf805fb33d79a818f9837c207c918134486345ea0bc",
     "site.css": "2991609cfa9f27d1817fc385c39fa7bb05717ebbe892b113b48e4edd9d6761cf",
     "site.js": "eccc671773ee1adfb8f9ec171546752ad5757f231c9aa6e17d9cd18b82127ea5"
   }
