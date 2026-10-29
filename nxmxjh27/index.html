@@ -73,9 +73,23 @@ hr { border: 0; border-top: 1px solid #ded0b8; margin: 32px 0; }
   tr, img { break-inside: avoid; }
   h1, h2, h3 { break-after: avoid; }
 }
+
+.reader-zoom { display: none; }
+@media screen and (min-width: 641px) {
+  main { zoom: var(--reader-zoom, 1); }
+  .reader-zoom:not([hidden]) { display: flex; position: fixed; z-index: 10; right: 24px; bottom: 24px; padding: 4px; gap: 2px; border: 1px solid #d8cbb4; border-radius: 8px; background: #f8f2e5; box-shadow: 0 2px 12px #42342120; }
+  .reader-zoom button { appearance: none; border: 0; background: transparent; color: #553d29; min-width: 36px; height: 34px; padding: 0 8px; border-radius: 4px; font: 15px system-ui, sans-serif; cursor: pointer; }
+  .reader-zoom button:hover { background: #eae0ce; }
+  .reader-zoom button:disabled { opacity: .35; cursor: default; }
+}
 </style>
 </head>
 <body>
+  <div class="reader-zoom" role="group" aria-label="文档缩放" hidden>
+    <button type="button" data-zoom="out" aria-label="缩小文档">−</button>
+    <button type="button" data-zoom="reset" aria-label="恢复默认大小" title="恢复默认大小">100%</button>
+    <button type="button" data-zoom="in" aria-label="放大文档">+</button>
+  </div>
   <main>
     <article>
       <header>
@@ -406,5 +420,24 @@ hr { border: 0; border-top: 1px solid #ded0b8; margin: 32px 0; }
 </div>
     </article>
   </main>
+  <script>(() => {
+  const toolbar = document.querySelector('.reader-zoom');
+  const smaller = toolbar.querySelector('[data-zoom="out"]');
+  const larger = toolbar.querySelector('[data-zoom="in"]');
+  const reset = toolbar.querySelector('[data-zoom="reset"]');
+  let percent = 100;
+  function update(value) {
+    percent = Math.max(70, Math.min(150, value));
+    document.documentElement.style.setProperty('--reader-zoom', percent / 100);
+    reset.textContent = percent + '%';
+    smaller.disabled = percent === 70;
+    larger.disabled = percent === 150;
+  }
+  smaller.addEventListener('click', () => update(percent - 10));
+  larger.addEventListener('click', () => update(percent + 10));
+  reset.addEventListener('click', () => update(100));
+  toolbar.hidden = false;
+})();
+</script>
 </body>
 </html>
