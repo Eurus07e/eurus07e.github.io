@@ -282,7 +282,7 @@ button { font: inherit; }
 .article-summary { white-space: pre-line; }
 
 /* Keep the quote marker centered on its content, excluding paragraph margins. */
-.article-body blockquote::before { content: ""; position: absolute; left: 0; top: .25em; bottom: .25em; width: 3px; background: #c4d2df; pointer-events: none; }
+.article-body blockquote::before { content: ""; position: absolute; left: 0; top: 0; bottom: 0; width: 3px; background: #c4d2df; pointer-events: none; }
 .article-body blockquote > :first-child { margin-top: 0; }
 .article-body blockquote > :last-child { margin-bottom: 0; }
 
