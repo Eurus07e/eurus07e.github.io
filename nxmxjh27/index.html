@@ -25,7 +25,7 @@ p, ul, ol { margin: 12px 0; }
 li + li { margin-top: 4px; }
 a { color: inherit; text-underline-offset: 4px; }
 a:hover { color: #936236; }
-blockquote { margin: 14px 0; padding: 0 0 0 20px; border-left: 3px solid #e4d8c1; color: #8b7050; }
+blockquote { margin: 14px 0; position: relative; padding: 0 0 0 20px; border-left: 0; color: #8b7050; }
 blockquote p { margin: 10px 0; }
 .table-scroll { max-width: 100%; margin: 14px 0; }
 table { width: 100%; border-collapse: collapse; font-size: 15px; line-height: 1.5; table-layout: fixed; }
@@ -82,6 +82,42 @@ hr { border: 0; border-top: 1px solid #ded0b8; margin: 32px 0; }
   .reader-zoom button:hover { background: #eae0ce; }
   .reader-zoom button:disabled { opacity: .35; cursor: default; }
 }
+
+/* Keep the quote marker centered on its content, excluding paragraph margins. */
+blockquote::before { content: ""; position: absolute; left: 0; top: .25em; bottom: .25em; width: 3px; background: #e4d8c1; pointer-events: none; }
+blockquote > :first-child { margin-top: 0; }
+blockquote > :last-child { margin-bottom: 0; }
+
+/* Use Times New Roman only for prose digits; retain the surrounding typeface. */
+@font-face {
+  font-family: "Blog Numerals";
+  src: local("Times New Roman"), local("TimesNewRomanPSMT");
+  font-weight: 400;
+  font-style: normal;
+  unicode-range: U+0030-0039;
+}
+@font-face {
+  font-family: "Blog Numerals";
+  src: local("Times New Roman Bold"), local("TimesNewRomanPS-BoldMT");
+  font-weight: 700;
+  font-style: normal;
+  unicode-range: U+0030-0039;
+}
+@font-face {
+  font-family: "Blog Numerals";
+  src: local("Times New Roman Italic"), local("TimesNewRomanPS-ItalicMT");
+  font-weight: 400;
+  font-style: italic;
+  unicode-range: U+0030-0039;
+}
+@font-face {
+  font-family: "Blog Numerals";
+  src: local("Times New Roman Bold Italic"), local("TimesNewRomanPS-BoldItalicMT");
+  font-weight: 700;
+  font-style: italic;
+  unicode-range: U+0030-0039;
+}
+.prose { font-family: "Blog Numerals", "Times New Roman", "Songti SC", "STSong", "Noto Serif CJK SC", "SimSun", serif; }
 </style>
 </head>
 <body>

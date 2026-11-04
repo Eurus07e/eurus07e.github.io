@@ -1,7 +1,7 @@
 {
   "version": 1,
   "sourceRepository": "Eurus07e/personal-website",
-  "sourceCommit": "f41f777a906a2ef66259550cfb167dd8bba411c5",
+  "sourceCommit": "3c44efcbae3923965b55d32ddbb69c0340c7b808",
   "files": {
     ".nojekyll": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
     "assets/downloads/python-for-deep-learning/plot_results.py": "d975ba3ab43d876545bdfc1d4581586411361ec111fbe2a0ff82c7f2f13d8b9a",
@@ -67,8 +67,8 @@
     "fonts/Lato-Regular-LatinExt.woff2": "b85c84c655bcbba3bd628b2c1fea0fbdb5b158a9022281a2f910e82fd6da5098",
     "fonts/OFL.txt": "19e7e97ffc31e58fa0e54919b8189b2ddcc6fd75539f387e2822b107b6a51423",
     "index.html": "769ac3aebf5210abc2b7115d6ceb50b67f53c855eeb8d1a5d6818af643adfa04",
-    "nxmxjh27/index.html": "92541a1477d292ac30b47e2a355dc0d25acfe722621f5b2e8281b5f0753dc94c",
-    "site.css": "2991609cfa9f27d1817fc385c39fa7bb05717ebbe892b113b48e4edd9d6761cf",
+    "nxmxjh27/index.html": "7a7ce0995bade167204b8c2d149fe3c8336b4f4b4fbb06a2bf823f8701dd6431",
+    "site.css": "53ae87bf1fc1479621759e32ba905e51bec0c4a030996b00c4f2df4a0e5243f3",
     "site.js": "eccc671773ee1adfb8f9ec171546752ad5757f231c9aa6e17d9cd18b82127ea5"
   }
 }

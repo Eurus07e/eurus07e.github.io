@@ -240,7 +240,7 @@ button { font: inherit; }
 .article-body ul, .article-body ol { padding-left: 1.5em; }
 .article-body li { margin: .25em 0; }
 .article-body li > ul, .article-body li > ol { margin-top: .35em; }
-.article-body blockquote { border-left: 3px solid #c4d2df; padding: .15em 0 .15em 1em; color: #505c66; }
+.article-body blockquote { position: relative; border-left: 0; padding: 0 0 0 1em; color: #505c66; }
 .article-body img { display: block; max-width: 100%; height: auto; margin: 1.4em auto; }
 .article-body a { text-decoration: underline; text-underline-offset: .18em; -webkit-text-decoration-skip: none; text-decoration-skip-ink: none; }
 .article-body pre { overflow-x: auto; background: #f5f6f7; border: 1px solid #e7e9ea; padding: 14px 16px; border-radius: 4px; font-size: 13px; line-height: 1.5; tab-size: 2; }
@@ -280,3 +280,39 @@ button { font: inherit; }
 
 /* Preserve intentional line breaks in article summaries. */
 .article-summary { white-space: pre-line; }
+
+/* Keep the quote marker centered on its content, excluding paragraph margins. */
+.article-body blockquote::before { content: ""; position: absolute; left: 0; top: .25em; bottom: .25em; width: 3px; background: #c4d2df; pointer-events: none; }
+.article-body blockquote > :first-child { margin-top: 0; }
+.article-body blockquote > :last-child { margin-bottom: 0; }
+
+/* Use Times New Roman only for prose digits; retain the surrounding typeface. */
+@font-face {
+  font-family: "Blog Numerals";
+  src: local("Times New Roman"), local("TimesNewRomanPSMT");
+  font-weight: 400;
+  font-style: normal;
+  unicode-range: U+0030-0039;
+}
+@font-face {
+  font-family: "Blog Numerals";
+  src: local("Times New Roman Bold"), local("TimesNewRomanPS-BoldMT");
+  font-weight: 700;
+  font-style: normal;
+  unicode-range: U+0030-0039;
+}
+@font-face {
+  font-family: "Blog Numerals";
+  src: local("Times New Roman Italic"), local("TimesNewRomanPS-ItalicMT");
+  font-weight: 400;
+  font-style: italic;
+  unicode-range: U+0030-0039;
+}
+@font-face {
+  font-family: "Blog Numerals";
+  src: local("Times New Roman Bold Italic"), local("TimesNewRomanPS-BoldItalicMT");
+  font-weight: 700;
+  font-style: italic;
+  unicode-range: U+0030-0039;
+}
+.article-body { font-family: "Blog Numerals", Georgia, "Songti SC", serif; }
