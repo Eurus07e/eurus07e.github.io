@@ -1,7 +1,7 @@
 {
   "version": 1,
   "sourceRepository": "Eurus07e/personal-website",
-  "sourceCommit": "a08db283ef08ae9afa9c0af0b3e60199f191f9a1",
+  "sourceCommit": "f41f777a906a2ef66259550cfb167dd8bba411c5",
   "files": {
     ".nojekyll": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
     "assets/downloads/python-for-deep-learning/plot_results.py": "d975ba3ab43d876545bdfc1d4581586411361ec111fbe2a0ff82c7f2f13d8b9a",
@@ -29,12 +29,12 @@
     "blog/conditionalprobability/index.html": "53c90b2f4953fc41beb7247c2cc4a4cbfcc9c6019df7d41ba22035f0bb5e690e",
     "blog/derangement-methods/index.html": "85416b5f67ca7eac5028cacdf397a26bcabd696854b885aa50a97ab0772406b3",
     "blog/dl/index.html": "e9652b166ddb15fbe53281b0adc796088041fda408b600ff91439ee16cad39ff",
-    "blog/dsal6review/index.html": "3bea7dadba2216da453b79591c6088c6eae94d5d47f97c8db09480435af2e4b2",
-    "blog/feed.xml": "5556a97c7d6181b7828714d7cd985e3c4a8347216eb053f7ed9f08af00b2a7b1",
+    "blog/dsal5review/index.html": "3b9f36bfeff6f4127f3e9f00d4ebfccf65c239a0a60e87dceff098c85f12a365",
+    "blog/feed.xml": "bd306202d09408dfcd7e9c729c9cc748b9c8f03e4ffd8405cecc43cac0771b10",
     "blog/hanota/index.html": "c2da69686879503c47315560adb53ba9ef7beddd7107cbb18df47dd8d6bd92fe",
     "blog/heap/index.html": "222bb001812472e94c7e6a36a795641d9b764476f99dad3f50c62bff99e13965",
     "blog/hotkeys/index.html": "115b7348f511ce0cb2d37b55471bc5b13aa06c8aa2a20ae29955279308e7e55b",
-    "blog/index.html": "31389cf78ef5036913ea273b96727757942ad1a873eea23cf6642aba0d73a051",
+    "blog/index.html": "ff874372313380484820abde91ae36e065c538964b2dfc68e59bca5d00f4a5e0",
     "blog/kmp/index.html": "43ea2b848e1b10fcebecd7c4e580bede3bd601f960b6c2a98cbbdd75b0fd88d6",
     "blog/logic2p2/index.html": "e7e72b70084dae0921f150558f8bc2883d6a85a362b753d3e4195186638a0dfe",
     "blog/machine-learning-01/index.html": "0a28128d96344f8d6a00d9a3413f6421e985522f7a806e6c7d9e7f300a99b6f5",
@@ -66,7 +66,7 @@
     "fonts/Lato-Regular-Latin.woff2": "d4ae5188a65370ecfe28f42293bbee8297cfd5712c6aadfdb270d48f2bcd88b0",
     "fonts/Lato-Regular-LatinExt.woff2": "b85c84c655bcbba3bd628b2c1fea0fbdb5b158a9022281a2f910e82fd6da5098",
     "fonts/OFL.txt": "19e7e97ffc31e58fa0e54919b8189b2ddcc6fd75539f387e2822b107b6a51423",
-    "index.html": "13e7e38370f1d18bcd4fc59e105348a0cbd8c4ad94c6dae02fb6bec0b3539b41",
+    "index.html": "769ac3aebf5210abc2b7115d6ceb50b67f53c855eeb8d1a5d6818af643adfa04",
     "nxmxjh27/index.html": "92541a1477d292ac30b47e2a355dc0d25acfe722621f5b2e8281b5f0753dc94c",
     "site.css": "2991609cfa9f27d1817fc385c39fa7bb05717ebbe892b113b48e4edd9d6761cf",
     "site.js": "eccc671773ee1adfb8f9ec171546752ad5757f231c9aa6e17d9cd18b82127ea5"
