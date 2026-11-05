@@ -139,30 +139,6 @@ button { font: inherit; }
     cursor: pointer;
   }
   .article-toc-toggle:hover, .article-toc-toggle[aria-expanded="true"] { color: var(--link-hover); background: #f4f6f8; }
-  .article-toc-toggle::after {
-    content: attr(data-tooltip);
-    position: absolute;
-    z-index: 2;
-    left: 50%;
-    bottom: calc(100% + 8px);
-    transform: translateX(-50%) translateY(3px);
-    padding: 6px 9px;
-    border-radius: 5px;
-    background: #303942;
-    color: #fff;
-    font: 12px/1.4 system-ui, sans-serif;
-    white-space: nowrap;
-    pointer-events: none;
-    opacity: 0;
-    visibility: hidden;
-    transition: opacity .15s ease, transform .15s ease, visibility .15s;
-  }
-  .article-toc-toggle:hover::after, .article-toc-toggle:focus-visible::after {
-    opacity: 1;
-    visibility: visible;
-    transform: translateX(-50%);
-    transition-delay: .15s;
-  }
   .article-toc.is-animating ol { overflow: hidden; pointer-events: none; }
   .article-toc.has-icon-toggle:not([open]) { display: none; }
   .article-main > article {
@@ -317,15 +293,16 @@ button { font: inherit; }
 }
 .article-body { font-family: "Blog Numerals", Georgia, "Songti SC", serif; }
 
-.blog-search{display:flex;align-items:center;gap:12px;border:1px solid var(--line);border-radius:8px;padding:10px 12px;margin-bottom:8px;color:#454e57}
-.blog-search[hidden],.search-help[hidden],.search-empty[hidden],.blog-search button[hidden]{display:none}
-.blog-search label{display:flex;flex:none}
+.archive-heading{display:flex;align-items:center;gap:8px;margin:0 0 18px}
+.archive-heading h1{margin:0;font-size:27px;line-height:1.2;font-weight:500}
+.archive-heading .article-find-toggle{margin:0}
+.blog-search{gap:8px}
+.blog-search label{display:flex;flex:none;color:#454e57}
 .search-label{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap}
-.blog-search input{min-width:0;flex:1;width:100%;font:inherit;font-size:16px;color:var(--ink);border:0;background:transparent;outline:none}
-.blog-search:focus-within{outline:2px solid var(--link);outline-offset:2px}
-.blog-search input::-webkit-search-cancel-button{display:none}
-.blog-search button{border:0;background:transparent;color:var(--link);font:inherit;font-size:13px;cursor:pointer;padding:4px}
-.search-help{font-size:13px;color:var(--muted);margin:0 0 20px}
+.blog-search input{flex:1}
+.blog-search button[data-search-clear]{width:auto;padding-inline:6px}
+.blog-search button[hidden],.search-empty[hidden]{display:none}
 .search-empty{padding:24px 0;color:var(--muted)}
 .search-excerpt{overflow-wrap:anywhere}
 .search-excerpt mark{background:#f5dda0;color:#272b2a;border-radius:2px}
+.search-formula-note{display:block;font-size:13px;color:var(--muted);margin-top:4px}

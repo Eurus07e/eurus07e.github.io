@@ -23,7 +23,7 @@ if (articleToc) {
   articleToc.id ||= 'article-outline';
   outlineButton.setAttribute('aria-controls', articleToc.id);
   outlineButton.setAttribute('aria-keyshortcuts', 't');
-  outlineButton.innerHTML = '<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><path d="M9 6h11M9 12h11M9 18h11M4 6h.01M4 12h.01M4 18h.01"/></svg>';
+  outlineButton.innerHTML = '<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" aria-hidden="true"><path d="M9 6h11M9 12h11M9 18h11M4 6h.01M4 12h.01M4 18h.01"/></svg>';
   if (backLink) {
     backLink.after(outlineButton);
     articleToc.classList.add('has-icon-toggle');
@@ -91,7 +91,7 @@ if (articleToc) {
     const label = articleToc.open ? 'Hide table of contents' : 'Show table of contents';
     outlineButton.setAttribute('aria-label', label);
     outlineButton.setAttribute('aria-expanded', String(articleToc.open));
-    outlineButton.dataset.tooltip = `${label} (press T)`;
+    outlineButton.title = `${label} (T)`;
     if (backLink && desktopOutline.matches && !articleToc.open && articleToc.contains(document.activeElement)) {
       outlineButton.focus({ preventScroll: true });
     }
@@ -166,11 +166,31 @@ if (filterButtons.length && resultCount) {
   const input = document.getElementById('blogSearch');
   const clear = document.querySelector('[data-search-clear]');
   const empty = document.querySelector('[data-search-empty]');
-  const index = new Map(JSON.parse(document.getElementById('blogSearchIndex')?.textContent || '[]').map(item => [item.url, item.text]));
+  const index = new Map(JSON.parse(document.getElementById('blogSearchIndex')?.textContent || '[]').map(item => [item.url, item]));
   let category = 'all', timer, composing = false;
-  if (input) {
-    input.closest('.blog-search').hidden = false;
-    document.getElementById('searchHelp').hidden = false;
+  const toggle = document.querySelector('.blog-search-toggle');
+  const panel = document.getElementById('blogSearchPanel');
+  function closeSearch() {
+    clearTimeout(timer);
+    composing = false;
+    input.value = '';
+    updateResults();
+    panel.hidden = true;
+    toggle.setAttribute('aria-expanded', 'false');
+    toggle.focus({preventScroll:true});
+  }
+  if (input && toggle) {
+    toggle.hidden = false;
+    toggle.addEventListener('click', () => {
+      if (!panel.hidden) return closeSearch();
+      panel.hidden = false;
+      toggle.setAttribute('aria-expanded', 'true');
+      input.focus();
+    });
+    document.querySelector('[data-search-close]').addEventListener('click', closeSearch);
+    document.addEventListener('keydown', event => {
+      if (!panel.hidden && event.key === 'Escape' && !event.isComposing) {event.preventDefault(); closeSearch();}
+    });
   }
   function updateResults() {
     clearTimeout(timer);
@@ -178,8 +198,8 @@ if (filterButtons.length && resultCount) {
     const expression = query ? new RegExp(query.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'), 'iu') : null;
     let visible = 0;
     for (const article of articles) {
-      const text = index.get(article.dataset.postUrl) || '';
-      const match = expression?.exec(text);
+      const entry = index.get(article.dataset.postUrl);
+      const match = expression?.exec(entry?.text || '');
       const show = (category === 'all' || article.dataset.postCategory === category) && (!query || !!match);
       article.hidden = !show;
       article.querySelector('.search-excerpt')?.remove();
@@ -188,11 +208,22 @@ if (filterButtons.length && resultCount) {
       if (!show) continue;
       visible++;
       if (match) {
-        const start = Math.max(0, match.index - 65), end = Math.min(text.length, match.index + match[0].length + 120);
+        const text = entry.preview || entry.text;
+        const readableMatch = expression.exec(text);
+        const start = readableMatch ? Math.max(0, readableMatch.index - 65) : 0;
+        const end = readableMatch ? Math.min(text.length, readableMatch.index + readableMatch[0].length + 120) : 160;
         const excerpt = document.createElement('p'), mark = document.createElement('mark');
         excerpt.className = 'search-excerpt';
-        mark.textContent = match[0];
-        excerpt.append((start ? '…' : '') + text.slice(start, match.index), mark, text.slice(match.index + match[0].length, end) + (end < text.length ? '…' : ''));
+        if (readableMatch) {
+          mark.textContent = readableMatch[0];
+          excerpt.append((start ? '…' : '') + text.slice(start, readableMatch.index), mark, text.slice(readableMatch.index + readableMatch[0].length, end) + (end < text.length ? '…' : ''));
+        } else {
+          excerpt.textContent = text.slice(start, end) + '…';
+          const note = document.createElement('span');
+          note.className = 'search-formula-note';
+          note.textContent = 'Match in a formula — open the article to view.';
+          excerpt.append(note);
+        }
         article.querySelector('.archive-copy h2').after(excerpt);
       }
     }
@@ -211,6 +242,5 @@ if (filterButtons.length && resultCount) {
   input?.addEventListener('input', () => { clearTimeout(timer); if (!composing) timer = setTimeout(updateResults, 100); });
   input?.addEventListener('compositionstart', () => { composing = true; clearTimeout(timer); });
   input?.addEventListener('compositionend', () => { composing = false; updateResults(); });
-  input?.addEventListener('keydown', event => { if (event.key === 'Escape' && !event.isComposing) { input.value = ''; updateResults(); } });
   clear?.addEventListener('click', () => { input.value = ''; updateResults(); input.focus(); });
 }
