@@ -111,7 +111,7 @@
     const toggle = doc.createElement('button'); toggle.className = 'article-find-toggle'; toggle.type = 'button'; toggle.innerHTML = icon('search');
     toggle.setAttribute('aria-label', chinese() ? '文内搜索' : 'Find in article'); toggle.title = toggle.getAttribute('aria-label') + ' (⌘ / Ctrl F)';
     toggle.setAttribute('aria-expanded', 'false'); toggle.setAttribute('aria-controls', 'articleFind'); ui.bar.id = 'articleFind'; ui.bar.hidden = true;
-    (doc.querySelector('.article-toc-toggle') || doc.querySelector('.article-main > .back-link') || article.querySelector('.blog-back-link') || article).after(toggle); doc.body.append(ui.bar);
+    (doc.querySelector('.article-main > .back-link') || article.querySelector('.blog-back-link') || article).after(toggle); doc.body.append(ui.bar);
     let index = -1, matchCase = false, timer, composing = false, returnFocus;
     function open() { if (ui.bar.hidden) returnFocus = doc.activeElement; ui.localize(); ui.bar.hidden = false; toggle.setAttribute('aria-expanded', 'true'); refresh(); ui.input.focus(); ui.input.select(); }
     function close() { clearTimeout(timer); timer = null; ui.bar.hidden = true; toggle.setAttribute('aria-expanded', 'false'); engine.clear(); (returnFocus?.isConnected ? returnFocus : toggle).focus({ preventScroll: true }); }

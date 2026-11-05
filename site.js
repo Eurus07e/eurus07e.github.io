@@ -208,22 +208,13 @@ if (filterButtons.length && resultCount) {
       if (!show) continue;
       visible++;
       if (match) {
-        const text = entry.preview || entry.text;
-        const readableMatch = expression.exec(text);
-        const start = readableMatch ? Math.max(0, readableMatch.index - 65) : 0;
-        const end = readableMatch ? Math.min(text.length, readableMatch.index + readableMatch[0].length + 120) : 160;
+        const text = entry.text;
+        const start = Math.max(0, match.index - 65);
+        const end = Math.min(text.length, match.index + match[0].length + 120);
         const excerpt = document.createElement('p'), mark = document.createElement('mark');
         excerpt.className = 'search-excerpt';
-        if (readableMatch) {
-          mark.textContent = readableMatch[0];
-          excerpt.append((start ? '…' : '') + text.slice(start, readableMatch.index), mark, text.slice(readableMatch.index + readableMatch[0].length, end) + (end < text.length ? '…' : ''));
-        } else {
-          excerpt.textContent = text.slice(start, end) + '…';
-          const note = document.createElement('span');
-          note.className = 'search-formula-note';
-          note.textContent = 'Match in a formula — open the article to view.';
-          excerpt.append(note);
-        }
+        mark.textContent = match[0];
+        excerpt.append((start ? '…' : '') + text.slice(start, match.index), mark, text.slice(match.index + match[0].length, end) + (end < text.length ? '…' : ''));
         article.querySelector('.archive-copy h2').after(excerpt);
       }
     }
