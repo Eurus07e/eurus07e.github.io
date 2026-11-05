@@ -2,6 +2,37 @@ const filterButtons = [...document.querySelectorAll('[data-filter]')];
 const articles = [...document.querySelectorAll('[data-post-category]')];
 const resultCount = document.querySelector('[data-result-count]');
 
+// A hidden home-row shortcut, shared by the homepage and blog pages.
+(() => {
+  const sequence = 'asdfghjkl';
+  let progress = 0;
+  let lastKeyAt = 0;
+  const reset = () => { progress = 0; lastKeyAt = 0; };
+
+  document.addEventListener('keydown', (event) => {
+    const target = event.target;
+    if (event.defaultPrevented || event.isComposing || event.keyCode === 229 ||
+        event.ctrlKey || event.metaKey || event.altKey ||
+        target?.isContentEditable || target?.closest?.('input, textarea, select, [role="textbox"]')) {
+      reset();
+      return;
+    }
+    if (event.repeat) return;
+    const now = performance.now();
+    if (now - lastKeyAt > 2000) progress = 0;
+    const key = event.key.toLowerCase();
+    progress = key === sequence[progress] ? progress + 1 : (key === sequence[0] ? 1 : 0);
+    lastKeyAt = now;
+    if (progress === sequence.length) {
+      reset();
+      window.location.assign('https://chromedino.com/');
+    }
+  });
+  document.addEventListener('focusin', reset);
+  document.addEventListener('visibilitychange', reset);
+  window.addEventListener('blur', reset);
+})();
+
 const articleToc = document.querySelector('.article-toc');
 if (articleToc) {
   articleToc.open = false;
