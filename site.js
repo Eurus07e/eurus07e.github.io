@@ -164,10 +164,11 @@ if (articleToc) {
 
 if (filterButtons.length && resultCount) {
   const input = document.getElementById('blogSearch');
-  const clear = document.querySelector('[data-search-clear]');
+  const caseButton = document.querySelector('[data-search-case]');
+  const searchCount = document.querySelector('[data-search-count]');
   const empty = document.querySelector('[data-search-empty]');
   const index = new Map(JSON.parse(document.getElementById('blogSearchIndex')?.textContent || '[]').map(item => [item.url, item]));
-  let category = 'all', timer, composing = false;
+  let category = 'all', timer, composing = false, matchCase = false;
   const toggle = document.querySelector('.blog-search-toggle');
   const panel = document.getElementById('blogSearchPanel');
   function closeSearch() {
@@ -195,7 +196,7 @@ if (filterButtons.length && resultCount) {
   function updateResults() {
     clearTimeout(timer);
     const query = input?.value.trim() || '';
-    const expression = query ? new RegExp(query.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'), 'iu') : null;
+    const expression = query ? new RegExp(query.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'), matchCase ? 'u' : 'iu') : null;
     let visible = 0;
     for (const article of articles) {
       const entry = index.get(article.dataset.postUrl);
@@ -227,11 +228,15 @@ if (filterButtons.length && resultCount) {
       ? `${visible} ${visible === 1 ? 'article' : 'articles'} matching “${query}”${category === 'all' ? '' : ` in ${category}`}`
       : category === 'all' ? `Showing all ${visible} articles` : `Showing ${visible} ${visible === 1 ? 'article' : 'articles'} in ${category}`;
     if (empty) empty.hidden = visible > 0;
-    if (clear) clear.hidden = !input.value;
+    if (searchCount) searchCount.textContent = query ? `${visible} found` : '';
   }
   for (const button of filterButtons) button.addEventListener('click', () => { category = button.dataset.filter; updateResults(); });
   input?.addEventListener('input', () => { clearTimeout(timer); if (!composing) timer = setTimeout(updateResults, 100); });
   input?.addEventListener('compositionstart', () => { composing = true; clearTimeout(timer); });
   input?.addEventListener('compositionend', () => { composing = false; updateResults(); });
-  clear?.addEventListener('click', () => { input.value = ''; updateResults(); input.focus(); });
+  caseButton?.addEventListener('click', () => {
+    matchCase = !matchCase;
+    caseButton.setAttribute('aria-pressed', String(matchCase));
+    updateResults();
+  });
 }

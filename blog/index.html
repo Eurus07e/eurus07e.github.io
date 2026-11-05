@@ -10,8 +10,8 @@
   <meta property="og:title" content="Blog | Yuxuan Shu">
   <meta property="og:description" content="Technical notes and blog articles by Yuxuan Shu.">
   <link rel="canonical" href="https://eurus07e.github.io/blog/"><link rel="alternate" type="application/rss+xml" title="Yuxuan Shu Blog" href="/blog/feed.xml">
-  <link rel="stylesheet" href="/site.css?v=823f06a975ab">
-  <script src="/site.js?v=58769fe7c9b1" defer></script>
+  <link rel="stylesheet" href="/site.css?v=29e2e30ab657">
+  <script src="/site.js?v=edb81f8125cc" defer></script>
   <link rel="stylesheet" href="/assets/blog/article-search.css?v=72b244776ce4">
   <script src="/assets/blog/article-search.js?v=727903603741" defer></script>
   <title>Blog | Yuxuan Shu</title>
@@ -23,11 +23,17 @@
     <nav aria-label="Main navigation"><a href="/">Home</a><span>/</span><a href="/blog/" aria-current="page">Blog</a></nav>
   </header><main id="main" class="archive-main">
     <div class="archive-heading"><h1>Blog</h1><button class="article-find-toggle blog-search-toggle" type="button" aria-label="Search all articles" title="Search all articles" aria-expanded="false" aria-controls="blogSearchPanel" hidden><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5"/><path d="m16 16 5 5"/></svg></button></div>
-    <div class="blog-search article-find-bar" id="blogSearchPanel" role="search" hidden>
-      <label for="blogSearch"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5"/><path d="m16 16 5 5"/></svg><span class="search-label">Search all articles</span></label>
-      <input id="blogSearch" type="search" placeholder="Search titles and full article text…" autocomplete="off" spellcheck="false">
-      <button type="button" data-search-clear hidden>Clear</button>
-      <button type="button" data-search-close aria-label="Close search" title="Close search"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m6 6 12 12M18 6 6 18"/></svg></button>
+    <div class="blog-search article-find-bar" id="blogSearchPanel" role="search" aria-label="Search all articles" hidden>
+      <div class="article-find-field">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5"/><path d="m16 16 5 5"/></svg>
+        <input id="blogSearch" type="search" aria-label="Search all articles" placeholder="Search all articles" autocomplete="off" spellcheck="false">
+        <output data-search-count aria-hidden="true"></output>
+      </div>
+      <div class="article-find-actions">
+        <button type="button" data-search-case aria-pressed="false" aria-label="Match case" title="Match case">Aa</button>
+        <span class="article-find-divider"></span>
+        <button type="button" data-search-close aria-label="Close search" title="Close search"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m6 6 12 12M18 6 6 18"/></svg></button>
+      </div>
     </div>
     <div class="filters" aria-label="Filter articles by topic"><button class="filter-button is-active" type="button" data-filter="all" aria-pressed="true">All <span>37</span></button><button class="filter-button" type="button" data-filter="Algorithms" aria-pressed="false">Algorithms <span>8</span></button><button class="filter-button" type="button" data-filter="common sense" aria-pressed="false">common sense <span>2</span></button><button class="filter-button" type="button" data-filter="Computer Science" aria-pressed="false">Computer Science <span>1</span></button><button class="filter-button" type="button" data-filter="course requirements" aria-pressed="false">course requirements <span>2</span></button><button class="filter-button" type="button" data-filter="Deep Learning" aria-pressed="false">Deep Learning <span>1</span></button><button class="filter-button" type="button" data-filter="Logic and Reasoning" aria-pressed="false">Logic and Reasoning <span>2</span></button><button class="filter-button" type="button" data-filter="Machine Learning" aria-pressed="false">Machine Learning <span>1</span></button><button class="filter-button" type="button" data-filter="Mathematics" aria-pressed="false">Mathematics <span>4</span></button><button class="filter-button" type="button" data-filter="Miscellany" aria-pressed="false">Miscellany <span>2</span></button><button class="filter-button" type="button" data-filter="Probability and Statistics" aria-pressed="false">Probability and Statistics <span>13</span></button><button class="filter-button" type="button" data-filter="南星梦想计划" aria-pressed="false">南星梦想计划 <span>1</span></button></div>
     <p class="result-count" aria-live="polite" data-result-count>Showing all 37 articles</p>

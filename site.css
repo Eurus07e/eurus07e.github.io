@@ -296,12 +296,7 @@ button { font: inherit; }
 .archive-heading{display:flex;align-items:center;gap:8px;margin:0 0 18px}
 .archive-heading h1{margin:0;font-size:27px;line-height:1.2;font-weight:500}
 .archive-heading .article-find-toggle{float:none;margin:0 0 0 auto}
-.blog-search{gap:8px}
-.blog-search label{display:flex;flex:none;color:#454e57}
-.search-label{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap}
-.blog-search input{flex:1}
-.blog-search button[data-search-clear]{width:auto;padding-inline:6px}
-.blog-search button[hidden],.search-empty[hidden]{display:none}
+.search-empty[hidden]{display:none}
 .search-empty{padding:24px 0;color:var(--muted)}
 .search-excerpt{overflow-wrap:anywhere}
 .search-excerpt mark{background:#f5dda0;color:#272b2a;border-radius:2px}
