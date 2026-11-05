@@ -1,7 +1,7 @@
 {
   "version": 1,
   "sourceRepository": "Eurus07e/personal-website",
-  "sourceCommit": "458266f1b6f6b111fbdfa50402d514dd52f54416",
+  "sourceCommit": "1fd8cb07105d1af1f9e4ca6fe490fa64aeb12194",
   "files": {
     ".nojekyll": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
     "assets/downloads/python-for-deep-learning/plot_results.py": "d975ba3ab43d876545bdfc1d4581586411361ec111fbe2a0ff82c7f2f13d8b9a",
@@ -30,12 +30,13 @@
     "blog/derangement-methods/index.html": "becbdd23c32c5a69bfa32d95b8171354d81651d3739b010358219142c0c18e68",
     "blog/dl/index.html": "7db13e14c96af4b1f90539ddfd33a585ae2f6ce17495dd031dca846bb93b8c60",
     "blog/dsa5review/index.html": "8d38a30fac40d20bdebb12ee9bd44b1a04bbd4c7e5e87a7a3df5435e4a815e77",
+    "blog/dsal3review/index.html": "3b5204283145f073517b919e3a7d4e357afb3fcc387fc408a4b2faade99b63fc",
     "blog/dsal5review/index.html": "5c7c87b0cbc469a9fa246daaa25b1114bde3bc3b994a859254970ab13bbebcb9",
-    "blog/feed.xml": "06e8d66700eaa0c102e03a6a2abe3e567eb63e29653b091f195957eacf092447",
+    "blog/feed.xml": "032e1dbbecaa7d5b1f9f72b43ea16ff4b60b497a1781d7bf2ce717ec40b86196",
     "blog/hanota/index.html": "77fd9559e8348de6d4a143bce224dc8186fb505683d65ef812f415705b8c7325",
     "blog/heap/index.html": "70fbb5eda16f125da88d57bca5fbacdfb8b15c1e714060370f82ab86db3f7c79",
     "blog/hotkeys/index.html": "1f28657749cd2d818b5e53ba30e28558c311d5e7538cc2b6df5a19eba3234e28",
-    "blog/index.html": "9217f5cf1c2864383d3e8ab817d543b4b33ac5b767a245e59d4243909f3264a6",
+    "blog/index.html": "480a549950a3fc9cfe38138f0b1ffb47678bbd5f65105e2a306fe5f4e95de652",
     "blog/kmp/index.html": "c86260077b10b0e2518e5885723ea171692fb35172ddbcd767de7ece33629a2b",
     "blog/logic2p2/index.html": "2cbb71322cfd26dbacbd4a50530cabba60eb12355c807bd89d5210bda82d841b",
     "blog/machine-learning-01/index.html": "2f08556bc0c055f5622241d6e16cbb0466f7fcda4cc68bd78825dec563a77007",
@@ -66,7 +67,7 @@
     "fonts/Lato-Regular-Latin.woff2": "d4ae5188a65370ecfe28f42293bbee8297cfd5712c6aadfdb270d48f2bcd88b0",
     "fonts/Lato-Regular-LatinExt.woff2": "b85c84c655bcbba3bd628b2c1fea0fbdb5b158a9022281a2f910e82fd6da5098",
     "fonts/OFL.txt": "19e7e97ffc31e58fa0e54919b8189b2ddcc6fd75539f387e2822b107b6a51423",
-    "index.html": "ff34299a2bb88a10717baf6846de85566261a690246a5f5004fa57e62c9e274e",
+    "index.html": "952411f307ebf14cef5c2f70f1366264810ba072687a622392d5ba63ff89c0b4",
     "nxmxjh27/index.html": "3a105e3b137934293316ecbbb4762b3d611c57d06ba1b6edb6fd0d55ac1ea54e",
     "site.css": "a2e49b9a7dbc921c33c164ca3f661eab321778f2b8d076d567131ce1415593d0",
     "site.js": "eccc671773ee1adfb8f9ec171546752ad5757f231c9aa6e17d9cd18b82127ea5"
