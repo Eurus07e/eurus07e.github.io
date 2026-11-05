@@ -1,0 +1,24 @@
+/* A compact find surface shared by the article reader and Folio. */
+::highlight(article-find){background:#f5dda0;color:#272b2a}
+::highlight(article-find-current){background:#e6a948;color:#1c241f}
+.article-find-rect{position:absolute;pointer-events:none;z-index:8;background:#f5dda0;mix-blend-mode:multiply;border-radius:2px}
+.article-find-rect.current{background:#e6a948}
+.article-find-bar{--find-accent:var(--accent,#315d87);position:fixed;z-index:1100;top:20px;right:24px;display:flex;align-items:center;gap:8px;box-sizing:border-box;width:min(480px,calc(100vw - 32px));padding:8px;background:var(--surface,#fff);border:1px solid var(--line,#dce2e5);border-radius:12px;box-shadow:0 6px 24px #172b3a18;font:14px/1.4 system-ui,-apple-system,sans-serif;color:#303b36}
+.article-find-bar[hidden]{display:none!important}
+.article-find-field{display:flex;align-items:center;gap:8px;min-width:0;flex:1;padding-left:6px}
+.article-find-bar svg,.article-find-toggle svg{display:block;width:18px;height:18px;flex:none;fill:none;stroke:currentColor;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
+.article-find-field>svg{color:#7c8782}
+.article-find-bar input{min-width:30px;width:100%;height:30px;margin:0;padding:3px 0;border:0;outline:0!important;background:transparent;color:inherit;font:inherit;box-shadow:none}
+.article-find-bar input::-webkit-search-cancel-button{display:none}
+.article-find-field:focus-within{box-shadow:0 1px var(--find-accent)}
+.article-find-bar output{flex:none;white-space:nowrap;color:#77827c;font-size:11px;font-variant-numeric:tabular-nums}
+.article-find-actions{display:flex;gap:2px;align-items:center}
+.article-find-bar button,.article-find-toggle{display:inline-flex;justify-content:center;align-items:center;box-sizing:border-box;width:30px;height:30px;padding:5px;border:0;border-radius:5px;background:transparent;color:inherit;cursor:pointer;font:12px/1 system-ui,sans-serif}
+.article-find-bar button:hover,.article-find-toggle:hover{background:#899b9215}
+.article-find-bar button[aria-pressed="true"]{color:var(--find-accent);background:color-mix(in srgb,var(--find-accent) 12%,transparent);font-weight:600}
+.article-find-bar button:disabled{opacity:.3;cursor:default}
+.article-find-bar button:focus-visible,.article-find-toggle:focus-visible{outline:2px solid var(--find-accent);outline-offset:2px}
+.article-find-divider{height:16px;width:1px;background:#dce2e5;margin-inline:3px}
+.article-find-toggle{float:right;width:32px;height:32px;color:var(--link,#315d87);margin-top:-5px}
+@media(max-width:520px){.article-find-bar{right:12px;top:12px;width:calc(100vw - 24px);gap:2px;padding:6px}.article-find-field{gap:5px}.article-find-bar button{width:27px}.article-find-bar input{font-size:16px}}
+@media(prefers-color-scheme:dark){.post-shell~.article-find-toggle{color:inherit}}
