@@ -316,3 +316,16 @@ button { font: inherit; }
   unicode-range: U+0030-0039;
 }
 .article-body { font-family: "Blog Numerals", Georgia, "Songti SC", serif; }
+
+.blog-search{display:flex;align-items:center;gap:12px;border:1px solid var(--line);border-radius:8px;padding:10px 12px;margin-bottom:8px;color:#454e57}
+.blog-search[hidden],.search-help[hidden],.search-empty[hidden],.blog-search button[hidden]{display:none}
+.blog-search label{display:flex;flex:none}
+.search-label{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap}
+.blog-search input{min-width:0;flex:1;width:100%;font:inherit;font-size:16px;color:var(--ink);border:0;background:transparent;outline:none}
+.blog-search:focus-within{outline:2px solid var(--link);outline-offset:2px}
+.blog-search input::-webkit-search-cancel-button{display:none}
+.blog-search button{border:0;background:transparent;color:var(--link);font:inherit;font-size:13px;cursor:pointer;padding:4px}
+.search-help{font-size:13px;color:var(--muted);margin:0 0 20px}
+.search-empty{padding:24px 0;color:var(--muted)}
+.search-excerpt{overflow-wrap:anywhere}
+.search-excerpt mark{background:#f5dda0;color:#272b2a;border-radius:2px}

@@ -162,25 +162,55 @@ if (articleToc) {
   new ResizeObserver(scheduleOutlineUpdate).observe(document.querySelector('.article-main'));
 }
 
-if (filterButtons.length && articles.length && resultCount) {
-  const selectCategory = (category) => {
+if (filterButtons.length && resultCount) {
+  const input = document.getElementById('blogSearch');
+  const clear = document.querySelector('[data-search-clear]');
+  const empty = document.querySelector('[data-search-empty]');
+  const index = new Map(JSON.parse(document.getElementById('blogSearchIndex')?.textContent || '[]').map(item => [item.url, item.text]));
+  let category = 'all', timer, composing = false;
+  if (input) {
+    input.closest('.blog-search').hidden = false;
+    document.getElementById('searchHelp').hidden = false;
+  }
+  function updateResults() {
+    clearTimeout(timer);
+    const query = input?.value.trim() || '';
+    const expression = query ? new RegExp(query.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'), 'iu') : null;
     let visible = 0;
     for (const article of articles) {
-      const match = category === 'all' || article.dataset.postCategory === category;
-      article.hidden = !match;
-      if (match) visible += 1;
+      const text = index.get(article.dataset.postUrl) || '';
+      const match = expression?.exec(text);
+      const show = (category === 'all' || article.dataset.postCategory === category) && (!query || !!match);
+      article.hidden = !show;
+      article.querySelector('.search-excerpt')?.remove();
+      const summary = article.querySelector('.archive-copy > p');
+      if (summary) summary.hidden = !!query;
+      if (!show) continue;
+      visible++;
+      if (match) {
+        const start = Math.max(0, match.index - 65), end = Math.min(text.length, match.index + match[0].length + 120);
+        const excerpt = document.createElement('p'), mark = document.createElement('mark');
+        excerpt.className = 'search-excerpt';
+        mark.textContent = match[0];
+        excerpt.append((start ? '…' : '') + text.slice(start, match.index), mark, text.slice(match.index + match[0].length, end) + (end < text.length ? '…' : ''));
+        article.querySelector('.archive-copy h2').after(excerpt);
+      }
     }
     for (const button of filterButtons) {
       const active = button.dataset.filter === category;
       button.classList.toggle('is-active', active);
       button.setAttribute('aria-pressed', String(active));
     }
-    resultCount.textContent = category === 'all'
-      ? `Showing all ${visible} articles`
-      : `Showing ${visible} ${visible === 1 ? 'article' : 'articles'} in ${category}`;
-  };
-
-  for (const button of filterButtons) {
-    button.addEventListener('click', () => selectCategory(button.dataset.filter));
+    resultCount.textContent = query
+      ? `${visible} ${visible === 1 ? 'article' : 'articles'} matching “${query}”${category === 'all' ? '' : ` in ${category}`}`
+      : category === 'all' ? `Showing all ${visible} articles` : `Showing ${visible} ${visible === 1 ? 'article' : 'articles'} in ${category}`;
+    if (empty) empty.hidden = visible > 0;
+    if (clear) clear.hidden = !input.value;
   }
+  for (const button of filterButtons) button.addEventListener('click', () => { category = button.dataset.filter; updateResults(); });
+  input?.addEventListener('input', () => { clearTimeout(timer); if (!composing) timer = setTimeout(updateResults, 100); });
+  input?.addEventListener('compositionstart', () => { composing = true; clearTimeout(timer); });
+  input?.addEventListener('compositionend', () => { composing = false; updateResults(); });
+  input?.addEventListener('keydown', event => { if (event.key === 'Escape' && !event.isComposing) { input.value = ''; updateResults(); } });
+  clear?.addEventListener('click', () => { input.value = ''; updateResults(); input.focus(); });
 }
