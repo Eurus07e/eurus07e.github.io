@@ -1,5 +1,6 @@
 [hidden]{display:none!important}
-.directory-header{padding:48px 0 28px}
+.page.home-page{width:min(740px,calc(100% - 60px))}
+.directory-header{padding:72px 0 28px}
 .directory-header h1{font-size:32px;font-weight:500;letter-spacing:-.025em;line-height:1.35;margin:0}
 .directory-section{scroll-margin-top:24px;padding-top:22px;margin-bottom:32px}
 .directory-section h2{font-size:23px}
@@ -19,7 +20,7 @@
 .member-reading .article-body details{margin:24px 0}
 .member-reading .article-body summary{cursor:pointer;color:var(--link)}
 @media(max-width:600px){
- .directory-header{padding-top:30px}
+ .directory-header{padding-top:45px}
  .directory-header h1{font-size:27px}
  .directory-section{margin-bottom:28px}
  .resource-row{grid-template-columns:80px minmax(0,1fr);gap:10px}
@@ -71,8 +72,8 @@
 
 /* Desktop directory uses the available width, like a simple course index. */
 @media(min-width:768px){
- .page.home-page{width:calc(100% - 48px);max-width:none}
- .directory-header{padding-top:16px}
+ .page.home-page{width:calc(100% - 72px);max-width:none}
+ .directory-header{padding-top:24px}
 }
 
 /* Only the inline title text is a link, not the rest of its grid column. */
@@ -80,6 +81,8 @@
 .resource-title{display:inline;font-weight:600}
 body{-webkit-font-smoothing:auto}
 .notice-copy,.member-reading .article-body{font-weight:500}
+.title-desktop{display:inline-block;position:relative}
+.opening-quote{position:absolute;right:100%;top:0}
 .title-mobile{display:none}
 @media(max-width:767px){
  .title-desktop{display:none}
