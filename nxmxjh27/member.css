@@ -75,3 +75,9 @@
  .resource-row time{font-size:12px}
  .resource-action{font-size:13px}
 }
+
+/* Desktop directory uses the available width, like a simple course index. */
+@media(min-width:768px){
+ .page.home-page{width:calc(100% - 32px);max-width:none}
+ .directory-header{padding-top:16px}
+}
