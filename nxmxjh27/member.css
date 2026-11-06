@@ -29,7 +29,7 @@
 @media(max-width:420px){
  .resource-row{grid-template-columns:minmax(0,1fr);gap:4px 14px}
  .resource-row time{grid-column:1;grid-row:1}
- .resource-title{grid-column:1;grid-row:2}
+ .resource-copy{grid-column:1;grid-row:2}
 }
 @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
 /* Course-page palette and type hierarchy, within the shared site layout. */
@@ -73,4 +73,15 @@
 @media(min-width:768px){
  .page.home-page{width:calc(100% - 48px);max-width:none}
  .directory-header{padding-top:16px}
+}
+
+/* Only the inline title text is a link, not the rest of its grid column. */
+.resource-copy{min-width:0;overflow-wrap:anywhere;line-height:1.6}
+.resource-title{display:inline;font-weight:600}
+body{-webkit-font-smoothing:auto}
+.notice-copy,.member-reading .article-body{font-weight:500}
+.title-mobile{display:none}
+@media(max-width:767px){
+ .title-desktop{display:none}
+ .title-mobile{display:inline}
 }
