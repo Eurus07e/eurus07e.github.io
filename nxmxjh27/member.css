@@ -4,11 +4,10 @@
 .directory-section{scroll-margin-top:24px;padding-top:22px;margin-bottom:32px}
 .directory-section h2{font-size:23px}
 .resource-list{list-style:none;margin:0;padding:0}
-.resource-row{display:grid;grid-template-columns:90px minmax(0,1fr) auto;align-items:baseline;gap:20px;padding:14px 0}
+.resource-row{display:grid;grid-template-columns:90px minmax(0,1fr);align-items:baseline;gap:20px;padding:14px 0}
 .resource-row:not(:last-child){border-bottom:1px solid var(--soft-line)}
 .resource-row time{color:var(--date);font-size:14px;white-space:nowrap;font-variant-numeric:tabular-nums}
 .resource-title{min-width:0;font-size:17px;font-weight:600;line-height:1.6;overflow-wrap:anywhere}
-.resource-action{grid-column:3;font-size:14px;white-space:nowrap}
 .notice-copy{font-size:16px;line-height:1.75}
 .notice-copy h3{font-size:17px;margin:0 0 10px}
 .notice-copy p:last-child{margin-bottom:0}
@@ -23,16 +22,14 @@
  .directory-header{padding-top:30px}
  .directory-header h1{font-size:27px}
  .directory-section{margin-bottom:28px}
- .resource-row{grid-template-columns:80px minmax(0,1fr) auto;gap:10px}
+ .resource-row{grid-template-columns:80px minmax(0,1fr);gap:10px}
  .resource-row time{font-size:12px}
  .resource-title{font-size:16px}
- .resource-action{font-size:13px}
 }
 @media(max-width:420px){
- .resource-row{grid-template-columns:minmax(0,1fr) auto;gap:4px 14px}
+ .resource-row{grid-template-columns:minmax(0,1fr);gap:4px 14px}
  .resource-row time{grid-column:1;grid-row:1}
  .resource-title{grid-column:1;grid-row:2}
- .resource-action{grid-column:2;grid-row:2;align-self:baseline}
 }
 @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
 /* Course-page palette and type hierarchy, within the shared site layout. */
@@ -44,7 +41,6 @@
 .notice-copy{font-size:17px;line-height:1.65}
 .notice-copy h3{font-size:18px;font-weight:700}
 .resource-title{font-size:17px;line-height:1.6;font-weight:600}
-.resource-action{font-size:16px}
 .resource-row time{font-size:14px}
 .member-reading .article-header h1{color:var(--heading);font-size:30px;font-weight:700;letter-spacing:0}
 .member-reading .article-body{font-size:17px;line-height:1.65}
@@ -54,7 +50,6 @@
  .directory-header h1,.member-reading .article-header h1{font-size:27px}
  .directory-section h2,.member-reading .article-body h2{font-size:22px}
  .notice-copy,.resource-title,.member-reading .article-body{font-size:16px}
- .resource-action{font-size:14px}
  .resource-row time{font-size:12px}
 }
 
@@ -66,18 +61,16 @@
 .notice-copy{font-size:16px}
 .notice-copy h3{font-size:16px}
 .resource-title{font-size:15px;font-weight:500}
-.resource-action{font-size:14px}
 .resource-row time{font-size:13px}
 @media(max-width:600px){
  .directory-header h1{font-size:25px}
  .directory-section h2{font-size:19px}
  .notice-copy,.resource-title{font-size:15px}
  .resource-row time{font-size:12px}
- .resource-action{font-size:13px}
 }
 
 /* Desktop directory uses the available width, like a simple course index. */
 @media(min-width:768px){
- .page.home-page{width:calc(100% - 32px);max-width:none}
+ .page.home-page{width:calc(100% - 48px);max-width:none}
  .directory-header{padding-top:16px}
 }
