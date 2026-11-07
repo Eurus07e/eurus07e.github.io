@@ -92,3 +92,10 @@ body{-webkit-font-smoothing:auto}
 @media(max-width:767px){
  .page.home-page{width:calc(100% - 32px)}
 }
+
+@media(max-width:767px){
+ .page.post-page{width:calc(100% - 32px)}
+ .member-reading .article-main{padding-inline:0}
+ .member-reading .article-body table{display:table;width:100%;max-width:100%;table-layout:fixed;font-size:12px;line-height:1.5}
+ .member-reading .article-body th,.member-reading .article-body td{min-width:0;padding:5px 4px;white-space:normal;overflow-wrap:anywhere;vertical-align:top}
+}
