@@ -88,3 +88,7 @@ body{-webkit-font-smoothing:auto}
  .title-desktop{display:none}
  .title-mobile{display:inline}
 }
+
+@media(max-width:767px){
+ .page.home-page{width:calc(100% - 32px)}
+}
