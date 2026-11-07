@@ -105,3 +105,17 @@ body{-webkit-font-smoothing:auto}
 .member-footer p{margin:0}
 
 @media(max-width:767px){.member-footer{flex-direction:column;align-items:center;text-align:center}}
+
+/* Ship the same serif font and type scale to desktop and mobile. */
+html{-webkit-text-size-adjust:100%;text-size-adjust:100%}
+body{font-family:"Noto Serif SC",serif}
+@media(max-width:600px){
+ .directory-header h1{font-size:27px}
+ .directory-section h2{font-size:20px}
+ .notice-copy{font-size:16px}
+ .resource-title{font-size:15px}
+ .resource-row time{font-size:13px}
+ .member-reading .article-header h1{font-size:30px}
+ .member-reading .article-body{font-size:17px}
+ .member-reading .article-body h2{font-size:24px}
+}
