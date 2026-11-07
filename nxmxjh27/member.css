@@ -121,3 +121,6 @@ body,.notice-copy,.member-reading .article-body{font-family:"Noto Serif SC",seri
 }
 
 @media(max-width:767px){.directory-header{padding-top:20px}}
+
+/* Match the closed desktop outline before its deferred controls initialize. */
+@media(min-width:1200px){.has-outline-script .member-reading .article-toc:not([open]){display:none}}
