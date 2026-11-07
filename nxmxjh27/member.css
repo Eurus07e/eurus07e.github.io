@@ -108,7 +108,7 @@ body{-webkit-font-smoothing:auto}
 
 /* Ship the same serif font and type scale to desktop and mobile. */
 html{scroll-behavior:auto;-webkit-text-size-adjust:100%;text-size-adjust:100%}
-body,.notice-copy,.member-reading .article-body{font-family:"Noto Serif SC",serif}
+body,.notice-copy,.member-reading .article-body{font-family:var(--reader-font,"Noto Serif SC",serif)}
 @media(max-width:600px){
  .directory-header h1{font-size:27px}
  .directory-section h2{font-size:20px}

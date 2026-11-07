@@ -11,6 +11,23 @@
   },{once:true});
   // Keep normal back/forward restoration when leaving this directory entry.
   addEventListener('pagehide',()=>{history.scrollRestoration='auto';},{once:true});
+})();</script><style>.fonts-loading .page{visibility:hidden}.fonts-fallback{--reader-font:Georgia,"Songti SC",serif}</style><script>(()=>{
+  const root=document.documentElement;
+  if(!document.fonts)return;
+  root.classList.add('fonts-loading');
+  let finished=false;
+  const finish=fallback=>{
+    if(finished)return;
+    finished=true;
+    clearTimeout(timeout);
+    if(fallback)root.classList.add('fonts-fallback');
+    root.classList.remove('fonts-loading');
+  };
+  // On a failed or very slow connection, show readable text and keep that font.
+  const timeout=setTimeout(()=>finish(true),2500);
+  addEventListener('load',()=>{
+    document.fonts.ready.then(()=>finish([...document.fonts].some(f=>f.family.includes('Noto Serif SC')&&f.status==='error')),()=>finish(true));
+  },{once:true});
 })();</script><link rel="icon" href="data:,"><link rel="preload" href="fonts/noto-serif-sc-100.woff2" as="font" type="font/woff2" crossorigin><link rel="preload" href="fonts/noto-serif-sc-096.woff2" as="font" type="font/woff2" crossorigin><link rel="preload" href="fonts/noto-serif-sc-095.woff2" as="font" type="font/woff2" crossorigin><link rel="preload" href="fonts/noto-serif-sc-094.woff2" as="font" type="font/woff2" crossorigin><title>团队资料目录 · 南星梦想计划</title><link rel="stylesheet" href="site.css"><link rel="stylesheet" href="reader-font.css"><link rel="stylesheet" href="member.css"></head><body class=""><a class="skip-link" href="#main">跳转到正文</a><div class="page home-page"><main id="main"><header class="directory-header"><h1><span class="title-desktop"><span class="opening-quote">“</span>南星梦想计划” 暨 2027 年千名优秀学子回访中学母校活动</span><span class="title-mobile">南星梦想计划</span></h1></header>
 <section id="notification" class="content-section directory-section"><h2>Notification</h2><div class="article-body notice-copy"><p>2027 年 &quot;南星梦想计划&quot; 活动通知已放在 <strong>Info</strong>，可直接下载或查看~</p>
 <p>关于原创物料设计的一些经验和提示，大家可以参考这篇 <a href="https://mp.weixin.qq.com/s/53wrgMEFQt095eCsZWPlMQ?clicktag=bar_share&amp;scene=294&amp;clickpos=935&amp;from_safari=0">推文</a> 。工作安排请查看 <strong>Work List</strong> 中的团队工作清单。<br>
