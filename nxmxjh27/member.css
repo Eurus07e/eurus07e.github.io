@@ -20,7 +20,7 @@
 .member-reading .article-body details{margin:24px 0}
 .member-reading .article-body summary{cursor:pointer;color:var(--link)}
 @media(max-width:600px){
- .directory-header{padding-top:45px}
+ .directory-header{padding-top:24px}
  .directory-header h1{font-size:27px}
  .directory-section{margin-bottom:28px}
  .resource-row{grid-template-columns:80px minmax(0,1fr);gap:10px}
@@ -108,7 +108,7 @@ body{-webkit-font-smoothing:auto}
 
 /* Ship the same serif font and type scale to desktop and mobile. */
 html{-webkit-text-size-adjust:100%;text-size-adjust:100%}
-body{font-family:"Noto Serif SC",serif}
+body,.notice-copy,.member-reading .article-body{font-family:"Noto Serif SC",serif}
 @media(max-width:600px){
  .directory-header h1{font-size:27px}
  .directory-section h2{font-size:20px}
@@ -119,3 +119,5 @@ body{font-family:"Noto Serif SC",serif}
  .member-reading .article-body{font-size:17px}
  .member-reading .article-body h2{font-size:24px}
 }
+
+@media(max-width:767px){.directory-header{padding-top:20px}}
