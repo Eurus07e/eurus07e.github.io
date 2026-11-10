@@ -1,7 +1,7 @@
 {
   "version": 1,
   "sourceRepository": "Eurus07e/personal-website",
-  "sourceCommit": "976b5296bc7bf52ab7b32b16ee64f7daf0e1a46a",
+  "sourceCommit": "194defb5e0b3b865c28bb98db619a18f90d99247",
   "files": {
     ".nojekyll": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
     "assets/blog/article-search.css": "72b244776ce44558c9d149eca91375fea7b837a7af33dac73524db7f3f69f138",
@@ -79,11 +79,15 @@
     "nxmxjh27/fonts/Lato-Regular-Latin.woff2": "d4ae5188a65370ecfe28f42293bbee8297cfd5712c6aadfdb270d48f2bcd88b0",
     "nxmxjh27/fonts/Lato-Regular-LatinExt.woff2": "b85c84c655bcbba3bd628b2c1fea0fbdb5b158a9022281a2f910e82fd6da5098",
     "nxmxjh27/fonts/OFL.txt": "19e7e97ffc31e58fa0e54919b8189b2ddcc6fd75539f387e2822b107b6a51423",
-    "nxmxjh27/index.html": "c528ad81429cecd335cde02ba93755724823bd61a5bf696c9b201295452854c1",
-    "nxmxjh27/member.css": "bd94339d1ee96f15c4b6f9c7c0eec4f43524631e07ea70f3f6cadd154f61220e",
+    "nxmxjh27/icons/apple-touch-icon.png": "fe34ad4af6f117b25adb1160a0552f176d6effb4da95bf921db1425c8a36a4fe",
+    "nxmxjh27/icons/favicon-32.png": "d0a234b582ecf9ed70461bd9a15ca8645ee247941add78463e760f1d7c0ecc3d",
+    "nxmxjh27/icons/favicon.svg": "bfee25826d1c217ce84f364e59cb454851d5e727e64542c8fc9dd8717557c686",
+    "nxmxjh27/icons/logo.svg": "0e74c2881a879017863f7c7c1440ef1ddfb738130a8635fe16aeaf3e5a76f70b",
+    "nxmxjh27/index.html": "cf44f28c1ea017ed59cc8a71fc15f1f2d7e0c09aac08eb7346e2e105b102ef5c",
+    "nxmxjh27/member.css": "9f9e356f372cfb95fde51e30cde8ff1d5d233b15696481c08d3abf1274f39d0e",
     "nxmxjh27/outline.js": "c773365ea536e0d8587663802e22965b0eefe5c861e53047f56c298fa798af97",
     "nxmxjh27/site.css": "29e2e30ab6575facec7e10ec29e8b1fe8ca3325e9b5a2ffd1448213611aa285b",
-    "nxmxjh27/work-list/index.html": "d3f28b7e2044e3eff41dda6cb40861cf43d85f1dd01df701d8549323ae4f983a",
+    "nxmxjh27/work-list/index.html": "30fade6085d2d4b576635c20e534c33d597994466f3a12223a228b4cba3dd757",
     "site.css": "29e2e30ab6575facec7e10ec29e8b1fe8ca3325e9b5a2ffd1448213611aa285b",
     "site.js": "0304bef1948f19520638817a969670cbbd69fd3f81b47d9bcbbc121cd2658e73"
   }

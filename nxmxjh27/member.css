@@ -14,7 +14,7 @@
 .notice-copy p:last-child{margin-bottom:0}
 .member-reading .article-toc{z-index:1}
 .member-reading .article-body h2{scroll-margin-top:28px}
-.member-reading .article-body table{width:100%}
+.member-reading .article-body table{display:table;width:100%;margin-inline:auto}
 .member-reading .article-body td{min-width:80px}
 .member-reading .article-body th{white-space:nowrap}
 .member-reading .article-body details{margin:24px 0}
@@ -34,8 +34,8 @@
 }
 @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
 /* Course-page palette and type hierarchy, within the shared site layout. */
-:root{--ink:#111;--muted:#666;--line:#aaa;--soft-line:#e2e4e6;--link:#28558c;--link-hover:#173c6a;--date:#666;--heading:#527bbd}
-:root[data-member-accent="purple"]{--link:#75429b;--link-hover:#532b72;--heading:#8357ae}
+:root{--ink:#111;--muted:#666;--line:#aaa;--soft-line:#e2e4e6;--link:#75429b;--link-hover:#532b72;--date:#666;--heading:#8357ae}
+:root[data-member-accent="blue"]{--link:#28558c;--link-hover:#173c6a;--heading:#527bbd}
 .directory-header{padding-bottom:22px}
 .directory-header h1{color:var(--heading);font-size:30px;font-weight:700;letter-spacing:0;padding-bottom:10px;border-bottom:1px solid var(--line)}
 .directory-section{border-top:0;padding-top:8px;margin-bottom:28px}
@@ -125,3 +125,6 @@ body,.notice-copy,.member-reading .article-body{font-family:Georgia,"Songti SC",
 
 /* Match the closed desktop outline before its deferred controls initialize. */
 @media(min-width:1200px){.has-outline-script .member-reading .article-toc:not([open]){display:none}}
+
+/* Center every work-list cell, including Markdown's inline alignment styles. */
+.member-reading .article-body th,.member-reading .article-body td{text-align:center!important;vertical-align:middle}
