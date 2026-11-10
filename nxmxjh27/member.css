@@ -35,6 +35,7 @@
 @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
 /* Course-page palette and type hierarchy, within the shared site layout. */
 :root{--ink:#111;--muted:#666;--line:#aaa;--soft-line:#e2e4e6;--link:#28558c;--link-hover:#173c6a;--date:#666;--heading:#527bbd}
+:root[data-member-accent="purple"]{--link:#75429b;--link-hover:#532b72;--heading:#8357ae}
 .directory-header{padding-bottom:22px}
 .directory-header h1{color:var(--heading);font-size:30px;font-weight:700;letter-spacing:0;padding-bottom:10px;border-bottom:1px solid var(--line)}
 .directory-section{border-top:0;padding-top:8px;margin-bottom:28px}
@@ -106,9 +107,9 @@ body{-webkit-font-smoothing:auto}
 
 @media(max-width:767px){.member-footer{flex-direction:column;align-items:center;text-align:center}}
 
-/* Ship the same serif font and type scale to desktop and mobile. */
+/* Prefer installed Song/Ming serif faces; the browser supplies any missing glyphs. */
 html{scroll-behavior:auto;-webkit-text-size-adjust:100%;text-size-adjust:100%}
-body,.notice-copy,.member-reading .article-body{font-family:var(--reader-font,"Noto Serif SC",serif)}
+body,.notice-copy,.member-reading .article-body{font-family:Georgia,"Songti SC","STSong","SimSun","Noto Serif CJK SC","Noto Serif SC","Source Han Serif SC",serif}
 @media(max-width:600px){
  .directory-header h1{font-size:27px}
  .directory-section h2{font-size:20px}

@@ -1,21 +1,19 @@
-<!doctype html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="noindex,nofollow"><meta name="color-scheme" content="light"><style>.fonts-loading .page{visibility:hidden}.fonts-fallback{--reader-font:Georgia,"Songti SC",serif}</style><script>(()=>{
+<!doctype html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="noindex,nofollow"><meta name="color-scheme" content="light"><script>(()=>{
   const root=document.documentElement;
-  if(!document.fonts)return;
-  root.classList.add('fonts-loading');
-  let finished=false;
-  const finish=fallback=>{
-    if(finished)return;
-    finished=true;
-    clearTimeout(timeout);
-    if(fallback)root.classList.add('fonts-fallback');
-    root.classList.remove('fonts-loading');
-  };
-  // On a failed or very slow connection, show readable text and keep that font.
-  const timeout=setTimeout(()=>finish(true),2500);
-  addEventListener('load',()=>{
-    document.fonts.ready.then(()=>finish([...document.fonts].some(f=>f.family.includes('Noto Serif SC')&&f.status==='error')),()=>finish(true));
-  },{once:true});
-})();</script><link rel="icon" href="data:,"><link rel="preload" href="../fonts/noto-serif-sc-100.woff2" as="font" type="font/woff2" crossorigin><link rel="preload" href="../fonts/noto-serif-sc-096.woff2" as="font" type="font/woff2" crossorigin><link rel="preload" href="../fonts/noto-serif-sc-095.woff2" as="font" type="font/woff2" crossorigin><link rel="preload" href="../fonts/noto-serif-sc-094.woff2" as="font" type="font/woff2" crossorigin><title>团队工作清单 · 南星梦想计划</title><link rel="stylesheet" href="../site.css"><link rel="stylesheet" href="../reader-font.css"><link rel="stylesheet" href="../member.css"><script>document.documentElement.classList.add("has-outline-script")</script><script src="../outline.js" defer></script></head><body class="member-reading"><a class="skip-link" href="#main">跳转到正文</a><div class="page post-page"><main id="main" class="article-main"><a class="back-link" href="../">← 返回目录</a><article lang="zh-CN"><header class="article-header"><h1>江苏省大丰高级中学团队 Work List</h1><p class="article-meta"><time datetime="2026-10-29">2026.10.29</time></p></header><details class="article-toc"><summary>本页目录</summary><ol><li class=""><a href="#一-工作清单">（一）工作清单</a></li><li class="subheading"><a href="#一-返乡前-南星准备时-2026-年-11-月-2027-年-1-月">一、返乡前（ “南星准备时” ）（2026 年 11 月 - 2027 年 1 月）</a></li><li class="subheading"><a href="#二-宣讲中-2027-年-1-月-2-月">二、宣讲中（2027 年 1 月 - 2 月）</a></li><li class="subheading"><a href="#三-宣讲后-2027-年-2-月">三、宣讲后（2027 年 2 月）</a></li><li class="subheading"><a href="#四-开学后-2027-年-3-月">四、开学后（2027 年 3 月）</a></li><li class="subheading"><a href="#大致分工-暂定">大致分工（暂定）</a></li></ol></details><div class="article-body"><blockquote>
+  const storageKey='nanxing-accent';
+  const apply=value=>{root.dataset.memberAccent=value==='purple'?'purple':'blue';};
+  apply('blue');
+  try{apply(localStorage.getItem(storageKey));}catch{}
+  document.addEventListener('keydown',event=>{
+    if(event.defaultPrevented||event.isComposing||event.repeat||event.ctrlKey||event.metaKey||event.altKey||event.shiftKey)return;
+    if(event.target instanceof Element&&event.target.closest('input,textarea,select,[contenteditable]:not([contenteditable="false"]),[role="textbox"]'))return;
+    const key=event.key.toLowerCase();
+    if(key!=='b'&&key!=='p')return;
+    const accent=key==='p'?'purple':'blue';
+    apply(accent);
+    try{localStorage.setItem(storageKey,accent);}catch{}
+  });
+})();</script><link rel="icon" href="data:,"><title>团队工作清单 · 南星梦想计划</title><link rel="stylesheet" href="../site.css"><link rel="stylesheet" href="../member.css"><script>document.documentElement.classList.add("has-outline-script")</script><script src="../outline.js" defer></script></head><body class="member-reading"><a class="skip-link" href="#main">跳转到正文</a><div class="page post-page"><main id="main" class="article-main"><a class="back-link" href="../">← 返回目录</a><article lang="zh-CN"><header class="article-header"><h1>江苏省大丰高级中学团队 Work List</h1><p class="article-meta"><time datetime="2026-10-29">2026.10.29</time></p></header><details class="article-toc"><summary>本页目录</summary><ol><li class=""><a href="#一-工作清单">（一）工作清单</a></li><li class="subheading"><a href="#一-返乡前-南星准备时-2026-年-11-月-2027-年-1-月">一、返乡前（ “南星准备时” ）（2026 年 11 月 - 2027 年 1 月）</a></li><li class="subheading"><a href="#二-宣讲中-2027-年-1-月-2-月">二、宣讲中（2027 年 1 月 - 2 月）</a></li><li class="subheading"><a href="#三-宣讲后-2027-年-2-月">三、宣讲后（2027 年 2 月）</a></li><li class="subheading"><a href="#四-开学后-2027-年-3-月">四、开学后（2027 年 3 月）</a></li><li class="subheading"><a href="#大致分工-暂定">大致分工（暂定）</a></li></ol></details><div class="article-body"><blockquote>
 <p>Last Update 2026.11.7</p>
 </blockquote>
 <h2 id="一-工作清单">（一）工作清单</h2>
@@ -303,4 +301,4 @@
 <p>队长额外负责撰写与提交各类材料、设计队旗、设计与采买定制物料、申请报销、领取电子材料、完成 “创燃星图” 等活动, etc.</p>
 </li>
 </ul>
-</div></article><p class="article-end"><a href="../">← 返回目录</a></p></main><footer class="member-footer"><p>Last modified: <time datetime="2026-11-07">2026-11-07</time></p><p>© 2026 Yuxuan Shu</p></footer></div></body></html>
+</div></article><p class="article-end"><a href="../">← 返回目录</a></p></main><footer class="member-footer"><p>Last modified: <time datetime="2026-11-10">2026-11-10</time></p><p>© 2026 Yuxuan Shu</p></footer></div></body></html>
