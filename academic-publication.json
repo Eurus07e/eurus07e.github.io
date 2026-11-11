@@ -1,7 +1,7 @@
 {
   "version": 1,
   "sourceRepository": "Eurus07e/personal-website",
-  "sourceCommit": "aea0ee13de8a8a2767d397b144cdf7b69672f389",
+  "sourceCommit": "5a15258bb63517028382a2e898760a37acd8efe1",
   "files": {
     ".nojekyll": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
     "assets/blog/article-search.css": "72b244776ce44558c9d149eca91375fea7b837a7af33dac73524db7f3f69f138",
@@ -38,12 +38,12 @@
     "blog/hanota/index.html": "6aa6cf8f8705fa63a142eb00d54233ae1b92394d597129bd5aabb4a07223b526",
     "blog/heap/index.html": "a59e2f2edea2a0f392c85879863208588c70de70723a28931307706fb40d6d93",
     "blog/hotkeys/index.html": "1f1917e5aaab2129c01160f0ad9275eba25ea46456ecc590e499042e87c77de3",
-    "blog/index.html": "23bb7d731abd5bed39cfcc48a29e0b04c7c30fd909dd98ad539b72a56948a0ae",
+    "blog/index.html": "d432a02b9a0cd6411704b6621b935dea9f9318dfde87d5a8139a59f34f90de91",
     "blog/justincase/index.html": "244504ba40173de933590d7a666dc9427ccf8dc69284f929610225c53847c3bf",
     "blog/kmp/index.html": "c3201310c6496b40b5feeef8b2901bcd6a02184cfad9aa38b73541ea65ade8f8",
     "blog/logic2p2/index.html": "c42f5305a059b0910bad34f88144612041837fe56f32a2de4885c1644a6742a0",
     "blog/machine-learning-01/index.html": "99421d4700d9c64d67ff84f83a84bce0566d91cec403ab688517b0e568d2dc2e",
-    "blog/markov/index.html": "0357a919f5f2488e772d69df1fbb5c04efed0b04ba7dfff6f8ede8f4d700e01d",
+    "blog/markov/index.html": "571f8b4f71ff887aaf6e8ff7fe7fe5549898c0e1d3fe1964addb7dea98e9c1b2",
     "blog/newthoughts/index.html": "7e6f0bd2dd401cb432f10d62de5102320db968322061769ce7e67b70d7420884",
     "blog/nju-jokes/index.html": "739714788aa59e69f0db5d6ae8395f57b34ddf871dbcb011d7ef5fb065a95fea",
     "blog/ps-00-introduction/index.html": "865f7f1645ba2fb564bf63cf4631a34cae25a31e0d7a7217c45eee385443b94b",
