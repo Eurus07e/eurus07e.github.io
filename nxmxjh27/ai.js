@@ -47,6 +47,7 @@
     };
   }
   let target = 0, progress = 0, raf = 0, lastDraw = 0;
+  let glowStarted = 0;
   let motion = null, geometry, previousOverflow = '', previousGutter = '', previousTitle = '';
   let bodyLock = null, rootLock = null;
   let previousFocus = null, historyOwned = false, returnURL = '', gl, program, uniforms;
@@ -76,7 +77,7 @@
       const fragment = compile(gl.FRAGMENT_SHADER, `
         precision highp float;
         uniform vec2 resolution, viewport, origin;
-        uniform float radius, progress, time, intensity;
+        uniform float radius, progress, time, intensity, glow;
         const float PI = 3.14159265359;
         vec3 spectrum(float t) {
           vec3 blue=vec3(.22,.57,1.);
@@ -117,7 +118,7 @@
           vec3 edgeColor=spectrum(edgePhase);
           float breathing=.88+.12*sin(time*.8);
           float perimeter=(gaussian(edge-1.2,1.6)*.64+gaussian(edge,12.)*.19+gaussian(edge,30.)*.035+cornerFill)*breathing;
-          perimeter*=smoothstep(.62,.82,progress)*(1.-smoothstep(.84,1.,progress));
+          perimeter*=smoothstep(.62,.82,progress)*glow;
           float alpha=(wave+perimeter)*intensity;
           vec3 combined=(color*wave+edgeColor*perimeter)/max(wave+perimeter,.0001);
           gl_FragColor=vec4(combined,min(alpha,.92));
@@ -130,7 +131,7 @@
       gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([-1,-1,1,-1,-1,1,-1,1,1,-1,1,1]), gl.STATIC_DRAW);
       const position = gl.getAttribLocation(program, 'position');
       gl.enableVertexAttribArray(position); gl.vertexAttribPointer(position, 2, gl.FLOAT, false, 0, 0);
-      uniforms = Object.fromEntries(['resolution','viewport','origin','radius','progress','time','intensity'].map(key => [key, gl.getUniformLocation(program,key)]));
+      uniforms = Object.fromEntries(['resolution','viewport','origin','radius','progress','time','intensity','glow'].map(key => [key, gl.getUniformLocation(program,key)]));
       dialog.classList.remove('nx-ai-no-webgl');
     } catch {
       gl = null; dialog.classList.add('nx-ai-no-webgl');
@@ -198,6 +199,7 @@
     if (!geometry) return;
     const {x,y,width,height,radius} = geometry;
     const travel=buttonTravel(progress);
+    const glow=glowStarted ? 1-smooth(1500,1850,now-glowStarted) : 1;
     const r = 18 / width + radius * travel;
     const rx = r * width, ry = r * height;
     surface.style.clipPath = progress >= 1 ? 'none' : `ellipse(${rx}px ${ry}px at ${x}px ${y}px)`;
@@ -213,9 +215,12 @@
       gl.uniform1f(uniforms.progress,travel);
       gl.uniform1f(uniforms.time,reduced.matches ? 0 : (now-started)/1000);
       gl.uniform1f(uniforms.intensity,reduced.matches ? .45 : 1);
+      gl.uniform1f(uniforms.glow,glow);
       gl.drawArrays(gl.TRIANGLES,0,6);
     } else {
-      Object.assign(fallback.style, {width:`${rx*2+30}px`,height:`${ry*2+30}px`,left:`${x-rx-15}px`,top:`${y-ry-15}px`,opacity: String(.65*(1-smooth(.85,1,travel)))});
+      fallback.classList.toggle('nx-ai-perimeter',progress===1);
+      if(progress===1)Object.assign(fallback.style,{width:'100%',height:'100%',left:'0',top:'0',opacity:String(.65*glow)});
+      else Object.assign(fallback.style, {width:`${rx*2+30}px`,height:`${ry*2+30}px`,left:`${x-rx-15}px`,top:`${y-ry-15}px`,opacity: String(.65*(1-smooth(.85,1,travel)))});
     }
   }
   function finishClose() {
@@ -228,7 +233,7 @@
         window.scrollTo({top:bodyLock.scrollY,left:bodyLock.scrollX,behavior:'instant'});
       bodyLock=null;
     }
-    dialog.classList.remove('nx-ai-settled','nx-ai-keyboard');
+    dialog.classList.remove('nx-ai-settled','nx-ai-keyboard','nx-ai-glow-finished');glowStarted=0;
     editingStarted=false;layoutHeight=0;layoutTop=0;
     cancelAnimationFrame(keyboardFrame);cancelAnimationFrame(sizeFrame);
     clearTimeout(touchEndTimer);touchScroll=false;touchPoint=null;
@@ -249,12 +254,13 @@
       progress=clamp((2*t3-3*t2+1)*motion.from+(t3-2*t2+t)*motion.velocity*motion.duration+(-2*t3+3*t2)*motion.to);
       if (t === 1) {
         progress=motion.to; motion=null;
-        if(target)dialog.classList.add('nx-ai-settled');
+        if(target){dialog.classList.add('nx-ai-settled');glowStarted=now;}
         if (!target) { render(now); finishClose(); return; }
       }
     }
     render(now); lastDraw=now;
-    if (motion) raf=requestAnimationFrame(frame);
+    if(glowStarted && now-glowStarted>=1850)dialog.classList.add('nx-ai-glow-finished');
+    if (motion || (target && glowStarted && now-glowStarted<1850)) raf=requestAnimationFrame(frame);
   }
   function startFrame() { if (!raf) raf=requestAnimationFrame(frame); }
   function velocityAt(now) {
@@ -267,7 +273,7 @@
     if (target === next && (dialog.open || !next)) return;
     const now = performance.now();
     let velocity = velocityAt(now);
-    target = next;
+    target = next;glowStarted=0;dialog.classList.remove('nx-ai-glow-finished');
     toggle.setAttribute('aria-expanded',String(open));
     toggle.setAttribute('aria-label',open?'关闭南星 AI':'打开南星 AI');
     if (open && !dialog.open) {
@@ -296,7 +302,7 @@
     }
     if (!open) { dialog.classList.remove('nx-ai-settled');resetConversation(); input.blur(); }
     if (reduced.matches) {
-      progress=target; motion=null;dialog.classList.toggle('nx-ai-settled',Boolean(target)); render(now);
+      progress=target; motion=null;dialog.classList.toggle('nx-ai-settled',Boolean(target));dialog.classList.toggle('nx-ai-glow-finished',Boolean(target)); render(now);
       if (!target) finishClose();
       return;
     }

@@ -159,7 +159,9 @@
 /* Scrollable without visible rails; text selection and touch scrolling stay native. */
 .nx-ai, .nx-ai-messages, .nx-ai textarea { scrollbar-width:none; }
 .nx-ai::-webkit-scrollbar, .nx-ai-messages::-webkit-scrollbar, .nx-ai textarea::-webkit-scrollbar { display:none; width:0; height:0; }
-.nx-ai-settled .nx-ai-light, .nx-ai-settled .nx-ai-fallback { visibility:hidden; }
+.nx-ai-glow-finished .nx-ai-light, .nx-ai-glow-finished .nx-ai-fallback { visibility:hidden; }
+.nx-ai-fallback.nx-ai-perimeter { border-radius:0; -webkit-mask:none; mask:none; filter:blur(3px); }
+.nx-ai-fallback.nx-ai-perimeter::after { content:""; position:absolute; inset:3px; border-radius:15px; background:#fcfcfd; }
 @media (pointer:coarse) {
   .nx-ai-copy { width:44px; height:40px; margin-left:-7px; }
   .nx-ai-retry { min-height:40px;padding-inline:6px; }
