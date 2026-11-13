@@ -72,7 +72,8 @@ button { font: inherit; }
 .content-section p { margin: 0 0 10px; }
 .news-list { margin: 0 0 2px; padding-left: 20px; }
 .news-list li { margin: 3px 0; padding-left: 0; }
-.news-date { color: var(--date); font-size: 15px; font-weight: 600; white-space: nowrap; }
+.news-date { color: var(--date); font-size: 15px; font-weight: 600; white-space: nowrap; font-variant-numeric: tabular-nums; }
+.news-date > span { display: inline-block; width: 6.4ch; text-align: center; }
 .writing-list, .archive-list { list-style: none; padding: 0; margin: 0; }
 .writing-entry { display: grid; grid-template-columns: 115px minmax(0, 1fr) auto; gap: 11px; align-items: baseline; padding: 8px 0; border-bottom: 1px solid var(--soft-line); }
 .writing-entry .date { color: var(--date); font-size: 15px; font-weight: 600; }
