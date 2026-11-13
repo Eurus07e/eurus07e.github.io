@@ -5,7 +5,7 @@
 }
 .directory-header h1 { padding-right: 76px; }
 .nx-ai-toggle {
-  position: fixed; top: var(--nx-ai-top); right: var(--nx-ai-right); z-index: 30;
+  position: fixed; top: calc(var(--nx-ai-top) + var(--nx-visual-top, 0px)); right: var(--nx-ai-right); z-index: 30;
   width: 40px; height: 40px; padding: 0; border: 1px solid #e7e5ec; border-radius: 50%;
   display: grid; place-items: center; background: #fffffff2; color: #4d4659;
   box-shadow: 0 2px 10px #3b285908, inset 0 1px 0 #fff;
@@ -28,6 +28,7 @@
   -webkit-font-smoothing: antialiased; overscroll-behavior: none;
 }
 .nx-ai::backdrop { background: transparent; }
+.nx-ai.nx-ai-settled, .nx-ai.nx-ai-settled::backdrop { background:#fcfcfd; }
 .nx-ai *, .nx-ai *::before, .nx-ai *::after { box-sizing: border-box; }
 .nx-ai-surface {
   position: absolute; inset: 0; background: #fcfcfd;
@@ -38,7 +39,7 @@
   background: radial-gradient(ellipse at 100% 0%, #c6c0f217, transparent 42%), radial-gradient(ellipse at 0% 100%, #bddafa13, transparent 40%);
 }
 .nx-ai-main {
-  position: absolute; inset: 0; width: min(660px, calc(100% - 48px)); height: var(--nx-view-height, 100%);
+  position: absolute; inset: 0 0 auto; width: min(660px, calc(100% - 48px)); height: var(--nx-view-height, 100%);
   margin-inline: auto; display: flex; flex-direction: column; justify-content: center;
   padding: 88px 0 110px; opacity: 0; transform: translateY(14px);
 }
@@ -47,14 +48,14 @@
 .nx-ai-welcome h1 { position: relative; display: inline-block; margin: 0; color: #35313c; font: 500 clamp(25px, 3vw, 31px)/1.5 -apple-system, BlinkMacSystemFont, "PingFang SC", sans-serif; letter-spacing: -.6px; }
 .nx-ai-period { position: absolute; left: 100%; top: 0; }
 .nx-ai-composer {
-  position: relative; flex-shrink: 0; width: 100%; min-height: 116px; margin: 0; padding: 19px 20px 52px;
+  position: relative; flex-shrink: 0; width: 100%; min-height: 116px; cursor: text; margin: 0; padding: 19px 20px 52px;
   border: 1px solid #e5e3ea; border-radius: 24px; background: #fff;
   box-shadow: 0 8px 32px #28203605, 0 2px 5px #28203603;
   transition: border-color .3s, box-shadow .3s;
 }
 .nx-ai-composer:focus-within { border-color: #c9bfde; box-shadow: 0 8px 35px #6d4fa00a, 0 0 0 3px #aa88dd07; }
 .nx-ai textarea {
-  display: block; width: 100%; height: 27px; min-height: 27px; max-height: 144px; padding: 0; margin: 0;
+  display: block; width: 100%; height: 27px; min-height: 27px; max-height: var(--nx-input-max, 144px); padding: 0; margin: 0;
   border: 0; border-radius: 0; outline: none; resize: none; background: transparent; color: #35313d;
   font: 16px/1.7 -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", sans-serif;
   scrollbar-width: thin;
@@ -138,3 +139,11 @@
 .nx-ai-send.is-generating { background:#594b67; }
 @keyframes nx-ai-pulse { 50% { opacity:.3; transform:scale(.8); } }
 @media(prefers-reduced-motion:reduce) { .nx-ai-message.is-pending .nx-ai-message-body::after { animation:none; } }
+
+/* The composer belongs to the visible viewport, not the keyboard-covered layout viewport. */
+.nx-ai.nx-ai-keyboard .nx-ai-main { justify-content:flex-end; padding-top:64px; padding-bottom:12px; }
+.nx-ai.nx-ai-keyboard .nx-ai-welcome { display:none; }
+.nx-ai.nx-ai-keyboard .nx-ai-composer { min-height:100px; }
+.nx-ai.nx-ai-keyboard .nx-ai-messages { padding-top:12px; padding-bottom:18px; }
+
+.nx-ai-no-webgl.nx-ai-settled::after { content:'';position:absolute;inset:0;pointer-events:none;border:2px solid transparent;border-image:linear-gradient(135deg,#78baff,#ac82ee,#ef98c6,#ffbc8c) 1;box-shadow:inset 0 0 18px #c0a1ec35; }

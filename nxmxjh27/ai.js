@@ -48,8 +48,10 @@
   }
   let target = 0, progress = 0, raf = 0, lastDraw = 0;
   let motion = null, geometry, previousOverflow = '', previousGutter = '', previousTitle = '';
+  let bodyLock = null;
   let previousFocus = null, historyOwned = false, returnURL = '', gl, program, uniforms;
   let started = performance.now();
+  let keyboardFrame = 0;
 
   // A single distance field keeps the fine highlight, spectral bloom and reveal
   // on the same wavefront. No scaled bitmap rings or screen-size blur filters.
@@ -99,12 +101,13 @@
           float bloom=gaussian(dist,34.)*.23 + gaussian(dist+17.,65.)*.085;
           float ribbon=gaussian(dist,7.)*.36 + gaussian(dist-1.,1.6)*.35;
           float wave=(bloom+ribbon)*smoothstep(0.,.035,progress)*(1.-smoothstep(.88,1.,progress));
-          vec2 q=abs(p-viewport*.5)-(viewport*.5-vec2(17.));
-          float edge=-(length(max(q,0.))+min(max(q.x,q.y),0.)-17.);
+          vec2 corner=min(p,viewport-p);
+          float edge=min(corner.x,corner.y);
+          float cornerGlow=exp(-dot(corner,corner)/450.)*.26;
           float edgePhase=atan(p.y-viewport.y*.5,p.x-viewport.x*.5)/(2.*PI)+time*.04;
           vec3 edgeColor=spectrum(edgePhase);
           float breathing=.88+.12*sin(time*.8);
-          float perimeter=(gaussian(edge-1.2,1.6)*.64+gaussian(edge,12.)*.19+gaussian(edge,30.)*.035)*breathing;
+          float perimeter=(gaussian(edge-1.2,1.6)*.64+gaussian(edge,12.)*.19+gaussian(edge,30.)*.035+cornerGlow)*breathing;
           perimeter*=smoothstep(.62,1.,progress);
           float alpha=(wave+perimeter)*intensity;
           vec3 combined=(color*wave+edgeColor*perimeter)/max(wave+perimeter,.0001);
@@ -133,8 +136,30 @@
     const scale = Math.min(devicePixelRatio || 1, 1.5, Math.sqrt(1400000 / (width * height)));
     canvas.width = Math.round(width * scale); canvas.height = Math.round(height * scale);
     if (gl) gl.viewport(0,0,canvas.width,canvas.height);
-    main.style.setProperty('--nx-view-height', `${Math.min(height, window.visualViewport?.height || height)}px`);
+    layoutVisibleViewport();
     render(performance.now());
+  }
+  function layoutVisibleViewport() {
+    if(!dialog.open)return;
+    const viewport=window.visualViewport;
+    const height=Math.min(dialog.clientHeight,viewport?.height || innerHeight);
+    const top=viewport?.offsetTop || 0;
+    const keyboard=touch.matches && document.activeElement===input && height < dialog.clientHeight-120;
+    dialog.classList.toggle('nx-ai-keyboard',keyboard);
+    dialog.style.setProperty('--nx-visual-top',`${top}px`);
+    main.style.top=`${top}px`;
+    main.style.setProperty('--nx-view-height',`${height}px`);
+    main.style.setProperty('--nx-input-max',`${Math.max(54,Math.min(144,height*.25))}px`);
+    // iOS can pan the visual viewport to focus a fixed textarea. Follow that
+    // viewport (including its offset), rather than scrolling the page to it.
+    if(keyboard) {
+      input.style.height='27px';
+      input.style.height=Math.min(input.scrollHeight,Math.max(54,Math.min(144,height*.25)))+'px';
+    }
+  }
+  function scheduleViewportLayout() {
+    cancelAnimationFrame(keyboardFrame);
+    keyboardFrame=requestAnimationFrame(layoutVisibleViewport);
   }
   const clamp = value => Math.max(0,Math.min(1,value));
   const smooth = (a,b,value) => { const p=clamp((value-a)/(b-a)); return p*p*(3-2*p); };
@@ -164,6 +189,13 @@
   function finishClose() {
     dialog.close(); anchor.after(toggle);
     document.body.style.overflow = previousOverflow;
+    if(bodyLock){
+      for(const [key,value] of Object.entries(bodyLock.styles))document.body.style[key]=value;
+      window.scrollTo({top:bodyLock.scrollY,left:bodyLock.scrollX,behavior:'instant'});
+      bodyLock=null;
+    }
+    dialog.classList.remove('nx-ai-settled','nx-ai-keyboard');
+    dialog.style.removeProperty('--nx-visual-top');
     document.documentElement.style.scrollbarGutter = previousGutter;
     document.title = previousTitle;
     resetConversation(); input.value = ''; resizeInput();
@@ -180,6 +212,7 @@
       progress=clamp((2*t3-3*t2+1)*motion.from+(t3-2*t2+t)*motion.velocity*motion.duration+(-2*t3+3*t2)*motion.to);
       if (t === 1) {
         progress=motion.to; motion=null;
+        if(target)dialog.classList.add('nx-ai-settled');
         if (!target) { render(now); finishClose(); return; }
       }
     }
@@ -207,6 +240,8 @@
       previousTitle=document.title;
       document.documentElement.style.scrollbarGutter='stable';
       document.body.style.overflow='hidden';
+      bodyLock={scrollY:window.scrollY,scrollX:window.scrollX,styles:Object.fromEntries(['position','top','left','width'].map(key=>[key,document.body.style[key]]))};
+      Object.assign(document.body.style,{position:'fixed',top:`${-bodyLock.scrollY}px`,left:`${-bodyLock.scrollX}px`,width:'100%'});
       main.inert=true;
       dialog.append(toggle); dialog.showModal();
       toggle.focus({preventScroll:true});
@@ -215,9 +250,9 @@
       measure();
       velocity=.0038;
     }
-    if (!open) { resetConversation(); input.blur(); }
+    if (!open) { dialog.classList.remove('nx-ai-settled');resetConversation(); input.blur(); }
     if (reduced.matches) {
-      progress=target; motion=null; render(now);
+      progress=target; motion=null;dialog.classList.toggle('nx-ai-settled',Boolean(target)); render(now);
       if (!target) finishClose();
       return;
     }
@@ -252,11 +287,14 @@
   });
   window.addEventListener('popstate',()=>{historyOwned=location.hash==='#ai' && history.state?.nanxingAI===true;setOpen(location.hash==='#ai');});
   window.addEventListener('resize',()=>{if(dialog.open)measure();});
-  window.visualViewport?.addEventListener('resize',()=>{if(dialog.open)measure();});
+  window.visualViewport?.addEventListener('resize',scheduleViewportLayout);
+  window.visualViewport?.addEventListener('scroll',scheduleViewportLayout);
+  input.addEventListener('focus',scheduleViewportLayout);
+  input.addEventListener('blur',scheduleViewportLayout);
   document.addEventListener('visibilitychange',()=>{if(!document.hidden && dialog.open)startFrame();});
   reduced.addEventListener('change',()=>{
     if (!dialog.open) return;
-    if(reduced.matches){progress=target;motion=null;render(performance.now());if(!target)finishClose();}
+    if(reduced.matches){progress=target;motion=null;dialog.classList.toggle('nx-ai-settled',Boolean(target));render(performance.now());if(!target)finishClose();}
     else startFrame();
   });
   canvas.addEventListener('webglcontextlost',event=>{event.preventDefault();gl=null;dialog.classList.add('nx-ai-no-webgl');});
@@ -267,7 +305,8 @@
     send.setAttribute('aria-label',activeRequest?'停止生成':'发送消息');
     send.innerHTML=activeRequest?stopMarkup:arrowMarkup;
     send.classList.toggle('is-generating',Boolean(activeRequest));
-    input.style.height='27px';input.style.height=Math.min(input.scrollHeight || 27,144)+'px';
+    const maxHeight=parseFloat(main.style.getPropertyValue('--nx-input-max')) || 144;
+    input.style.height='27px';input.style.height=Math.min(input.scrollHeight || 27,maxHeight)+'px';
   }
   function resetConversation() {
     generation++;activeRequest?.abort();activeRequest=null;conversation=[];
@@ -275,6 +314,10 @@
     dialog.classList.remove('has-conversation');resizeInput();
   }
   input.addEventListener('input',resizeInput);
+  form.addEventListener('click',event=>{
+    if(event.target.closest('button,a,textarea'))return;
+    input.focus({preventScroll:true});
+  });
   function addMessage(text,who) {
     const row=document.createElement('div');row.className=`nx-ai-message nx-ai-message-${who}`;
     const body=document.createElement('div');body.className='nx-ai-message-body';body.textContent=text;
