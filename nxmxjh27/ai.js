@@ -10,7 +10,7 @@
   toggle.setAttribute('aria-expanded', 'false');
   toggle.innerHTML = `<span class="nx-ai-open-icon" aria-hidden="true">${star('nx-entry-gradient')}</span><span class="nx-ai-close-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="m6 6 12 12M18 6 6 18"/></svg></span>`;
   const anchor = document.createComment('nanxing-ai-entry');
-  document.body.append(anchor, toggle);
+  (document.querySelector('.directory-header h1') || document.body).append(anchor, toggle);
 
   const dialog = document.createElement('dialog');
   dialog.id = 'nx-ai';
@@ -29,6 +29,7 @@
   const reduced = matchMedia('(prefers-reduced-motion: reduce)');
   const touch = matchMedia('(pointer: coarse)');
   const endpoint = document.querySelector('meta[name="nanxing-ai-endpoint"]')?.content || '';
+  const themeColor = document.querySelector('meta[name="theme-color"]');
   const arrowMarkup = send.innerHTML;
   const stopMarkup = '<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><rect x="7" y="7" width="10" height="10" rx="2"/></svg>';
   let conversation = [], activeRequest = null, generation = 0;
@@ -48,7 +49,7 @@
   }
   let target = 0, progress = 0, raf = 0, lastDraw = 0;
   let glowStarted = 0;
-  let motion = null, geometry, previousOverflow = '', previousGutter = '', previousTitle = '';
+  let motion = null, geometry, previousOverflow = '', previousGutter = '', previousTitle = '', previousThemeColor = '';
   let bodyLock = null, rootLock = null;
   let previousFocus = null, historyOwned = false, returnURL = '', gl, program, uniforms;
   let started = performance.now();
@@ -109,15 +110,12 @@
           float bloom=gaussian(dist,34.)*.23 + gaussian(dist+17.,65.)*.085;
           float ribbon=gaussian(dist,7.)*.36 + gaussian(dist-1.,1.6)*.35;
           float wave=(bloom+ribbon)*smoothstep(0.,.035,progress)*(1.-smoothstep(.88,1.,progress));
-          vec2 q=abs(p-viewport*.5)-(viewport*.5-vec2(17.));
-          float edge=-(length(max(q,0.))+min(max(q.x,q.y),0.)-17.);
-          // Keep the rounded inner light contour; fill only the outside
-          // corner wedges with its spectrum instead of exposing white.
-          float cornerFill=(1.-smoothstep(-1.,.8,edge))*.9;
+          // Follow the viewport edges rather than drawing a rounded card.
+          float edge=min(min(p.x,viewport.x-p.x),min(p.y,viewport.y-p.y));
           float edgePhase=atan(p.y-viewport.y*.5,p.x-viewport.x*.5)/(2.*PI)+time*.04;
           vec3 edgeColor=spectrum(edgePhase);
           float breathing=.88+.12*sin(time*.8);
-          float perimeter=(gaussian(edge-1.2,1.6)*.64+gaussian(edge,12.)*.19+gaussian(edge,30.)*.035+cornerFill)*breathing;
+          float perimeter=(gaussian(edge-1.2,1.6)*.64+gaussian(edge,12.)*.19+gaussian(edge,30.)*.035)*breathing;
           perimeter*=smoothstep(.62,.82,progress)*glow;
           float alpha=(wave+perimeter)*intensity;
           vec3 combined=(color*wave+edgeColor*perimeter)/max(wave+perimeter,.0001);
@@ -228,7 +226,8 @@
   }
   function finishClose() {
     dialog.close(); anchor.after(toggle);
-    document.documentElement.classList.remove('nx-ai-active');
+    document.documentElement.classList.remove('nx-ai-active','nx-ai-open');
+    if(themeColor)themeColor.content=previousThemeColor;
     document.body.style.overflow = previousOverflow;
     if(rootLock){Object.assign(document.documentElement.style,rootLock);rootLock=null;}
     if(bodyLock){
@@ -288,7 +287,10 @@
       previousOverflow=document.body.style.overflow;
       previousGutter=document.documentElement.style.scrollbarGutter;
       previousTitle=document.title;
-      document.documentElement.style.scrollbarGutter='stable';
+      previousThemeColor=themeColor?.content || '';
+      document.documentElement.classList.add('nx-ai-open');
+      if(themeColor)themeColor.content=getComputedStyle(document.documentElement).getPropertyValue('--nx-ai-background').trim();
+      document.documentElement.style.scrollbarGutter='auto';
       document.body.style.overflow='hidden';
       rootLock={overflow:document.documentElement.style.overflow,overscrollBehavior:document.documentElement.style.overscrollBehavior};
       Object.assign(document.documentElement.style,{overflow:'hidden',overscrollBehavior:'none'});
@@ -302,7 +304,14 @@
       measure();
       velocity=.0038;
     }
-    if (!open) { document.documentElement.classList.remove('nx-ai-active');dialog.classList.remove('nx-ai-settled');resetConversation(); input.blur(); }
+    if (!open) {
+      document.documentElement.classList.remove('nx-ai-active');
+      dialog.classList.remove('nx-ai-settled');
+      // Freeze the current conversation during the closing reveal. Clear its
+      // DOM only in finishClose(), once the dialog is no longer visible.
+      generation++; activeRequest?.abort(); activeRequest=null;
+      input.blur();
+    }
     if (reduced.matches) {
       progress=target; motion=null;dialog.classList.toggle('nx-ai-settled',Boolean(target));dialog.classList.toggle('nx-ai-glow-finished',Boolean(target));document.documentElement.classList.toggle('nx-ai-active',Boolean(target)); render(now);
       if (!target) finishClose();

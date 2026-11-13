@@ -1,9 +1,21 @@
 /* The entry and exit share one physical button, including in the top layer. */
 :root {
+  --nx-ai-background: #fcfcfd;
+  --nx-directory-gutter: 36px;
   --nx-ai-right: max(24px, env(safe-area-inset-right));
   --nx-ai-top: max(20px, env(safe-area-inset-top));
 }
-.directory-header h1 { padding-right: 76px; }
+/* Let the background reach the display edges; inset only readable content. */
+.page.home-page {
+  width:calc(100% - max(var(--nx-directory-gutter), env(safe-area-inset-left)) - max(var(--nx-directory-gutter), env(safe-area-inset-right)));
+  padding-top:env(safe-area-inset-top, 0px); padding-bottom:env(safe-area-inset-bottom, 0px);
+}
+@media (max-width:767px) { :root { --nx-directory-gutter:16px; } }
+html.nx-ai-open, html.nx-ai-open > body { background:var(--nx-ai-background); scrollbar-width:none; }
+html.nx-ai-open::-webkit-scrollbar, html.nx-ai-open > body::-webkit-scrollbar { display:none; }
+.directory-header h1 { display:flex; align-items:center; gap:16px; }
+.directory-header h1 > :is(.title-desktop, .title-mobile) { flex:1; min-width:0; }
+.directory-header h1 > .nx-ai-toggle { position:static; flex-shrink:0; }
 .nx-ai-toggle {
   position: fixed; top: calc(var(--nx-ai-top) + var(--nx-visual-top, 0px)); right: var(--nx-ai-right); z-index: 30;
   width: 40px; height: 40px; padding: 0; border: 1px solid #e7e5ec; border-radius: 50%;
@@ -23,17 +35,17 @@
 .nx-ai-toggle[aria-expanded="true"] .nx-ai-close-icon { opacity: 1; transform: rotate(0) scale(1); }
 .nx-ai {
   position: absolute; inset: auto; top:0; left:0; width: 100%; height: 100%; max-width: none; max-height: none;
-  margin: 0; padding: 0; border: 0; overflow: hidden; background: transparent;
+  margin: 0; padding: 0; border: 0; border-radius: 0; box-shadow:none; overflow: hidden; background: transparent;
   color: #29272e; font: 15px/1.65 -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", sans-serif;
   -webkit-font-smoothing: antialiased; overscroll-behavior: none;
 }
 .nx-ai::backdrop { background: transparent; }
 html.nx-ai-active > body > .page { visibility:hidden; }
 .nx-ai > .nx-ai-toggle { position:absolute; top:var(--nx-ai-top); }
-.nx-ai.nx-ai-settled, .nx-ai.nx-ai-settled::backdrop { background:#fcfcfd; }
+.nx-ai.nx-ai-settled, .nx-ai.nx-ai-settled::backdrop { background:var(--nx-ai-background); }
 .nx-ai *, .nx-ai *::before, .nx-ai *::after { box-sizing: border-box; }
 .nx-ai-surface {
-  position: absolute; inset: 0; background: #fcfcfd;
+  position: absolute; inset: 0; background: var(--nx-ai-background);
   clip-path: circle(0 at 100% 0); will-change: clip-path;
 }
 .nx-ai-surface::before {
@@ -74,7 +86,7 @@ html.nx-ai-active > body > .page { visibility:hidden; }
 .nx-ai-send:not(:disabled):hover { background: #69547f; transform: translateY(-1px); }
 .nx-ai-send:focus-visible { outline: 2px solid #9b7acb; outline-offset: 4px; }
 .nx-ai-messages { display: none; min-height: 0; overflow-y: auto; overscroll-behavior: contain; scrollbar-width: none; -webkit-overflow-scrolling: touch; overflow-anchor: none; padding: 20px 4px 24px; touch-action: pan-y; }
-.nx-ai.has-conversation .nx-ai-main { justify-content: flex-end; padding-top: 92px; padding-bottom: max(28px, env(safe-area-inset-bottom)); }
+.nx-ai.has-conversation .nx-ai-main { justify-content: flex-end; padding-top: env(safe-area-inset-top, 0px); padding-bottom: max(28px, env(safe-area-inset-bottom)); }
 .nx-ai.has-conversation .nx-ai-welcome { display: none; }
 .nx-ai.has-conversation .nx-ai-messages { display: flex; flex: 1; flex-direction: column; gap: 28px; }
 .nx-ai-message { margin: 0; max-width: 88%; white-space: pre-wrap; overflow-wrap: anywhere; flex-shrink: 0; }
@@ -93,7 +105,7 @@ html.nx-ai-active > body > .page { visibility:hidden; }
 @media (max-width: 767px), (pointer: coarse) {
   :root { --nx-ai-top: max(16px, env(safe-area-inset-top)); --nx-ai-right: max(16px, env(safe-area-inset-right)); }
   .directory-header { min-height: 78px; }
-  .directory-header h1 { padding-right: 62px; font-size: clamp(20px, 6.25vw, 27px); }
+  .directory-header h1 { font-size: clamp(20px, 6.25vw, 27px); }
   .nx-ai-toggle { width: 38px; height: 38px; }
   .nx-ai-main { width: calc(min(100%, var(--nx-view-width, 100vw)) - max(16px, env(safe-area-inset-left)) - max(16px, env(safe-area-inset-right))); left: var(--nx-visual-left, 0px); right: auto; margin-left:max(16px, env(safe-area-inset-left)); padding:calc(64px + env(safe-area-inset-top)) 0 max(12px, env(safe-area-inset-bottom)); justify-content:flex-end; }
   .nx-ai-welcome { flex:1; display:flex; flex-direction:column; align-items:center; justify-content:center; padding-bottom:36px; }
@@ -104,7 +116,7 @@ html.nx-ai-active > body > .page { visibility:hidden; }
   .nx-ai-welcome h1 { font-size: 26px; }
   .nx-ai-symbol { width: 37px; height: 37px; margin-bottom: 22px; }
   
-  .nx-ai.has-conversation .nx-ai-main { padding-top:calc(64px + env(safe-area-inset-top)); padding-bottom:max(12px, env(safe-area-inset-bottom)); }
+  .nx-ai.has-conversation .nx-ai-main { padding-top:env(safe-area-inset-top, 0px); padding-bottom:max(12px, env(safe-area-inset-bottom)); }
 }
 @media (max-height: 520px) {
   .nx-ai-main { padding-top: 65px; padding-bottom: 22px; }
@@ -163,7 +175,7 @@ html.nx-ai-active > body > .page { visibility:hidden; }
 .nx-ai::-webkit-scrollbar, .nx-ai-messages::-webkit-scrollbar, .nx-ai textarea::-webkit-scrollbar { display:none; width:0; height:0; }
 .nx-ai-glow-finished .nx-ai-light, .nx-ai-glow-finished .nx-ai-fallback { visibility:hidden; }
 .nx-ai-fallback.nx-ai-perimeter { border-radius:0; -webkit-mask:none; mask:none; filter:blur(3px); }
-.nx-ai-fallback.nx-ai-perimeter::after { content:""; position:absolute; inset:3px; border-radius:15px; background:#fcfcfd; }
+.nx-ai-fallback.nx-ai-perimeter::after { content:""; position:absolute; inset:3px; background:var(--nx-ai-background); }
 @media (pointer:coarse) {
   .nx-ai-copy { width:44px; height:40px; margin-left:-7px; }
   .nx-ai-retry { min-height:40px;padding-inline:6px; }
@@ -191,3 +203,10 @@ html.nx-ai-active > body > .page { visibility:hidden; }
 }
 
 @media (pointer:coarse) { .nx-ai.nx-ai-keyboard .nx-ai-suggestions { display:none; } }
+
+/* The exit control shares the conversation's top edge, without a header row.
+   On narrow screens, keep the scrolling text beside its hit target. */
+.nx-ai.has-conversation .nx-ai-main { padding-top:env(safe-area-inset-top, 0px); }
+@media (max-width:820px) {
+  .nx-ai.has-conversation .nx-ai-messages { padding-right:56px; }
+}
