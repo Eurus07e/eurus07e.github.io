@@ -138,15 +138,18 @@
     }
   }
   function measure() {
-    const rect = toggle.getBoundingClientRect();
-    const x = rect.x + rect.width / 2, y = rect.y + rect.height / 2;
+    layoutVisibleViewport();
+    const rect = toggle.getBoundingClientRect(), bounds=dialog.getBoundingClientRect();
+    const x = rect.x-bounds.x + rect.width / 2, y = rect.y-bounds.y + rect.height / 2;
     const width = dialog.clientWidth || innerWidth, height = dialog.clientHeight || innerHeight;
     geometry = {x, y, width, height, radius: Math.hypot(Math.max(x,width-x)/width, Math.max(y,height-y)/height) + .08};
     // Cap fill rate on high-DPI phones and large displays without softening the UI.
     const scale = Math.min(devicePixelRatio || 1, 1.5, Math.sqrt(1400000 / (width * height)));
-    canvas.width = Math.round(width * scale); canvas.height = Math.round(height * scale);
-    if (gl) gl.viewport(0,0,canvas.width,canvas.height);
-    layoutVisibleViewport();
+    const pixelWidth=Math.round(width*scale),pixelHeight=Math.round(height*scale);
+    if(canvas.width!==pixelWidth || canvas.height!==pixelHeight){
+      canvas.width=pixelWidth;canvas.height=pixelHeight;
+      if(gl)gl.viewport(0,0,pixelWidth,pixelHeight);
+    }
     render(performance.now());
   }
   function isNearLatest() {
@@ -165,10 +168,11 @@
   function layoutVisibleViewport() {
     if(!dialog.open)return;
     const viewport=window.visualViewport;
-    // Pin to visualViewport, accounting for iOS focus-panning and zoom. The
-    // surface's own offset matters when the browser moves fixed top-layer UI.
+    // One coordinate system for the entire top-layer dialog. An absolute
+    // dialog uses document coordinates, so visualViewport.pageTop/pageLeft
+    // locate it without feeding a moving fixed element's rect back into itself.
     const height=Math.round(viewport?.height || innerHeight);
-    const top=Math.max(0,Math.round((viewport?.offsetTop || 0)-surface.getBoundingClientRect().top));
+    const top=Math.max(0,Math.round(viewport?.pageTop ?? window.scrollY));
     const width=viewport?.width || innerWidth;
     const orientationChanged=Math.abs(innerWidth-viewportBaseline.width)>80;
     if(orientationChanged)viewportBaseline={width:innerWidth,height:Math.max(innerHeight,dialog.clientHeight)};
@@ -177,9 +181,8 @@
     const previousKeyboard=dialog.classList.contains('nx-ai-keyboard');
     const changed=Math.abs(layoutHeight-height)>1 || Math.abs(layoutTop-top)>1 || keyboard!==previousKeyboard;
     dialog.classList.toggle('nx-ai-keyboard',keyboard);
-    dialog.style.setProperty('--nx-visual-top',`${top}px`);
-    dialog.style.setProperty('--nx-visual-left',`${viewport?.offsetLeft || 0}px`);
-    main.style.top=`${top}px`;
+    Object.assign(dialog.style,{top:`${top}px`,left:`${viewport?.pageLeft ?? window.scrollX}px`,width:`${width}px`,height:`${height}px`});
+    main.style.top='0px';
     main.style.setProperty('--nx-view-height',`${height}px`);
     main.style.setProperty('--nx-view-width',`${width}px`);
     const maxInput=28*Math.max(2,Math.min(5,Math.floor(height*.25/28)));
@@ -191,7 +194,7 @@
   }
   function scheduleViewportLayout() {
     cancelAnimationFrame(keyboardFrame);
-    keyboardFrame=requestAnimationFrame(layoutVisibleViewport);
+    keyboardFrame=requestAnimationFrame(measure);
   }
   const clamp = value => Math.max(0,Math.min(1,value));
   const smooth = (a,b,value) => { const p=clamp((value-a)/(b-a)); return p*p*(3-2*p); };
@@ -199,7 +202,7 @@
     if (!geometry) return;
     const {x,y,width,height,radius} = geometry;
     const travel=buttonTravel(progress);
-    const glow=glowStarted ? 1-smooth(1500,1850,now-glowStarted) : 1;
+    const glow=glowStarted ? 1-smooth(500,1000,now-glowStarted) : 1;
     const r = 18 / width + radius * travel;
     const rx = r * width, ry = r * height;
     surface.style.clipPath = progress >= 1 ? 'none' : `ellipse(${rx}px ${ry}px at ${x}px ${y}px)`;
@@ -225,6 +228,7 @@
   }
   function finishClose() {
     dialog.close(); anchor.after(toggle);
+    document.documentElement.classList.remove('nx-ai-active');
     document.body.style.overflow = previousOverflow;
     if(rootLock){Object.assign(document.documentElement.style,rootLock);rootLock=null;}
     if(bodyLock){
@@ -254,13 +258,13 @@
       progress=clamp((2*t3-3*t2+1)*motion.from+(t3-2*t2+t)*motion.velocity*motion.duration+(-2*t3+3*t2)*motion.to);
       if (t === 1) {
         progress=motion.to; motion=null;
-        if(target){dialog.classList.add('nx-ai-settled');glowStarted=now;}
+        if(target){dialog.classList.add('nx-ai-settled');document.documentElement.classList.add('nx-ai-active');glowStarted=now;}
         if (!target) { render(now); finishClose(); return; }
       }
     }
     render(now); lastDraw=now;
-    if(glowStarted && now-glowStarted>=1850)dialog.classList.add('nx-ai-glow-finished');
-    if (motion || (target && glowStarted && now-glowStarted<1850)) raf=requestAnimationFrame(frame);
+    if(glowStarted && now-glowStarted>=1000)dialog.classList.add('nx-ai-glow-finished');
+    if (motion || (target && glowStarted && now-glowStarted<1000)) raf=requestAnimationFrame(frame);
   }
   function startFrame() { if (!raf) raf=requestAnimationFrame(frame); }
   function velocityAt(now) {
@@ -288,10 +292,8 @@
       document.body.style.overflow='hidden';
       rootLock={overflow:document.documentElement.style.overflow,overscrollBehavior:document.documentElement.style.overscrollBehavior};
       Object.assign(document.documentElement.style,{overflow:'hidden',overscrollBehavior:'none'});
-      // Keep the mobile document in flow: fixing body collapses its scroll
-      // range and makes Safari expand its browser bars when the modal opens.
-      // Modal inertness, root overflow and the touch boundary guard lock it.
-      if(!touch.matches)Object.assign(document.body.style,{position:'fixed',top:`${-bodyLock.scrollY}px`,left:`${-bodyLock.scrollX}px`,width:'100%'});
+      // Lock the document independently of the keyboard viewport.
+      Object.assign(document.body.style,{position:'fixed',top:`${-bodyLock.scrollY}px`,left:`${-bodyLock.scrollX}px`,width:'100%'});
       main.inert=true;
       dialog.append(toggle); dialog.showModal();
       toggle.focus({preventScroll:true});
@@ -300,9 +302,9 @@
       measure();
       velocity=.0038;
     }
-    if (!open) { dialog.classList.remove('nx-ai-settled');resetConversation(); input.blur(); }
+    if (!open) { document.documentElement.classList.remove('nx-ai-active');dialog.classList.remove('nx-ai-settled');resetConversation(); input.blur(); }
     if (reduced.matches) {
-      progress=target; motion=null;dialog.classList.toggle('nx-ai-settled',Boolean(target));dialog.classList.toggle('nx-ai-glow-finished',Boolean(target)); render(now);
+      progress=target; motion=null;dialog.classList.toggle('nx-ai-settled',Boolean(target));dialog.classList.toggle('nx-ai-glow-finished',Boolean(target));document.documentElement.classList.toggle('nx-ai-active',Boolean(target)); render(now);
       if (!target) finishClose();
       return;
     }
@@ -345,7 +347,7 @@
   document.addEventListener('visibilitychange',()=>{if(!document.hidden && dialog.open)startFrame();});
   reduced.addEventListener('change',()=>{
     if (!dialog.open) return;
-    if(reduced.matches){progress=target;motion=null;dialog.classList.toggle('nx-ai-settled',Boolean(target));render(performance.now());if(!target)finishClose();}
+    if(reduced.matches){progress=target;motion=null;glowStarted=0;dialog.classList.toggle('nx-ai-settled',Boolean(target));dialog.classList.toggle('nx-ai-glow-finished',Boolean(target));document.documentElement.classList.toggle('nx-ai-active',Boolean(target));render(performance.now());if(!target)finishClose();}
     else startFrame();
   });
   canvas.addEventListener('webglcontextlost',event=>{event.preventDefault();gl=null;dialog.classList.add('nx-ai-no-webgl');});

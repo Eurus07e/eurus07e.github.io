@@ -22,12 +22,14 @@
 .nx-ai-toggle[aria-expanded="true"] .nx-ai-open-icon { opacity: 0; transform: rotate(45deg) scale(.7); }
 .nx-ai-toggle[aria-expanded="true"] .nx-ai-close-icon { opacity: 1; transform: rotate(0) scale(1); }
 .nx-ai {
-  position: fixed; inset: 0; width: 100%; height: 100%; max-width: none; max-height: none;
+  position: absolute; inset: auto; top:0; left:0; width: 100%; height: 100%; max-width: none; max-height: none;
   margin: 0; padding: 0; border: 0; overflow: hidden; background: transparent;
   color: #29272e; font: 15px/1.65 -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", sans-serif;
   -webkit-font-smoothing: antialiased; overscroll-behavior: none;
 }
 .nx-ai::backdrop { background: transparent; }
+html.nx-ai-active > body > .page { visibility:hidden; }
+.nx-ai > .nx-ai-toggle { position:absolute; top:var(--nx-ai-top); }
 .nx-ai.nx-ai-settled, .nx-ai.nx-ai-settled::backdrop { background:#fcfcfd; }
 .nx-ai *, .nx-ai *::before, .nx-ai *::after { box-sizing: border-box; }
 .nx-ai-surface {
