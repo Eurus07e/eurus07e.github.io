@@ -15,7 +15,7 @@
 }
 .nx-ai-toggle:hover { border-color: #c6b9df; box-shadow: 0 2px 18px #8571c31c; }
 .nx-ai-toggle:active { background: #f6f3fb; }
-.nx-ai-toggle:focus-visible { outline: 2px solid #9b7acb; outline-offset: 4px; }
+.nx-ai-toggle:focus-visible { outline: none; border-color: #b8accb; }
 .nx-ai-toggle > span { grid-area: 1 / 1; display: flex; align-items: center; gap: 7px; transition: opacity .25s, transform .4s cubic-bezier(.2,.8,.2,1); }
 .nx-ai-toggle svg { width: 21px; height: 21px; }
 .nx-ai-toggle .nx-ai-close-icon { opacity: 0; transform: rotate(-75deg) scale(.7); }
