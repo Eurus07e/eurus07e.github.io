@@ -1,0 +1,139 @@
+/* The entry and exit share one physical button, including in the top layer. */
+:root {
+  --nx-ai-right: max(24px, env(safe-area-inset-right));
+  --nx-ai-top: max(20px, env(safe-area-inset-top));
+}
+.directory-header h1 { padding-right: 76px; }
+.nx-ai-toggle {
+  position: fixed; top: var(--nx-ai-top); right: var(--nx-ai-right); z-index: 30;
+  width: 40px; height: 40px; padding: 0; border: 1px solid #e7e5ec; border-radius: 50%;
+  display: grid; place-items: center; background: #fffffff2; color: #4d4659;
+  box-shadow: 0 2px 10px #3b285908, inset 0 1px 0 #fff;
+  font: 500 13px/1 -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  cursor: pointer; -webkit-tap-highlight-color: transparent;
+  transition: border-color .25s, box-shadow .25s, background .25s;
+}
+.nx-ai-toggle:hover { border-color: #c6b9df; box-shadow: 0 2px 18px #8571c31c; }
+.nx-ai-toggle:active { background: #f6f3fb; }
+.nx-ai-toggle:focus-visible { outline: 2px solid #9b7acb; outline-offset: 4px; }
+.nx-ai-toggle > span { grid-area: 1 / 1; display: flex; align-items: center; gap: 7px; transition: opacity .25s, transform .4s cubic-bezier(.2,.8,.2,1); }
+.nx-ai-toggle svg { width: 21px; height: 21px; }
+.nx-ai-toggle .nx-ai-close-icon { opacity: 0; transform: rotate(-75deg) scale(.7); }
+.nx-ai-toggle[aria-expanded="true"] .nx-ai-open-icon { opacity: 0; transform: rotate(45deg) scale(.7); }
+.nx-ai-toggle[aria-expanded="true"] .nx-ai-close-icon { opacity: 1; transform: rotate(0) scale(1); }
+.nx-ai {
+  position: fixed; inset: 0; width: 100%; height: 100%; max-width: none; max-height: none;
+  margin: 0; padding: 0; border: 0; overflow: hidden; background: transparent;
+  color: #29272e; font: 15px/1.65 -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", sans-serif;
+  -webkit-font-smoothing: antialiased; overscroll-behavior: none;
+}
+.nx-ai::backdrop { background: transparent; }
+.nx-ai *, .nx-ai *::before, .nx-ai *::after { box-sizing: border-box; }
+.nx-ai-surface {
+  position: absolute; inset: 0; background: #fcfcfd;
+  clip-path: circle(0 at 100% 0); will-change: clip-path;
+}
+.nx-ai-surface::before {
+  content: ""; position: absolute; inset: 0; pointer-events: none;
+  background: radial-gradient(ellipse at 100% 0%, #c6c0f217, transparent 42%), radial-gradient(ellipse at 0% 100%, #bddafa13, transparent 40%);
+}
+.nx-ai-main {
+  position: absolute; inset: 0; width: min(660px, calc(100% - 48px)); height: var(--nx-view-height, 100%);
+  margin-inline: auto; display: flex; flex-direction: column; justify-content: center;
+  padding: 88px 0 110px; opacity: 0; transform: translateY(14px);
+}
+.nx-ai-welcome { margin: 0 0 33px; text-align: center; }
+.nx-ai-symbol { width: 42px; height: 42px; display: block; margin: 0 auto 24px; }
+.nx-ai-welcome h1 { margin: 0; color: #35313c; font: 500 clamp(25px, 3vw, 31px)/1.5 -apple-system, BlinkMacSystemFont, "PingFang SC", sans-serif; letter-spacing: -.6px; }
+.nx-ai-composer {
+  position: relative; flex-shrink: 0; width: 100%; min-height: 116px; margin: 0; padding: 19px 20px 52px;
+  border: 1px solid #e5e3ea; border-radius: 24px; background: #fff;
+  box-shadow: 0 8px 32px #28203605, 0 2px 5px #28203603;
+  transition: border-color .3s, box-shadow .3s;
+}
+.nx-ai-composer:focus-within { border-color: #c9bfde; box-shadow: 0 8px 35px #6d4fa00a, 0 0 0 3px #aa88dd07; }
+.nx-ai textarea {
+  display: block; width: 100%; height: 27px; min-height: 27px; max-height: 144px; padding: 0; margin: 0;
+  border: 0; border-radius: 0; outline: none; resize: none; background: transparent; color: #35313d;
+  font: 16px/1.7 -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", sans-serif;
+  scrollbar-width: thin;
+}
+.nx-ai textarea::placeholder { color: #a6a2ad; }
+.nx-ai-send {
+  position: absolute; right: 13px; bottom: 12px; display: grid; place-items: center;
+  width: 32px; height: 32px; padding: 0; border: 0; border-radius: 50%; background: #353039; color: #fff;
+  cursor: pointer; transition: background .2s, transform .2s;
+}
+.nx-ai-send svg { width: 18px; height: 18px; }
+.nx-ai-send:disabled { background: #f0eef3; color: #bab4c3; cursor: default; }
+.nx-ai-send:not(:disabled):hover { background: #69547f; transform: translateY(-1px); }
+.nx-ai-send:focus-visible { outline: 2px solid #9b7acb; outline-offset: 4px; }
+.nx-ai-messages { display: none; min-height: 0; overflow-y: auto; overscroll-behavior: contain; scrollbar-width: thin; padding: 20px 4px 30px; }
+.nx-ai.has-conversation .nx-ai-main { justify-content: flex-end; padding-top: 92px; padding-bottom: max(28px, env(safe-area-inset-bottom)); }
+.nx-ai.has-conversation .nx-ai-welcome { display: none; }
+.nx-ai.has-conversation .nx-ai-messages { display: flex; flex: 1; flex-direction: column; gap: 28px; }
+.nx-ai-message { margin: 0; max-width: 88%; white-space: pre-wrap; overflow-wrap: anywhere; flex-shrink: 0; }
+.nx-ai-message-user { align-self: flex-end; background: #eeedf2; border-radius: 20px 20px 5px 20px; padding: 12px 18px; }
+.nx-ai-message-assistant { align-self: flex-start; color: #77717e; padding: 0 4px; }
+.nx-ai-light { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; }
+.nx-ai-fallback {
+  display: none; position: absolute; border-radius: 50%; pointer-events: none;
+  background: conic-gradient(from 20deg, #7ccfff, #7d82fc, #c47ce7, #f496b0, #ffbd86, #c47ce7, #7ccfff);
+  -webkit-mask: radial-gradient(closest-side, transparent calc(100% - 30px), #000 calc(100% - 15px), transparent 100%);
+  mask: radial-gradient(closest-side, transparent calc(100% - 30px), #000 calc(100% - 15px), transparent 100%);
+  filter: blur(6px); opacity: .65;
+}
+.nx-ai-no-webgl .nx-ai-fallback { display: block; }
+.nx-ai-sr { position: absolute; width: 1px; height: 1px; padding: 0; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+@media (max-width: 767px) {
+  :root { --nx-ai-top: max(16px, env(safe-area-inset-top)); --nx-ai-right: max(16px, env(safe-area-inset-right)); }
+  .directory-header { min-height: 78px; }
+  .directory-header h1 { padding-right: 62px; font-size: clamp(20px, 6.25vw, 27px); }
+  .nx-ai-toggle { width: 38px; height: 38px; }
+  .nx-ai-main { width: calc(100% - 40px); padding-bottom: 100px; }
+  .nx-ai-welcome { margin-bottom: 27px; }
+  .nx-ai-welcome h1 { font-size: 26px; }
+  .nx-ai-symbol { width: 37px; height: 37px; margin-bottom: 22px; }
+  .nx-ai-composer { border-radius: 22px; padding-inline: 17px; }
+  .nx-ai.has-conversation .nx-ai-main { padding-top: 76px; padding-bottom: max(18px, env(safe-area-inset-bottom)); }
+}
+@media (max-height: 520px) {
+  .nx-ai-main { padding-top: 65px; padding-bottom: 22px; }
+  .nx-ai-welcome { margin-bottom: 18px; }
+  .nx-ai-symbol { display: none; }
+  .nx-ai-welcome h1 { font-size: 23px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .nx-ai *, .nx-ai-toggle, .nx-ai-toggle > span { transition: none !important; }
+}
+
+/* Conversation stays visually quiet; controls appear only where needed. */
+.nx-ai-message-assistant { width:100%; max-width:100%; color:#39353f; white-space:normal; }
+.nx-ai-message-body { line-height:1.85; }
+.nx-ai-message-body > :first-child { margin-top:0; }
+.nx-ai-message-body > :last-child { margin-bottom:0; }
+.nx-ai-message-body p { margin:0 0 14px; }
+.nx-ai-message-body :is(h1,h2,h3,h4) { font-family:inherit; font-size:17px; font-weight:600; line-height:1.6; margin:23px 0 10px; color:#35313d; }
+.nx-ai-message-body :is(ul,ol) { padding-left:1.45em; margin:10px 0 16px; }
+.nx-ai-message-body li { margin:5px 0; }
+.nx-ai-message-body a { color:#8066a2; text-decoration:none; overflow-wrap:anywhere; }
+.nx-ai-message-body a:hover { text-decoration:underline; }
+.nx-ai-message-body blockquote { margin:16px 0; padding:0 0 0 16px; border-left:2px solid #d6cbe4; color:#7a7184; }
+.nx-ai-message-body table { display:block; max-width:100%; overflow-x:auto; border-collapse:collapse; font-size:14px; margin:16px 0; }
+.nx-ai-message-body :is(th,td) { padding:9px 13px; border:1px solid #e6e2ec; text-align:left; min-width:90px; }
+.nx-ai-message-body pre { overflow:auto; padding:15px; border-radius:12px; background:#f1eff5; font:13px/1.65 ui-monospace,monospace; white-space:pre; }
+.nx-ai-message-body code { font: .9em/1.6 ui-monospace,monospace; background:#f1eff5; padding:2px 4px; border-radius:4px; }
+.nx-ai-message-body pre code { padding:0; background:none; }
+.nx-ai-message-body hr { border:0; border-top:1px solid #e5e1eb; margin:20px 0; }
+.nx-ai-copy { display:grid;place-items:center;width:28px;height:28px;margin:9px 0 0;padding:5px;border:0;border-radius:6px;background:transparent;color:#a69dad;cursor:pointer; }
+.nx-ai-copy svg { width:16px;height:16px; }
+.nx-ai-copy:hover,.nx-ai-copy.is-copied { background:#efebf4;color:#8066a2; }
+.nx-ai-copy.is-copied svg { display:none; }
+.nx-ai-copy.is-copied::after { content:'✓'; }
+.nx-ai-error { display:flex;align-items:center;gap:12px;margin-top:10px;color:#968a9d;font-size:12px; }
+.nx-ai-retry { padding:2px 0;border:0;background:none;color:#8066a2;cursor:pointer;font:inherit; }
+.nx-ai-retry:hover { text-decoration:underline; }
+.nx-ai-message.is-pending .nx-ai-message-body::after { content:'';display:block;width:7px;height:7px;margin:12px 0;border-radius:50%;background:#a48bbd;animation:nx-ai-pulse 1.2s ease-in-out infinite; }
+.nx-ai-send.is-generating { background:#594b67; }
+@keyframes nx-ai-pulse { 50% { opacity:.3; transform:scale(.8); } }
+@media(prefers-reduced-motion:reduce) { .nx-ai-message.is-pending .nx-ai-message-body::after { animation:none; } }
