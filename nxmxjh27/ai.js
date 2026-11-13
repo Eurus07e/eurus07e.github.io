@@ -16,7 +16,7 @@
   dialog.id = 'nx-ai';
   dialog.className = 'nx-ai';
   dialog.setAttribute('aria-label', '南星 AI');
-  dialog.innerHTML = `<div class="nx-ai-surface"><main class="nx-ai-main"><div class="nx-ai-welcome">${star('nx-welcome-gradient', 'nx-ai-symbol')}<h1>你好，南星<span class="nx-ai-period">。</span></h1></div><div class="nx-ai-messages" role="log" aria-label="本次对话" aria-live="polite"></div><form class="nx-ai-composer"><label class="nx-ai-sr" for="nx-ai-input">给南星 AI 的消息</label><textarea id="nx-ai-input" rows="1" maxlength="4000" placeholder="询问 deepseek"></textarea><button class="nx-ai-send" type="submit" aria-label="发送消息" disabled><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 19V5m-6 6 6-6 6 6"/></svg></button></form></main></div><canvas class="nx-ai-light" aria-hidden="true"></canvas><div class="nx-ai-fallback" aria-hidden="true"></div>`;
+  dialog.innerHTML = `<div class="nx-ai-surface"><main class="nx-ai-main"><div class="nx-ai-welcome">${star('nx-welcome-gradient', 'nx-ai-symbol')}<h1>你好，南星<span class="nx-ai-period">。</span></h1><div class="nx-ai-suggestions" aria-label="预设问题"><button type="button">介绍一下“南星梦想计划”</button><button type="button">如何拿到更多志愿时长？</button><button type="button">我们团队近期要干什么？</button></div></div><div class="nx-ai-messages" role="log" aria-label="本次对话" aria-live="polite"></div><form class="nx-ai-composer"><label class="nx-ai-sr" for="nx-ai-input">给南星 AI 的消息</label><textarea id="nx-ai-input" rows="1" maxlength="4000" placeholder="询问 deepseek"></textarea><button class="nx-ai-send" type="submit" aria-label="发送消息" disabled><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 19V5m-6 6 6-6 6 6"/></svg></button></form></main></div><canvas class="nx-ai-light" aria-hidden="true"></canvas><div class="nx-ai-fallback" aria-hidden="true"></div>`;
   document.body.append(dialog);
   const surface = dialog.querySelector('.nx-ai-surface');
   const main = dialog.querySelector('.nx-ai-main');
@@ -48,10 +48,17 @@
   }
   let target = 0, progress = 0, raf = 0, lastDraw = 0;
   let motion = null, geometry, previousOverflow = '', previousGutter = '', previousTitle = '';
-  let bodyLock = null;
+  let bodyLock = null, rootLock = null;
   let previousFocus = null, historyOwned = false, returnURL = '', gl, program, uniforms;
   let started = performance.now();
   let keyboardFrame = 0;
+  let viewportBaseline = {width: innerWidth, height: innerHeight};
+  let editingStarted = false, followLatest = true, sizeFrame = 0;
+  let layoutHeight = 0, layoutTop = 0;
+  let touchScroll = false, touchEndTimer = 0, touchPoint = null;
+  // Its derivative at the button is exactly 3, tapering continuously to the
+  // outer page. The reverse traversal accelerates into that same endpoint.
+  const buttonTravel = p => -Math.expm1(-2.821439372 * p) / -Math.expm1(-2.821439372);
 
   // A single distance field keeps the fine highlight, spectral bloom and reveal
   // on the same wavefront. No scaled bitmap rings or screen-size blur filters.
@@ -110,7 +117,7 @@
           vec3 edgeColor=spectrum(edgePhase);
           float breathing=.88+.12*sin(time*.8);
           float perimeter=(gaussian(edge-1.2,1.6)*.64+gaussian(edge,12.)*.19+gaussian(edge,30.)*.035+cornerFill)*breathing;
-          perimeter*=smoothstep(.62,1.,progress);
+          perimeter*=smoothstep(.62,.82,progress)*(1.-smoothstep(.84,1.,progress));
           float alpha=(wave+perimeter)*intensity;
           vec3 combined=(color*wave+edgeColor*perimeter)/max(wave+perimeter,.0001);
           gl_FragColor=vec4(combined,min(alpha,.92));
@@ -141,23 +148,45 @@
     layoutVisibleViewport();
     render(performance.now());
   }
+  function isNearLatest() {
+    return messages.scrollHeight-messages.scrollTop-messages.clientHeight < 64;
+  }
+  function fitInput() {
+    const maxHeight=parseFloat(main.style.getPropertyValue('--nx-input-max')) || 140;
+    const scrollTop=input.scrollTop;
+    input.style.height='28px';
+    const height=Math.min(input.scrollHeight || 28,maxHeight);
+    input.style.height=height+'px';
+    input.style.overflowY=input.scrollHeight>height?'auto':'hidden';
+    input.scrollTop=scrollTop;
+    form.classList.toggle('is-multiline',height>30);
+  }
   function layoutVisibleViewport() {
     if(!dialog.open)return;
     const viewport=window.visualViewport;
-    const height=Math.min(dialog.clientHeight,viewport?.height || innerHeight);
-    const top=viewport?.offsetTop || 0;
-    const keyboard=touch.matches && document.activeElement===input && height < dialog.clientHeight-120;
+    // Pin to visualViewport, accounting for iOS focus-panning and zoom. The
+    // surface's own offset matters when the browser moves fixed top-layer UI.
+    const height=Math.round(viewport?.height || innerHeight);
+    const top=Math.max(0,Math.round((viewport?.offsetTop || 0)-surface.getBoundingClientRect().top));
+    const width=viewport?.width || innerWidth;
+    const orientationChanged=Math.abs(innerWidth-viewportBaseline.width)>80;
+    if(orientationChanged)viewportBaseline={width:innerWidth,height:Math.max(innerHeight,dialog.clientHeight)};
+    else if(height>viewportBaseline.height)viewportBaseline.height=height;
+    const keyboard=touch.matches && editingStarted && (viewportBaseline.height-height>120 || (navigator.virtualKeyboard?.boundingRect?.height || 0)>0);
+    const previousKeyboard=dialog.classList.contains('nx-ai-keyboard');
+    const changed=Math.abs(layoutHeight-height)>1 || Math.abs(layoutTop-top)>1 || keyboard!==previousKeyboard;
     dialog.classList.toggle('nx-ai-keyboard',keyboard);
     dialog.style.setProperty('--nx-visual-top',`${top}px`);
+    dialog.style.setProperty('--nx-visual-left',`${viewport?.offsetLeft || 0}px`);
     main.style.top=`${top}px`;
     main.style.setProperty('--nx-view-height',`${height}px`);
-    main.style.setProperty('--nx-input-max',`${Math.max(54,Math.min(144,height*.25))}px`);
-    // iOS can pan the visual viewport to focus a fixed textarea. Follow that
-    // viewport (including its offset), rather than scrolling the page to it.
-    if(keyboard) {
-      input.style.height='27px';
-      input.style.height=Math.min(input.scrollHeight,Math.max(54,Math.min(144,height*.25)))+'px';
-    }
+    main.style.setProperty('--nx-view-width',`${width}px`);
+    const maxInput=28*Math.max(2,Math.min(5,Math.floor(height*.25/28)));
+    const oldMax=main.style.getPropertyValue('--nx-input-max');
+    main.style.setProperty('--nx-input-max',`${maxInput}px`);
+    if(oldMax!==`${maxInput}px`)fitInput();
+    if(changed && followLatest && !touchScroll)messages.scrollTop=messages.scrollHeight;
+    layoutHeight=height;layoutTop=top;
   }
   function scheduleViewportLayout() {
     cancelAnimationFrame(keyboardFrame);
@@ -168,35 +197,41 @@
   function render(now) {
     if (!geometry) return;
     const {x,y,width,height,radius} = geometry;
-    const r = 18 / width + radius * progress;
+    const travel=buttonTravel(progress);
+    const r = 18 / width + radius * travel;
     const rx = r * width, ry = r * height;
     surface.style.clipPath = progress >= 1 ? 'none' : `ellipse(${rx}px ${ry}px at ${x}px ${y}px)`;
-    const content = smooth(.26,.86,progress);
+    const content = smooth(.26,.86,travel);
     main.style.opacity = String(content);
     main.style.transform = `translateY(${(1-content)*16}px)`;
-    main.inert = progress < .86 || !target;
+    main.inert = travel < .86 || !target;
     if (gl) {
       gl.uniform2f(uniforms.resolution, canvas.width, canvas.height);
       gl.uniform2f(uniforms.viewport, width, height);
       gl.uniform2f(uniforms.origin,x,y);
       gl.uniform1f(uniforms.radius,r);
-      gl.uniform1f(uniforms.progress,progress);
+      gl.uniform1f(uniforms.progress,travel);
       gl.uniform1f(uniforms.time,reduced.matches ? 0 : (now-started)/1000);
       gl.uniform1f(uniforms.intensity,reduced.matches ? .45 : 1);
       gl.drawArrays(gl.TRIANGLES,0,6);
     } else {
-      Object.assign(fallback.style, {width:`${rx*2+30}px`,height:`${ry*2+30}px`,left:`${x-rx-15}px`,top:`${y-ry-15}px`,opacity: String(.65*(1-smooth(.85,1,progress)))});
+      Object.assign(fallback.style, {width:`${rx*2+30}px`,height:`${ry*2+30}px`,left:`${x-rx-15}px`,top:`${y-ry-15}px`,opacity: String(.65*(1-smooth(.85,1,travel)))});
     }
   }
   function finishClose() {
     dialog.close(); anchor.after(toggle);
     document.body.style.overflow = previousOverflow;
+    if(rootLock){Object.assign(document.documentElement.style,rootLock);rootLock=null;}
     if(bodyLock){
       for(const [key,value] of Object.entries(bodyLock.styles))document.body.style[key]=value;
-      window.scrollTo({top:bodyLock.scrollY,left:bodyLock.scrollX,behavior:'instant'});
+      if(window.scrollY!==bodyLock.scrollY || window.scrollX!==bodyLock.scrollX)
+        window.scrollTo({top:bodyLock.scrollY,left:bodyLock.scrollX,behavior:'instant'});
       bodyLock=null;
     }
     dialog.classList.remove('nx-ai-settled','nx-ai-keyboard');
+    editingStarted=false;layoutHeight=0;layoutTop=0;
+    cancelAnimationFrame(keyboardFrame);cancelAnimationFrame(sizeFrame);
+    clearTimeout(touchEndTimer);touchScroll=false;touchPoint=null;
     dialog.style.removeProperty('--nx-visual-top');
     document.documentElement.style.scrollbarGutter = previousGutter;
     document.title = previousTitle;
@@ -218,8 +253,8 @@
         if (!target) { render(now); finishClose(); return; }
       }
     }
-    if (motion || now-lastDraw>=32 || reduced.matches) { render(now); lastDraw=now; }
-    if (motion || !reduced.matches) raf=requestAnimationFrame(frame);
+    render(now); lastDraw=now;
+    if (motion) raf=requestAnimationFrame(frame);
   }
   function startFrame() { if (!raf) raf=requestAnimationFrame(frame); }
   function velocityAt(now) {
@@ -237,13 +272,20 @@
     toggle.setAttribute('aria-label',open?'关闭南星 AI':'打开南星 AI');
     if (open && !dialog.open) {
       previousFocus=document.activeElement;
+      viewportBaseline={width:innerWidth,height:Math.max(innerHeight,window.visualViewport?.height || 0)};
+      editingStarted=false;followLatest=true;
+      bodyLock={scrollY:window.scrollY,scrollX:window.scrollX,styles:Object.fromEntries(['position','top','left','width'].map(key=>[key,document.body.style[key]]))};
       previousOverflow=document.body.style.overflow;
       previousGutter=document.documentElement.style.scrollbarGutter;
       previousTitle=document.title;
       document.documentElement.style.scrollbarGutter='stable';
       document.body.style.overflow='hidden';
-      bodyLock={scrollY:window.scrollY,scrollX:window.scrollX,styles:Object.fromEntries(['position','top','left','width'].map(key=>[key,document.body.style[key]]))};
-      Object.assign(document.body.style,{position:'fixed',top:`${-bodyLock.scrollY}px`,left:`${-bodyLock.scrollX}px`,width:'100%'});
+      rootLock={overflow:document.documentElement.style.overflow,overscrollBehavior:document.documentElement.style.overscrollBehavior};
+      Object.assign(document.documentElement.style,{overflow:'hidden',overscrollBehavior:'none'});
+      // Keep the mobile document in flow: fixing body collapses its scroll
+      // range and makes Safari expand its browser bars when the modal opens.
+      // Modal inertness, root overflow and the touch boundary guard lock it.
+      if(!touch.matches)Object.assign(document.body.style,{position:'fixed',top:`${-bodyLock.scrollY}px`,left:`${-bodyLock.scrollX}px`,width:'100%'});
       main.inert=true;
       dialog.append(toggle); dialog.showModal();
       toggle.focus({preventScroll:true});
@@ -282,7 +324,7 @@
   dialog.addEventListener('cancel',event=>{event.preventDefault();requestClose();});
   dialog.addEventListener('keydown',event=>{
     if(event.key!=='Tab')return;
-    const controls=main.inert?[toggle]:[toggle,...messages.querySelectorAll('a[href],button:not(:disabled)'),input,...(send.disabled?[]:[send])];
+    const controls=main.inert?[toggle]:[toggle,...(dialog.classList.contains('has-conversation')||dialog.classList.contains('nx-ai-keyboard')?[]:dialog.querySelectorAll('.nx-ai-suggestions button')),...messages.querySelectorAll('a[href],button:not(:disabled)'),input,...(send.disabled?[]:[send])];
     const index=controls.indexOf(document.activeElement);
     event.preventDefault();
     controls[(index+(event.shiftKey?-1:1)+controls.length)%controls.length].focus({preventScroll:true});
@@ -291,8 +333,9 @@
   window.addEventListener('resize',()=>{if(dialog.open)measure();});
   window.visualViewport?.addEventListener('resize',scheduleViewportLayout);
   window.visualViewport?.addEventListener('scroll',scheduleViewportLayout);
-  input.addEventListener('focus',scheduleViewportLayout);
-  input.addEventListener('blur',scheduleViewportLayout);
+  input.addEventListener('focus',()=>{editingStarted=true;scheduleViewportLayout();});
+  input.addEventListener('blur',()=>{scheduleViewportLayout();});
+  navigator.virtualKeyboard?.addEventListener('geometrychange',scheduleViewportLayout);
   document.addEventListener('visibilitychange',()=>{if(!document.hidden && dialog.open)startFrame();});
   reduced.addEventListener('change',()=>{
     if (!dialog.open) return;
@@ -307,8 +350,8 @@
     send.setAttribute('aria-label',activeRequest?'停止生成':'发送消息');
     send.innerHTML=activeRequest?stopMarkup:arrowMarkup;
     send.classList.toggle('is-generating',Boolean(activeRequest));
-    const maxHeight=parseFloat(main.style.getPropertyValue('--nx-input-max')) || 144;
-    input.style.height='27px';input.style.height=Math.min(input.scrollHeight || 27,maxHeight)+'px';
+    fitInput();
+    if(followLatest&&!touchScroll){cancelAnimationFrame(sizeFrame);sizeFrame=requestAnimationFrame(()=>{messages.scrollTop=messages.scrollHeight;});}
   }
   function resetConversation() {
     generation++;activeRequest?.abort();activeRequest=null;conversation=[];
@@ -316,6 +359,56 @@
     dialog.classList.remove('has-conversation');resizeInput();
   }
   input.addEventListener('input',resizeInput);
+  // Keep the software keyboard and caret stable when tapping send/stop.
+  let sendPointer=null, pointerSubmitAt=-Infinity;
+  send.addEventListener('pointerdown',event=>{
+    sendPointer=null;
+    if(document.activeElement!==input || event.button!==0)return;
+    event.preventDefault();
+    sendPointer={id:event.pointerId,x:event.clientX,y:event.clientY};
+  });
+  send.addEventListener('pointerup',event=>{
+    const start=sendPointer;sendPointer=null;
+    if(!start || start.id!==event.pointerId || Math.hypot(event.clientX-start.x,event.clientY-start.y)>12)return;
+    // WebKit can suppress click after a cancelled touch pointerdown. Submit
+    // here to preserve the keyboard; consume any compatibility click below.
+    event.preventDefault();pointerSubmitAt=performance.now();form.requestSubmit();
+  });
+  send.addEventListener('pointercancel',()=>{sendPointer=null;});
+  send.addEventListener('click',event=>{
+    if(event.detail>0 && performance.now()-pointerSubmitAt<800)event.preventDefault();
+  });
+  messages.addEventListener('scroll',()=>{followLatest=isNearLatest();},{passive:true});
+  dialog.addEventListener('touchstart',event=>{
+    if(event.touches.length!==1){touchPoint=null;return;}
+    clearTimeout(touchEndTimer);
+    touchPoint={x:event.touches[0].clientX,y:event.touches[0].clientY};
+    touchScroll=Boolean(event.target.closest('.nx-ai-messages,textarea,.nx-ai-suggestions,.nx-ai-welcome'));
+  },{passive:true});
+  dialog.addEventListener('touchmove',event=>{
+    if(event.touches.length!==1||!touchPoint)return;
+    const point=event.touches[0],dx=point.clientX-touchPoint.x,dy=point.clientY-touchPoint.y;
+    touchPoint={x:point.clientX,y:point.clientY};
+    // Let content scroll natively; stop only chaining into the fixed modal or
+    // the underlying page. This avoids iOS keyboard/viewport rubber-band loops.
+    if(Math.abs(dx)>Math.abs(dy)){
+      const horizontal=event.target.closest('table,pre,.nx-ai-suggestions');
+      if(horizontal&&horizontal.scrollWidth>horizontal.clientWidth)return;
+    }
+    const scroller=event.target.closest('textarea,.nx-ai-messages,.nx-ai-welcome');
+    if(scroller && scroller.scrollHeight>scroller.clientHeight+1){
+      const top=scroller.scrollTop,bottom=scroller.scrollHeight-scroller.clientHeight;
+      if((dy<0&&top<bottom-1)||(dy>0&&top>1))return;
+    }
+    if(event.cancelable)event.preventDefault();
+  },{passive:false});
+  const endTouch=()=>{touchPoint=null;touchEndTimer=setTimeout(()=>{touchScroll=false;followLatest=isNearLatest();},160);};
+  dialog.addEventListener('touchend',endTouch,{passive:true});
+  dialog.addEventListener('touchcancel',endTouch,{passive:true});
+  dialog.querySelectorAll('.nx-ai-suggestions button').forEach(button=>{
+    button.addEventListener('pointerdown',event=>{if(document.activeElement===input&&event.button===0)event.preventDefault();});
+    button.addEventListener('click',()=>sendMessage(button.textContent));
+  });
   form.addEventListener('click',event=>{
     if(event.target.closest('button,a,textarea'))return;
     input.focus({preventScroll:true});
@@ -326,7 +419,7 @@
     row.append(body);messages.append(row);return {row,body};
   }
   function paint(body,text) {
-    const follow=messages.scrollHeight-messages.scrollTop-messages.clientHeight<100;
+    const follow=followLatest && !touchScroll;
     if(markdown)body.innerHTML=markdown.render(text);else body.textContent=text;
     if(follow)messages.scrollTop=messages.scrollHeight;
   }
@@ -361,6 +454,7 @@
     if(activeRequest||!target)return;
     const history=retry?.history || conversation.slice();
     messages.querySelectorAll('.nx-ai-retry').forEach(button=>button.remove());
+    followLatest=true;
     dialog.classList.add('has-conversation');
     if(!retry)addMessage(text,'user');
     const reply=retry?.reply || addMessage('','assistant');
