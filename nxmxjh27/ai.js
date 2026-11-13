@@ -213,7 +213,7 @@
       document.title='南星 AI';
       if (!program && !dialog.classList.contains('nx-ai-no-webgl')) initLight();
       measure();
-      velocity=.0025;
+      velocity=.0038;
     }
     if (!open) { resetConversation(); input.blur(); }
     if (reduced.matches) {
@@ -222,7 +222,7 @@
       return;
     }
     const distance=Math.abs(target-progress);
-    const duration=(open?720:620)*Math.max(.35,Math.sqrt(distance));
+    const duration=(open?480:420)*Math.max(.35,Math.sqrt(distance));
     const maxVelocity=3*Math.max(distance,.04)/duration;
     velocity=Math.max(-maxVelocity,Math.min(maxVelocity,velocity));
     motion={from:progress,to:target,start:now,duration,velocity};
