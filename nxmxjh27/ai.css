@@ -146,4 +146,5 @@
 .nx-ai.nx-ai-keyboard .nx-ai-composer { min-height:100px; }
 .nx-ai.nx-ai-keyboard .nx-ai-messages { padding-top:12px; padding-bottom:18px; }
 
-.nx-ai-no-webgl.nx-ai-settled::after { content:'';position:absolute;inset:0;pointer-events:none;border:2px solid transparent;border-image:linear-gradient(135deg,#78baff,#ac82ee,#ef98c6,#ffbc8c) 1;box-shadow:inset 0 0 18px #c0a1ec35; }
+.nx-ai-no-webgl.nx-ai-settled { background:linear-gradient(135deg,#78baff,#ac82ee,#ef98c6,#ffbc8c); }
+.nx-ai-no-webgl.nx-ai-settled .nx-ai-surface { inset:2px; border-radius:16px; box-shadow:inset 0 0 18px #c0a1ec35; }

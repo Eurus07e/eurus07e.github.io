@@ -101,13 +101,15 @@
           float bloom=gaussian(dist,34.)*.23 + gaussian(dist+17.,65.)*.085;
           float ribbon=gaussian(dist,7.)*.36 + gaussian(dist-1.,1.6)*.35;
           float wave=(bloom+ribbon)*smoothstep(0.,.035,progress)*(1.-smoothstep(.88,1.,progress));
-          vec2 corner=min(p,viewport-p);
-          float edge=min(corner.x,corner.y);
-          float cornerGlow=exp(-dot(corner,corner)/450.)*.26;
+          vec2 q=abs(p-viewport*.5)-(viewport*.5-vec2(17.));
+          float edge=-(length(max(q,0.))+min(max(q.x,q.y),0.)-17.);
+          // Keep the rounded inner light contour; fill only the outside
+          // corner wedges with its spectrum instead of exposing white.
+          float cornerFill=(1.-smoothstep(-1.,.8,edge))*.9;
           float edgePhase=atan(p.y-viewport.y*.5,p.x-viewport.x*.5)/(2.*PI)+time*.04;
           vec3 edgeColor=spectrum(edgePhase);
           float breathing=.88+.12*sin(time*.8);
-          float perimeter=(gaussian(edge-1.2,1.6)*.64+gaussian(edge,12.)*.19+gaussian(edge,30.)*.035+cornerGlow)*breathing;
+          float perimeter=(gaussian(edge-1.2,1.6)*.64+gaussian(edge,12.)*.19+gaussian(edge,30.)*.035+cornerFill)*breathing;
           perimeter*=smoothstep(.62,1.,progress);
           float alpha=(wave+perimeter)*intensity;
           vec3 combined=(color*wave+edgeColor*perimeter)/max(wave+perimeter,.0001);
