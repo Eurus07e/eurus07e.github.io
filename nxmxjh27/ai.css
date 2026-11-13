@@ -44,7 +44,8 @@
 }
 .nx-ai-welcome { margin: 0 0 33px; text-align: center; }
 .nx-ai-symbol { width: 42px; height: 42px; display: block; margin: 0 auto 24px; }
-.nx-ai-welcome h1 { margin: 0; color: #35313c; font: 500 clamp(25px, 3vw, 31px)/1.5 -apple-system, BlinkMacSystemFont, "PingFang SC", sans-serif; letter-spacing: -.6px; }
+.nx-ai-welcome h1 { position: relative; display: inline-block; margin: 0; color: #35313c; font: 500 clamp(25px, 3vw, 31px)/1.5 -apple-system, BlinkMacSystemFont, "PingFang SC", sans-serif; letter-spacing: -.6px; }
+.nx-ai-period { position: absolute; left: 100%; top: 0; }
 .nx-ai-composer {
   position: relative; flex-shrink: 0; width: 100%; min-height: 116px; margin: 0; padding: 19px 20px 52px;
   border: 1px solid #e5e3ea; border-radius: 24px; background: #fff;
