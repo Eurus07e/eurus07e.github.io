@@ -255,7 +255,7 @@ html.nx-ai-active > body > .page { visibility:hidden; }
   }
   .nx-ai.has-conversation .nx-ai-restart { display:grid;place-items:center;position:absolute;z-index:30;top:max(var(--nx-ai-top),var(--nx-ai-exit-top,0px));left:max(16px,env(safe-area-inset-left));width:44px;height:44px;padding:0;border:0;border-radius:50%;background:transparent;color:#4d4659;cursor:pointer; }
   .nx-ai-restart svg { width:23px;height:23px; }
-  .nx-ai.has-conversation > .nx-ai-toggle { background:transparent;border-color:transparent;box-shadow:none; }
+
 }
 
 /* Shared controls: centered vector feedback and pointer-only emphasis. */
@@ -280,3 +280,14 @@ html.nx-ai-active > body > .page { visibility:hidden; }
 }
 
 @media (min-width:768px) and (pointer:fine) { .nx-ai-main { width:min(960px,calc(100% - 96px)); } }
+
+/* Restart and close share the same circular control surface. */
+.nx-ai.has-conversation .nx-ai-restart {
+  border:1px solid #e7e5ec;background:#fffffff2;
+  box-shadow:0 2px 10px #3b285908,inset 0 1px 0 #fff;
+}
+@media (hover:hover) and (pointer:fine) {
+  .nx-ai.has-conversation .nx-ai-restart:hover,.nx-ai > .nx-ai-toggle:hover {
+    border-color:#c6b9df;background:#f2eff7;box-shadow:0 3px 10px #40364d16,0 8px 20px #40364d0d;transform:scale(1.07);
+  }
+}
