@@ -432,7 +432,11 @@
       history.replaceState(history.state,'',returnURL || location.pathname+location.search);
     }
   }
-  toggle.addEventListener('click',()=>target?requestClose():requestOpen());
+  toggle.addEventListener('pointerleave',()=>toggle.classList.remove('is-hover-paused'));
+  toggle.addEventListener('click',event=>{
+    if(event.detail>0)toggle.classList.add('is-hover-paused');
+    target?requestClose():requestOpen();
+  });
   dialog.addEventListener('cancel',event=>{event.preventDefault();requestClose();});
   dialog.addEventListener('keydown',event=>{
     if(event.key!=='Tab')return;

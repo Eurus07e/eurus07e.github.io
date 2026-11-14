@@ -21,14 +21,14 @@ html.nx-ai-open::-webkit-scrollbar, html.nx-ai-open > body::-webkit-scrollbar { 
   position: fixed; top: calc(var(--nx-ai-top) + var(--nx-visual-top, 0px)); right: var(--nx-ai-right); z-index: 30;
   width: 40px; height: 40px; padding: 0; border: 1px solid #e7e5ec; border-radius: 50%;
   display: grid; place-items: center; background: #fffffff2; color: #4d4659;
-  box-shadow: 0 2px 10px #3b285908, inset 0 1px 0 #fff;
+  box-shadow:none;
   font: 500 13px/1 -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
   cursor: pointer; -webkit-tap-highlight-color: transparent;
   transition: border-color .25s, box-shadow .25s, background .25s;
 }
-.nx-ai-toggle:hover { border-color: #c6b9df; box-shadow: 0 2px 18px #8571c31c; }
-.nx-ai-toggle:active { background: #f6f3fb; }
-.nx-ai-toggle:focus-visible { outline: none; border-color: #b8accb; }
+
+.nx-ai-toggle:active { background:#f3f3f3; }
+.nx-ai-toggle:focus-visible { outline:none;border-color:#d4d4d6;background:#f5f5f5; }
 .nx-ai-toggle > span { grid-area: 1 / 1; display: flex; align-items: center; gap: 7px; transition: opacity .25s, transform .4s cubic-bezier(.2,.8,.2,1); }
 .nx-ai-toggle svg { width: 21px; height: 21px; }
 .nx-ai-toggle .nx-ai-close-icon { opacity: 0; transform: rotate(-75deg) scale(.7); }
@@ -150,7 +150,7 @@ html.nx-ai-active > body > .page { visibility:hidden; }
 .nx-ai-message-body hr { border:0; border-top:1px solid #e5e1eb; margin:20px 0; }
 .nx-ai-copy { display:grid;place-items:center;width:28px;height:28px;margin:9px 0 0;padding:5px;border:0;border-radius:6px;background:transparent;color:#a69dad;cursor:pointer; }
 .nx-ai-copy svg { width:16px;height:16px; }
-.nx-ai-copy.is-copied { background:#efebf4;color:#8066a2; }
+.nx-ai-copy.is-copied { background:#f0f0f0;color:#55565a; }
 .nx-ai-copy.is-copied svg { display:none; }
 .nx-ai-copy .nx-ai-copy-check { display:none; }
 .nx-ai-copy.is-copied .nx-ai-copy-check { display:block; }
@@ -243,7 +243,7 @@ html.nx-ai-active > body > .page { visibility:hidden; }
 .nx-ai :is(button,textarea,form) { -webkit-tap-highlight-color:transparent; }
 .nx-ai textarea, .nx-ai textarea:focus, .nx-ai textarea:focus-visible { -webkit-appearance:none;appearance:none;outline:none;box-shadow:none;border:0; }
 .nx-ai-composer:focus-within { border-color:#e5e3ea;box-shadow:0 4px 12px #30283c14,0 12px 36px #30283c12,inset 0 1px 3px #30283c08; }
-.nx-ai-toggle:focus-visible { border-color:#e7e5ec;box-shadow:0 3px 10px #30283c20,0 9px 24px #30283c12; }
+.nx-ai-toggle:focus-visible { box-shadow:none; }
 .nx-ai-restart { display:none; }
 @media (max-width:767px), (pointer:coarse) {
   .nx-ai.nx-ai-keyboard:not(.has-conversation) .nx-ai-welcome { display:none; }
@@ -264,9 +264,7 @@ html.nx-ai-active > body > .page { visibility:hidden; }
 .nx-ai.has-conversation .nx-ai-restart { display:grid;place-items:center;position:absolute;z-index:30;top:max(var(--nx-ai-top),var(--nx-ai-exit-top,0px));left:max(24px,env(safe-area-inset-left));width:40px;height:40px;padding:0;border:0;border-radius:50%;background:transparent;color:#4d4659;cursor:pointer; }
 .nx-ai-restart svg { width:23px;height:23px; }
 .nx-ai-copy,.nx-ai-restart { transition:background .2s,box-shadow .2s,transform .2s; }
-@media (hover:hover) and (pointer:fine) {
-  .nx-ai-copy:not(.is-copied):not(.is-hover-paused):hover,.nx-ai-restart:hover,.nx-ai > .nx-ai-toggle:hover { background:#f2eff7;box-shadow:0 3px 10px #40364d16,0 8px 20px #40364d0d;transform:scale(1.07); }
-}
+
 @media (min-width:768px) and (pointer:fine) {
   /* Equal flexible tracks keep the composer itself at the viewport midpoint. */
   .nx-ai:not(.has-conversation) .nx-ai-main { display:grid;grid-template-columns:minmax(0,1fr);grid-template-rows:minmax(0,1fr) auto minmax(0,1fr);justify-content:stretch;justify-items:stretch;padding:0; }
@@ -284,12 +282,7 @@ html.nx-ai-active > body > .page { visibility:hidden; }
 /* Restart and close share the same circular control surface. */
 .nx-ai.has-conversation .nx-ai-restart {
   border:1px solid #e7e5ec;background:#fffffff2;
-  box-shadow:0 2px 10px #3b285908,inset 0 1px 0 #fff;
-}
-@media (hover:hover) and (pointer:fine) {
-  .nx-ai.has-conversation .nx-ai-restart:hover,.nx-ai > .nx-ai-toggle:hover {
-    border-color:#c6b9df;background:#f2eff7;box-shadow:0 3px 10px #40364d16,0 8px 20px #40364d0d;transform:scale(1.07);
-  }
+  box-shadow:0 2px 10px #00000008,inset 0 1px 0 #fff;
 }
 
 .nx-ai-copy:is(.is-copied,.is-hover-paused) { transform:none;transition:none; }
@@ -305,3 +298,14 @@ html.nx-ai-active > body > .page { visibility:hidden; }
   height:calc(var(--nx-composer-height,60px) + 76px);pointer-events:none;
   background:linear-gradient(to top,#fcfcfdf0 0%,#fcfcfdc9 40%,#fcfcfd55 72%,#fcfcfd00 100%);
 }
+
+/* Neutral pointer feedback; clicking the entry/exit leaves no focus halo. */
+@media (hover:hover) and (pointer:fine) {
+  .nx-ai-copy:not(.is-copied):not(.is-hover-paused):hover,
+  .nx-ai.has-conversation .nx-ai-restart:hover,
+  .nx-ai-toggle:not(.is-hover-paused):hover {
+    background:#fff;color:#44464a;border-color:#dedee0;
+    box-shadow:0 3px 10px #00000014,0 9px 24px #0000000d;transform:none;
+  }
+}
+.nx-ai-toggle.is-hover-paused { box-shadow:none; }
