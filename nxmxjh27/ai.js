@@ -19,8 +19,17 @@
   dialog.id = 'nx-ai';
   dialog.className = 'nx-ai';
   dialog.setAttribute('aria-label', '南星 AI');
-  dialog.innerHTML = `<div class="nx-ai-surface"><main class="nx-ai-main"><div class="nx-ai-welcome">${star('nx-welcome-gradient', 'nx-ai-symbol')}<h1>你好，南星<span class="nx-ai-period">。</span></h1><div class="nx-ai-suggestions" aria-label="预设问题"></div></div><div class="nx-ai-messages" role="log" aria-label="本次对话" aria-live="polite"></div><form class="nx-ai-composer"><label class="nx-ai-sr" for="nx-ai-input">给南星 AI 的消息</label><textarea id="nx-ai-input" rows="1" maxlength="4000" placeholder="询问 deepseek"></textarea><button class="nx-ai-send" type="submit" aria-label="发送消息" disabled><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 19V5m-6 6 6-6 6 6"/></svg></button></form></main></div><canvas class="nx-ai-light" aria-hidden="true"></canvas><div class="nx-ai-fallback" aria-hidden="true"></div>`;
+  dialog.innerHTML = `<div class="nx-ai-surface"><main class="nx-ai-main"><div class="nx-ai-welcome">${star('nx-welcome-gradient', 'nx-ai-symbol')}<h1>你好，南星<span class="nx-ai-period">。</span></h1></div><div class="nx-ai-messages" role="log" aria-label="本次对话" aria-live="polite"></div><form class="nx-ai-composer"><label class="nx-ai-sr" for="nx-ai-input">给南星 AI 的消息</label><textarea id="nx-ai-input" rows="1" maxlength="4000" placeholder="询问 deepseek"></textarea><button class="nx-ai-send" type="submit" aria-label="发送消息" disabled><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 19V5m-6 6 6-6 6 6"/></svg></button></form><div class="nx-ai-suggestions" aria-label="预设问题"></div></main></div><canvas class="nx-ai-light" aria-hidden="true"></canvas><div class="nx-ai-fallback" aria-hidden="true"></div>`;
   document.body.append(dialog);
+  const restart=document.createElement('button');
+  restart.type='button';restart.className='nx-ai-restart';restart.setAttribute('aria-label','重新对话');
+  restart.innerHTML='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 4-5 5 5 5M4 9h9a6 6 0 0 1 0 12"/></svg>';
+  dialog.append(restart);
+  restart.addEventListener('click',()=>{
+    input.blur();input.value='';editingStarted=false;followLatest=true;
+    resetConversation();refreshSuggestions();revealSuggestions();scheduleViewportLayout();
+    toggle.focus({preventScroll:true});
+  });
   const surface = dialog.querySelector('.nx-ai-surface');
   const main = dialog.querySelector('.nx-ai-main');
   const canvas = dialog.querySelector('canvas');
@@ -36,11 +45,16 @@
     '如何拿到更多志愿时长？',
     '我们团队近期要干什么？',
     '返乡宣讲前要准备哪些材料？',
-    '我们四个人怎么分工？',
+    '4 人团队怎么分工？',
     '帮我列一份宣讲 PPT 大纲',
     '宣讲结束后要交哪些材料？',
     '志愿服务时长怎么分配？',
-    '有哪些可以参加的专项活动？'
+    '有哪些可以参加的专项活动？',
+    '帮我写一段联系母校老师的开场白',
+    '如何安排一场 15 分钟的返乡宣讲？',
+    '宣讲时高中生可能会问哪些问题？',
+    '帮我列一份活动工作拍摄清单',
+    '新闻稿怎么写，才能突出我们团队的特色？'
   ];
   function refreshSuggestions() {
     welcomeAnimations.forEach(animation=>animation.cancel());
@@ -54,7 +68,11 @@
       [questions[i],questions[j]]=[questions[j],questions[i]];
     }
     suggestions.replaceChildren(...questions.slice(0,3).map(text=>{
-      const button=document.createElement('button');button.type='button';button.textContent=text;
+      const button=document.createElement('button');button.type='button';
+      const icon=document.createElement('span');icon.className='nx-ai-suggestion-icon';icon.setAttribute('aria-hidden','true');
+      icon.textContent=['✨','⏳','📅','📋','🤝','📑','📂','⚖️','🎯','💬','🗓️','🎓','📷','✍️'][suggestedQuestions.indexOf(text)];
+      const label=document.createElement('span');label.textContent=text;button.append(icon,label);
+      button.classList.toggle('has-open-ending',!/[。！？!?，,；;：:、…）)》」』”’]$/.test(text));
       button.addEventListener('pointerdown',event=>{if(document.activeElement===input&&event.button===0)event.preventDefault();});
       button.addEventListener('click',()=>sendMessage(text));
       return button;
@@ -415,7 +433,10 @@
   dialog.addEventListener('cancel',event=>{event.preventDefault();requestClose();});
   dialog.addEventListener('keydown',event=>{
     if(event.key!=='Tab')return;
-    const controls=main.inert?[toggle]:[toggle,...(dialog.classList.contains('has-conversation')||dialog.classList.contains('nx-ai-keyboard')?[]:dialog.querySelectorAll('.nx-ai-suggestions button')),...messages.querySelectorAll('a[href],button:not(:disabled)'),input,...(send.disabled?[]:[send])];
+    const presets=[...suggestions.querySelectorAll('button')].filter(button=>button.getClientRects().length);
+    const composerControls=[input,...(send.disabled?[]:[send])];
+    const mobile=matchMedia('(max-width:767px), (pointer:coarse)').matches;
+    const controls=main.inert?[toggle]:[...(restart.getClientRects().length?[restart]:[]),toggle,...messages.querySelectorAll('a[href],button:not(:disabled)'),...(mobile?[...presets,...composerControls]:[...composerControls,...presets])];
     const index=controls.indexOf(document.activeElement);
     event.preventDefault();
     controls[(index+(event.shiftKey?-1:1)+controls.length)%controls.length].focus({preventScroll:true});
@@ -518,9 +539,20 @@
   }
   function addCopy(row,text) {
     const copy=document.createElement('button');copy.className='nx-ai-copy';copy.type='button';copy.setAttribute('aria-label','复制回答');
-    copy.innerHTML='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><rect x="8" y="8" width="12" height="12" rx="2"/><path d="M15 8V5a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h3"/></svg>';
+    copy.innerHTML='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><rect x="8" y="8" width="12" height="12" rx="2"/><path d="M15 8V5a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h3"/></svg><svg class="nx-ai-copy-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m5 12 4 4L19 6"/></svg>';
+    let copyTimer=0,copyAnimation=null;
     copy.addEventListener('click',async()=>{
-      try{await navigator.clipboard.writeText(text);copy.setAttribute('aria-label','已复制');copy.classList.add('is-copied');setTimeout(()=>{copy.setAttribute('aria-label','复制回答');copy.classList.remove('is-copied');},1600);}
+      try{
+        await navigator.clipboard.writeText(text);
+        clearTimeout(copyTimer);copyAnimation?.cancel();
+        copy.setAttribute('aria-label','已复制');copy.classList.add('is-copied');
+        if(!reduced.matches)copyAnimation=copy.animate([
+          {transform:'scale(.72)'},{transform:'scale(1.2)',offset:.28},
+          {transform:'scale(.93)',offset:.5},{transform:'scale(1.035)',offset:.7},
+          {transform:'scale(.99)',offset:.87},{transform:'scale(1)'}
+        ],{duration:580,easing:'ease-out'});
+        copyTimer=setTimeout(()=>{copyAnimation?.cancel();copy.setAttribute('aria-label','复制回答');copy.classList.remove('is-copied');},1500);
+      }
       catch{copy.setAttribute('aria-label','复制失败，请选择文字复制');}
     });row.append(copy);
   }

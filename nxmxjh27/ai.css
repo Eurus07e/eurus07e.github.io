@@ -70,7 +70,7 @@ html.nx-ai-active > body > .page { visibility:hidden; }
   transition: border-color .3s, box-shadow .3s;
 }
 .nx-ai-composer.is-multiline { border-radius: 23px; }
-.nx-ai-composer:focus-within { border-color: #c9bfde; box-shadow: 0 8px 35px #6d4fa00a, 0 0 0 3px #aa88dd07; }
+.nx-ai-composer:focus-within { border-color: #e5e3ea; box-shadow: 0 4px 12px #30283c14, 0 12px 36px #30283c12, inset 0 1px 3px #30283c08; }
 .nx-ai textarea {
   display: block; width: 100%; height: 28px; min-height: 28px; min-width: 0; max-height: var(--nx-input-max, 140px); padding: 0; margin: 0;
   border: 0; border-radius: 0; outline: none; resize: none; background: transparent; color: #35313d;
@@ -86,7 +86,7 @@ html.nx-ai-active > body > .page { visibility:hidden; }
 .nx-ai-send svg { width: 18px; height: 18px; }
 .nx-ai-send:disabled { background: #f0eef3; color: #bab4c3; cursor: default; }
 .nx-ai-send:not(:disabled):hover { background: #69547f; transform: translateY(-1px); }
-.nx-ai-send:focus-visible { outline: 2px solid #9b7acb; outline-offset: 4px; }
+.nx-ai-send:focus-visible { outline:none;box-shadow:0 2px 8px #30283c25,0 7px 18px #30283c16; }
 .nx-ai-messages { display: none; min-height: 0; overflow-y: auto; overscroll-behavior: contain; scrollbar-width: none; -webkit-overflow-scrolling: touch; overflow-anchor: none; padding: 20px 4px 24px; touch-action: pan-y; }
 .nx-ai.has-conversation .nx-ai-main { justify-content: flex-end; padding-top: env(safe-area-inset-top, 0px); padding-bottom: max(28px, env(safe-area-inset-bottom)); }
 .nx-ai.has-conversation .nx-ai-welcome { display: none; }
@@ -150,9 +150,10 @@ html.nx-ai-active > body > .page { visibility:hidden; }
 .nx-ai-message-body hr { border:0; border-top:1px solid #e5e1eb; margin:20px 0; }
 .nx-ai-copy { display:grid;place-items:center;width:28px;height:28px;margin:9px 0 0;padding:5px;border:0;border-radius:6px;background:transparent;color:#a69dad;cursor:pointer; }
 .nx-ai-copy svg { width:16px;height:16px; }
-.nx-ai-copy:hover,.nx-ai-copy.is-copied { background:#efebf4;color:#8066a2; }
+.nx-ai-copy.is-copied { background:#efebf4;color:#8066a2; }
 .nx-ai-copy.is-copied svg { display:none; }
-.nx-ai-copy.is-copied::after { content:'✓'; }
+.nx-ai-copy .nx-ai-copy-check { display:none; }
+.nx-ai-copy.is-copied .nx-ai-copy-check { display:block; }
 .nx-ai-error { display:flex;align-items:center;gap:12px;margin-top:10px;color:#968a9d;font-size:12px; }
 .nx-ai-retry { padding:2px 0;border:0;background:none;color:#8066a2;cursor:pointer;font:inherit; }
 .nx-ai-retry:hover { text-decoration:underline; }
@@ -196,25 +197,34 @@ html.nx-ai-active > body > .page { visibility:hidden; }
   .nx-ai-welcome h1 { font-size:23px; }
 }
 
-.nx-ai-suggestions { display:flex;flex-wrap:wrap;justify-content:center;gap:8px;margin:24px 0 0; }
-.nx-ai-suggestions.is-awaiting-entry button { opacity:0; transform:translateY(8px); }
-.nx-ai-suggestions button { border:1px solid #e6e2ec;border-radius:20px;background:#ffffffb8;color:#7a7186;padding:9px 13px;font:12px/1.5 -apple-system,BlinkMacSystemFont,"PingFang SC",sans-serif;cursor:pointer;-webkit-tap-highlight-color:transparent;touch-action:manipulation; }
-.nx-ai-suggestions button:hover { background:#f2eef7;border-color:#d3c7e1; }
-.nx-ai-suggestions button:focus-visible { outline:2px solid #ab96c5;outline-offset:2px; }
+/* Suggestions sit below the desktop composer and directly above it on phones. */
+.nx-ai-suggestions { display:flex;flex-direction:column;align-items:stretch;gap:8px;margin:28px 0 0;padding:0 12px;flex-shrink:0; }
+.nx-ai-suggestions.is-awaiting-entry button { opacity:0;transform:translateY(8px); }
+.nx-ai-suggestions button { display:flex;align-items:center;gap:14px;width:fit-content;max-width:100%;min-height:48px;padding:10px 6px;border:0;border-radius:10px;background:transparent;color:#929497;text-align:left;font:400 15px/1.6 -apple-system,BlinkMacSystemFont,"PingFang SC",sans-serif;cursor:pointer;-webkit-tap-highlight-color:transparent;touch-action:manipulation; }
+.nx-ai-suggestion-icon { width:24px;flex:none;text-align:center;font-size:21px;line-height:1.4; }
+.nx-ai-suggestions button:hover { background:#f2f2f4;color:#55585e; }
+.nx-ai-suggestions button:focus-visible { outline:none;box-shadow:0 2px 8px #30283c18,0 7px 18px #30283c10; }
+.nx-ai.has-conversation .nx-ai-suggestions { display:none; }
 .nx-ai-welcome { min-height:0;flex-shrink:1;scrollbar-width:none; }
 .nx-ai-welcome::-webkit-scrollbar,.nx-ai-suggestions::-webkit-scrollbar { display:none; }
-@media(max-width:767px) {
-  .nx-ai-welcome { overflow-y:auto;overscroll-behavior:contain; }
-  .nx-ai-suggestions { width:100%;max-width:300px;display:grid;grid-template-columns:1fr;gap:0;margin-top:28px; }
-  .nx-ai-suggestions button { display:flex;align-items:center;justify-content:space-between;gap:12px;min-height:48px;padding:12px 2px;border:0;border-radius:0;background:transparent;text-align:left;font-size:14px;color:#82798d; }
-  .nx-ai-suggestions button + button { border-top:1px solid #e8e3ed; }
-  .nx-ai-suggestions button::after { content:'';width:7px;height:7px;flex:none;border-top:1px solid currentColor;border-right:1px solid currentColor;transform:rotate(45deg);opacity:.55;margin-right:4px; }
-  .nx-ai-suggestions button:hover { background:transparent;color:#594b6d; }
-  .nx-ai-suggestions button:active { background:#f2eef7; }
-  .nx-ai.nx-ai-keyboard .nx-ai-welcome { justify-content:center; }
+@media(min-width:768px) and (pointer:fine) {
+  .nx-ai:not(.has-conversation) .nx-ai-main { width:min(960px,calc(100% - 96px)); }
+  .nx-ai-welcome { margin-bottom:36px; }
+  .nx-ai-welcome h1 { font-size:31px;font-weight:400;color:#24272c; }
+  .nx-ai-welcome .nx-ai-symbol { display:none; }
+  .nx-ai-composer { min-height:58px;border-color:#ebebed;border-radius:29px;padding:8px 9px 8px 18px;box-shadow:0 4px 20px #20202006; }
+  .nx-ai textarea { font-size:16px; }
+  .nx-ai textarea::placeholder { color:#b8b9bd; }
 }
-
-@media (pointer:coarse) { .nx-ai.nx-ai-keyboard .nx-ai-suggestions { display:none; } }
+@media(max-width:767px), (pointer:coarse) {
+  .nx-ai-welcome { order:0;overflow-y:auto;overscroll-behavior:contain;margin-bottom:0;padding-bottom:28px; }
+  .nx-ai-messages { order:0; }
+  .nx-ai-suggestions { order:1;width:100%;gap:2px;margin:0 0 14px;padding:0; }
+  .nx-ai-suggestions button { min-height:44px;padding:8px 3px;gap:10px;font-size:14px; }
+  .nx-ai-suggestion-icon { width:22px;font-size:18px; }
+  .nx-ai-composer { order:2; }
+  .nx-ai.nx-ai-keyboard .nx-ai-suggestions { display:none; }
+}
 
 /* The exit control shares the conversation's top edge, without a header row.
    On narrow screens, keep the scrolling text beside its hit target. */
@@ -228,3 +238,45 @@ html.nx-ai-active > body > .page { visibility:hidden; }
   .nx-ai.has-conversation .nx-ai-main { padding-top:calc(max(var(--nx-ai-top), var(--nx-ai-exit-top, 0px)) + 52px); }
   .nx-ai.has-conversation .nx-ai-messages { padding-top:12px; padding-right:4px; }
 }
+
+/* Soft focus feedback, including Safari's native input/tap treatment. */
+.nx-ai :is(button,textarea,form) { -webkit-tap-highlight-color:transparent; }
+.nx-ai textarea, .nx-ai textarea:focus, .nx-ai textarea:focus-visible { -webkit-appearance:none;appearance:none;outline:none;box-shadow:none;border:0; }
+.nx-ai-composer:focus-within { border-color:#e5e3ea;box-shadow:0 4px 12px #30283c14,0 12px 36px #30283c12,inset 0 1px 3px #30283c08; }
+.nx-ai-toggle:focus-visible { border-color:#e7e5ec;box-shadow:0 3px 10px #30283c20,0 9px 24px #30283c12; }
+.nx-ai-restart { display:none; }
+@media (max-width:767px), (pointer:coarse) {
+  .nx-ai.nx-ai-keyboard:not(.has-conversation) .nx-ai-welcome { display:none; }
+  .nx-ai.has-conversation .nx-ai-main { padding-top:0; }
+  .nx-ai.has-conversation .nx-ai-messages { padding-top:calc(max(var(--nx-ai-top),var(--nx-ai-exit-top,0px)) + 60px); }
+  .nx-ai.has-conversation .nx-ai-surface::after {
+    content:'';position:absolute;z-index:2;inset:0 0 auto;height:calc(max(var(--nx-ai-top),var(--nx-ai-exit-top,0px)) + 72px);pointer-events:none;
+    background:linear-gradient(to bottom,#fcfcfdf0 0%,#fcfcfdc9 40%,#fcfcfd55 72%,#fcfcfd00 100%);
+  }
+  .nx-ai.has-conversation .nx-ai-restart { display:grid;place-items:center;position:absolute;z-index:30;top:max(var(--nx-ai-top),var(--nx-ai-exit-top,0px));left:max(16px,env(safe-area-inset-left));width:44px;height:44px;padding:0;border:0;border-radius:50%;background:transparent;color:#4d4659;cursor:pointer; }
+  .nx-ai-restart svg { width:23px;height:23px; }
+  .nx-ai.has-conversation > .nx-ai-toggle { background:transparent;border-color:transparent;box-shadow:none; }
+}
+
+/* Shared controls: centered vector feedback and pointer-only emphasis. */
+.nx-ai-copy svg { grid-area:1 / 1; }
+.nx-ai-suggestions button.has-open-ending { padding-right:calc(6px + .5em); }
+.nx-ai.has-conversation .nx-ai-restart { display:grid;place-items:center;position:absolute;z-index:30;top:max(var(--nx-ai-top),var(--nx-ai-exit-top,0px));left:max(24px,env(safe-area-inset-left));width:40px;height:40px;padding:0;border:0;border-radius:50%;background:transparent;color:#4d4659;cursor:pointer; }
+.nx-ai-restart svg { width:23px;height:23px; }
+.nx-ai-copy,.nx-ai-restart { transition:background .2s,box-shadow .2s,transform .2s; }
+@media (hover:hover) and (pointer:fine) {
+  .nx-ai-copy:hover,.nx-ai-restart:hover,.nx-ai > .nx-ai-toggle:hover { background:#f2eff7;box-shadow:0 3px 10px #40364d16,0 8px 20px #40364d0d;transform:scale(1.07); }
+}
+@media (min-width:768px) and (pointer:fine) {
+  /* Equal flexible tracks keep the composer itself at the viewport midpoint. */
+  .nx-ai:not(.has-conversation) .nx-ai-main { display:grid;grid-template-rows:minmax(0,1fr) auto minmax(0,1fr);padding:0; }
+  .nx-ai:not(.has-conversation) .nx-ai-welcome { grid-row:1;align-self:end; }
+  .nx-ai:not(.has-conversation) .nx-ai-composer { grid-row:2; }
+  .nx-ai:not(.has-conversation) .nx-ai-suggestions { grid-row:3;align-self:start; }
+}
+@media (max-width:767px), (pointer:coarse) {
+  .nx-ai.has-conversation .nx-ai-restart { left:max(16px,env(safe-area-inset-left));width:44px;height:44px; }
+  .nx-ai-suggestions button.has-open-ending { padding-right:calc(3px + .5em); }
+}
+
+@media (min-width:768px) and (pointer:fine) { .nx-ai-main { width:min(960px,calc(100% - 96px)); } }
