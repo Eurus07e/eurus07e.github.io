@@ -10,13 +10,16 @@
   toggle.setAttribute('aria-expanded', 'false');
   toggle.innerHTML = `<span class="nx-ai-open-icon" aria-hidden="true">${star('nx-entry-gradient')}</span><span class="nx-ai-close-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="m6 6 12 12M18 6 6 18"/></svg></span>`;
   const anchor = document.createComment('nanxing-ai-entry');
+  const entrySpace = document.createElement('span');
+  entrySpace.className = 'nx-ai-entry-space';
+  entrySpace.setAttribute('aria-hidden','true');
   (document.querySelector('.directory-header h1') || document.body).append(anchor, toggle);
 
   const dialog = document.createElement('dialog');
   dialog.id = 'nx-ai';
   dialog.className = 'nx-ai';
   dialog.setAttribute('aria-label', '南星 AI');
-  dialog.innerHTML = `<div class="nx-ai-surface"><main class="nx-ai-main"><div class="nx-ai-welcome">${star('nx-welcome-gradient', 'nx-ai-symbol')}<h1>你好，南星<span class="nx-ai-period">。</span></h1><div class="nx-ai-suggestions" aria-label="预设问题"><button type="button">介绍一下“南星梦想计划”</button><button type="button">如何拿到更多志愿时长？</button><button type="button">我们团队近期要干什么？</button></div></div><div class="nx-ai-messages" role="log" aria-label="本次对话" aria-live="polite"></div><form class="nx-ai-composer"><label class="nx-ai-sr" for="nx-ai-input">给南星 AI 的消息</label><textarea id="nx-ai-input" rows="1" maxlength="4000" placeholder="询问 deepseek"></textarea><button class="nx-ai-send" type="submit" aria-label="发送消息" disabled><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 19V5m-6 6 6-6 6 6"/></svg></button></form></main></div><canvas class="nx-ai-light" aria-hidden="true"></canvas><div class="nx-ai-fallback" aria-hidden="true"></div>`;
+  dialog.innerHTML = `<div class="nx-ai-surface"><main class="nx-ai-main"><div class="nx-ai-welcome">${star('nx-welcome-gradient', 'nx-ai-symbol')}<h1>你好，南星<span class="nx-ai-period">。</span></h1><div class="nx-ai-suggestions" aria-label="预设问题"></div></div><div class="nx-ai-messages" role="log" aria-label="本次对话" aria-live="polite"></div><form class="nx-ai-composer"><label class="nx-ai-sr" for="nx-ai-input">给南星 AI 的消息</label><textarea id="nx-ai-input" rows="1" maxlength="4000" placeholder="询问 deepseek"></textarea><button class="nx-ai-send" type="submit" aria-label="发送消息" disabled><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 19V5m-6 6 6-6 6 6"/></svg></button></form></main></div><canvas class="nx-ai-light" aria-hidden="true"></canvas><div class="nx-ai-fallback" aria-hidden="true"></div>`;
   document.body.append(dialog);
   const surface = dialog.querySelector('.nx-ai-surface');
   const main = dialog.querySelector('.nx-ai-main');
@@ -26,6 +29,55 @@
   const form = dialog.querySelector('form');
   const send = dialog.querySelector('.nx-ai-send');
   const messages = dialog.querySelector('.nx-ai-messages');
+  const suggestions = dialog.querySelector('.nx-ai-suggestions');
+  let suggestionsPending = false, welcomeAnimations = [];
+  const suggestedQuestions = [
+    '介绍一下“南星梦想计划”',
+    '如何拿到更多志愿时长？',
+    '我们团队近期要干什么？',
+    '返乡宣讲前要准备哪些材料？',
+    '我们四个人怎么分工？',
+    '帮我列一份宣讲 PPT 大纲',
+    '宣讲结束后要交哪些材料？',
+    '志愿服务时长怎么分配？',
+    '有哪些可以参加的专项活动？'
+  ];
+  function refreshSuggestions() {
+    welcomeAnimations.forEach(animation=>animation.cancel());
+    welcomeAnimations=[];
+    suggestionsPending=true;
+    suggestions.classList.add('is-awaiting-entry');
+    dialog.querySelector('.nx-ai-welcome').classList.add('is-awaiting-entry');
+    const questions=[...suggestedQuestions];
+    for(let i=questions.length-1;i>0;i--){
+      const j=Math.floor(Math.random()*(i+1));
+      [questions[i],questions[j]]=[questions[j],questions[i]];
+    }
+    suggestions.replaceChildren(...questions.slice(0,3).map(text=>{
+      const button=document.createElement('button');button.type='button';button.textContent=text;
+      button.addEventListener('pointerdown',event=>{if(document.activeElement===input&&event.button===0)event.preventDefault();});
+      button.addEventListener('click',()=>sendMessage(text));
+      return button;
+    }));
+  }
+  function revealSuggestions() {
+    suggestionsPending=false;
+    const welcome=dialog.querySelector('.nx-ai-welcome');
+    welcome.classList.remove('is-awaiting-entry');
+    suggestions.classList.remove('is-awaiting-entry');
+    if(reduced.matches)return;
+    const animate=(element,keyframes,options)=>{
+      welcomeAnimations.push(element.animate(keyframes,{fill:'backwards',...options}));
+    };
+    for(const element of [welcome.querySelector('.nx-ai-symbol'),welcome.querySelector('h1')]){
+      animate(element,[{opacity:0},{opacity:1}],{duration:300,easing:'ease-out'});
+    }
+    [...suggestions.children].forEach((button,index)=>animate(button,
+      [{opacity:0,transform:'translateY(8px)'},{opacity:1,transform:'translateY(0)'}],
+      {duration:360,delay:400+index*70,easing:'cubic-bezier(.22,1,.36,1)'}
+    ));
+  }
+
   const reduced = matchMedia('(prefers-reduced-motion: reduce)');
   const touch = matchMedia('(pointer: coarse)');
   const endpoint = document.querySelector('meta[name="nanxing-ai-endpoint"]')?.content || '';
@@ -208,7 +260,17 @@
     main.style.opacity = String(content);
     main.style.transform = `translateY(${(1-content)*16}px)`;
     main.inert = travel < .86 || !target;
+    if(target && travel>=.86 && suggestionsPending)revealSuggestions();
+    // Keep a CSS light alongside the GPU highlight, so a cleared drawing
+    // buffer cannot leave the reveal entirely white.
+    const perimeter=travel>=.88;
+    fallback.classList.toggle('nx-ai-perimeter',perimeter);
+    const lightOpacity=gl && !gl.isContextLost() ? .35 : .65;
+    if(perimeter)Object.assign(fallback.style,{width:'100%',height:'100%',left:'0',top:'0',opacity:String(lightOpacity*glow)});
+    else Object.assign(fallback.style,{width:`${rx*2+30}px`,height:`${ry*2+30}px`,left:`${x-rx-15}px`,top:`${y-ry-15}px`,opacity:String(lightOpacity)});
     if (gl) {
+      gl.viewport(0,0,canvas.width,canvas.height);
+      gl.useProgram(program);
       gl.uniform2f(uniforms.resolution, canvas.width, canvas.height);
       gl.uniform2f(uniforms.viewport, width, height);
       gl.uniform2f(uniforms.origin,x,y);
@@ -218,14 +280,10 @@
       gl.uniform1f(uniforms.intensity,reduced.matches ? .45 : 1);
       gl.uniform1f(uniforms.glow,glow);
       gl.drawArrays(gl.TRIANGLES,0,6);
-    } else {
-      fallback.classList.toggle('nx-ai-perimeter',progress===1);
-      if(progress===1)Object.assign(fallback.style,{width:'100%',height:'100%',left:'0',top:'0',opacity:String(.65*glow)});
-      else Object.assign(fallback.style, {width:`${rx*2+30}px`,height:`${ry*2+30}px`,left:`${x-rx-15}px`,top:`${y-ry-15}px`,opacity: String(.65*(1-smooth(.85,1,travel)))});
     }
   }
   function finishClose() {
-    dialog.close(); anchor.after(toggle);
+    anchor.after(toggle); entrySpace.remove();
     document.documentElement.classList.remove('nx-ai-active','nx-ai-open');
     if(themeColor)themeColor.content=previousThemeColor;
     document.body.style.overflow = previousOverflow;
@@ -242,6 +300,7 @@
     clearTimeout(touchEndTimer);touchScroll=false;touchPoint=null;
     dialog.style.removeProperty('--nx-visual-top');
     document.documentElement.style.scrollbarGutter = previousGutter;
+    dialog.close();
     document.title = previousTitle;
     resetConversation(); input.value = ''; resizeInput();
     dialog.classList.remove('has-conversation');
@@ -279,8 +338,16 @@
     target = next;glowStarted=0;dialog.classList.remove('nx-ai-glow-finished');
     toggle.setAttribute('aria-expanded',String(open));
     toggle.setAttribute('aria-label',open?'关闭南星 AI':'打开南星 AI');
+    welcomeAnimations.forEach(animation=>{
+      if(open && animation.playState==='paused')animation.play();
+      else if(!open && animation.playState==='running')animation.pause();
+    });
     if (open && !dialog.open) {
+      refreshSuggestions();
       previousFocus=document.activeElement;
+      const entryRect=toggle.getBoundingClientRect();
+      Object.assign(entrySpace.style,{width:`${entryRect.width}px`,height:`${entryRect.height}px`});
+      const pageWidth=document.documentElement.clientWidth;
       viewportBaseline={width:innerWidth,height:Math.max(innerHeight,window.visualViewport?.height || 0)};
       editingStarted=false;followLatest=true;
       bodyLock={scrollY:window.scrollY,scrollX:window.scrollX,styles:Object.fromEntries(['position','top','left','width'].map(key=>[key,document.body.style[key]]))};
@@ -295,8 +362,9 @@
       rootLock={overflow:document.documentElement.style.overflow,overscrollBehavior:document.documentElement.style.overscrollBehavior};
       Object.assign(document.documentElement.style,{overflow:'hidden',overscrollBehavior:'none'});
       // Lock the document independently of the keyboard viewport.
-      Object.assign(document.body.style,{position:'fixed',top:`${-bodyLock.scrollY}px`,left:`${-bodyLock.scrollX}px`,width:'100%'});
+      Object.assign(document.body.style,{position:'fixed',top:`${-bodyLock.scrollY}px`,left:`${-bodyLock.scrollX}px`,width:`${pageWidth}px`});
       main.inert=true;
+      anchor.after(entrySpace);
       dialog.append(toggle); dialog.showModal();
       toggle.focus({preventScroll:true});
       document.title='南星 AI';
@@ -355,6 +423,7 @@
   navigator.virtualKeyboard?.addEventListener('geometrychange',scheduleViewportLayout);
   document.addEventListener('visibilitychange',()=>{if(!document.hidden && dialog.open)startFrame();});
   reduced.addEventListener('change',()=>{
+    if(reduced.matches){welcomeAnimations.forEach(animation=>animation.cancel());welcomeAnimations=[];}
     if (!dialog.open) return;
     if(reduced.matches){progress=target;motion=null;glowStarted=0;dialog.classList.toggle('nx-ai-settled',Boolean(target));dialog.classList.toggle('nx-ai-glow-finished',Boolean(target));document.documentElement.classList.toggle('nx-ai-active',Boolean(target));render(performance.now());if(!target)finishClose();}
     else startFrame();
@@ -422,10 +491,6 @@
   const endTouch=()=>{touchPoint=null;touchEndTimer=setTimeout(()=>{touchScroll=false;followLatest=isNearLatest();},160);};
   dialog.addEventListener('touchend',endTouch,{passive:true});
   dialog.addEventListener('touchcancel',endTouch,{passive:true});
-  dialog.querySelectorAll('.nx-ai-suggestions button').forEach(button=>{
-    button.addEventListener('pointerdown',event=>{if(document.activeElement===input&&event.button===0)event.preventDefault();});
-    button.addEventListener('click',()=>sendMessage(button.textContent));
-  });
   form.addEventListener('click',event=>{
     if(event.target.closest('button,a,textarea'))return;
     input.focus({preventScroll:true});
