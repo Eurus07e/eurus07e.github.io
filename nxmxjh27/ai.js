@@ -37,6 +37,9 @@
   const input = dialog.querySelector('textarea');
   const form = dialog.querySelector('form');
   const send = dialog.querySelector('.nx-ai-send');
+  new ResizeObserver(()=>{
+    if(form.offsetHeight)main.style.setProperty('--nx-composer-height',`${form.offsetHeight}px`);
+  }).observe(form);
   const messages = dialog.querySelector('.nx-ai-messages');
   const suggestions = dialog.querySelector('.nx-ai-suggestions');
   let suggestionsPending = false, welcomeAnimations = [];
