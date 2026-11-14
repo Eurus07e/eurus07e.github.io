@@ -336,8 +336,6 @@
     const now = performance.now();
     let velocity = velocityAt(now);
     target = next;glowStarted=0;dialog.classList.remove('nx-ai-glow-finished');
-    toggle.setAttribute('aria-expanded',String(open));
-    toggle.setAttribute('aria-label',open?'关闭南星 AI':'打开南星 AI');
     welcomeAnimations.forEach(animation=>{
       if(open && animation.playState==='paused')animation.play();
       else if(!open && animation.playState==='running')animation.pause();
@@ -347,6 +345,9 @@
       previousFocus=document.activeElement;
       const entryRect=toggle.getBoundingClientRect();
       Object.assign(entrySpace.style,{width:`${entryRect.width}px`,height:`${entryRect.height}px`});
+      const viewport=window.visualViewport;
+      dialog.style.setProperty('--nx-ai-exit-top',`${Math.max(0,entryRect.top-(viewport?.offsetTop || 0))}px`);
+      dialog.style.setProperty('--nx-ai-exit-right',`${Math.max(0,(viewport?.width || innerWidth)-entryRect.right+(viewport?.offsetLeft || 0))}px`);
       const pageWidth=document.documentElement.clientWidth;
       viewportBaseline={width:innerWidth,height:Math.max(innerHeight,window.visualViewport?.height || 0)};
       editingStarted=false;followLatest=true;
@@ -372,6 +373,11 @@
       measure();
       velocity=.0038;
     }
+    // Establish the icon's closed pose in its new top-layer parent before
+    // changing state; otherwise reparenting can skip the opening transition.
+    getComputedStyle(toggle.querySelector('.nx-ai-close-icon')).transform;
+    toggle.setAttribute('aria-expanded',String(open));
+    toggle.setAttribute('aria-label',open?'关闭南星 AI':'打开南星 AI');
     if (!open) {
       document.documentElement.classList.remove('nx-ai-active');
       dialog.classList.remove('nx-ai-settled');

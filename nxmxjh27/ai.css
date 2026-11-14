@@ -42,7 +42,7 @@ html.nx-ai-open::-webkit-scrollbar, html.nx-ai-open > body::-webkit-scrollbar { 
 }
 .nx-ai::backdrop { background: transparent; }
 html.nx-ai-active > body > .page { visibility:hidden; }
-.nx-ai > .nx-ai-toggle { position:absolute; top:var(--nx-ai-top); }
+.nx-ai > .nx-ai-toggle { position:absolute; top:max(var(--nx-ai-top), var(--nx-ai-exit-top, 0px)); right:max(var(--nx-ai-right), var(--nx-ai-exit-right, 0px)); }
 .nx-ai.nx-ai-settled, .nx-ai.nx-ai-settled::backdrop { background:var(--nx-ai-background); }
 .nx-ai *, .nx-ai *::before, .nx-ai *::after { box-sizing: border-box; }
 .nx-ai-surface {
@@ -225,6 +225,6 @@ html.nx-ai-active > body > .page { visibility:hidden; }
 
 /* Phones reserve a separate exit row; desktop keeps the compact layout. */
 @media (max-width:767px), (pointer:coarse) {
-  .nx-ai.has-conversation .nx-ai-main { padding-top:calc(var(--nx-ai-top) + 52px); }
+  .nx-ai.has-conversation .nx-ai-main { padding-top:calc(max(var(--nx-ai-top), var(--nx-ai-exit-top, 0px)) + 52px); }
   .nx-ai.has-conversation .nx-ai-messages { padding-top:12px; padding-right:4px; }
 }
