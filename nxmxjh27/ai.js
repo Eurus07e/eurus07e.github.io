@@ -541,11 +541,12 @@
     const copy=document.createElement('button');copy.className='nx-ai-copy';copy.type='button';copy.setAttribute('aria-label','复制回答');
     copy.innerHTML='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><rect x="8" y="8" width="12" height="12" rx="2"/><path d="M15 8V5a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h3"/></svg><svg class="nx-ai-copy-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m5 12 4 4L19 6"/></svg>';
     let copyTimer=0,copyAnimation=null;
+    copy.addEventListener('pointerleave',()=>copy.classList.remove('is-hover-paused'));
     copy.addEventListener('click',async()=>{
       try{
         await navigator.clipboard.writeText(text);
         clearTimeout(copyTimer);copyAnimation?.cancel();
-        copy.setAttribute('aria-label','已复制');copy.classList.add('is-copied');
+        copy.setAttribute('aria-label','已复制');copy.classList.add('is-copied','is-hover-paused');
         if(!reduced.matches)copyAnimation=copy.animate([
           {transform:'scale(.72)'},{transform:'scale(1.2)',offset:.28},
           {transform:'scale(.93)',offset:.5},{transform:'scale(1.035)',offset:.7},

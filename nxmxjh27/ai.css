@@ -265,7 +265,7 @@ html.nx-ai-active > body > .page { visibility:hidden; }
 .nx-ai-restart svg { width:23px;height:23px; }
 .nx-ai-copy,.nx-ai-restart { transition:background .2s,box-shadow .2s,transform .2s; }
 @media (hover:hover) and (pointer:fine) {
-  .nx-ai-copy:hover,.nx-ai-restart:hover,.nx-ai > .nx-ai-toggle:hover { background:#f2eff7;box-shadow:0 3px 10px #40364d16,0 8px 20px #40364d0d;transform:scale(1.07); }
+  .nx-ai-copy:not(.is-copied):not(.is-hover-paused):hover,.nx-ai-restart:hover,.nx-ai > .nx-ai-toggle:hover { background:#f2eff7;box-shadow:0 3px 10px #40364d16,0 8px 20px #40364d0d;transform:scale(1.07); }
 }
 @media (min-width:768px) and (pointer:fine) {
   /* Equal flexible tracks keep the composer itself at the viewport midpoint. */
@@ -291,3 +291,5 @@ html.nx-ai-active > body > .page { visibility:hidden; }
     border-color:#c6b9df;background:#f2eff7;box-shadow:0 3px 10px #40364d16,0 8px 20px #40364d0d;transform:scale(1.07);
   }
 }
+
+.nx-ai-copy:is(.is-copied,.is-hover-paused) { transform:none;transition:none; }
