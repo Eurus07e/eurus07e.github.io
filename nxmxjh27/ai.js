@@ -37,13 +37,102 @@
   const input = dialog.querySelector('textarea');
   const form = dialog.querySelector('form');
   const send = dialog.querySelector('.nx-ai-send');
+  const icon=path=>`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${path}</svg>`;
+  const toolbar=document.createElement('div');toolbar.className='nx-ai-toolbar';
+  toolbar.innerHTML=`<button type="button" class="nx-ai-tool nx-ai-attach" aria-label="上传图片或文件">${icon('<path d="M12 5v14M5 12h14"/>')}</button><button type="button" class="nx-ai-tool nx-ai-thinking" aria-pressed="false">${icon('<path d="m9 4-5 5 3 3-3 3 5 5m6-16 5 5-3 3 3 3-5 5M14 3l-4 18"/>')}<span>深度思考</span></button><button type="button" class="nx-ai-tool nx-ai-search" aria-pressed="false">${icon('<circle cx="12" cy="12" r="9"/><ellipse cx="12" cy="12" rx="4" ry="9"/><path d="M3 12h18"/>')}<span>联网搜索</span></button><div class="nx-ai-model"><button type="button" class="nx-ai-model-trigger" value="deepseek-flash" aria-label="选择模型，当前 Flash" aria-haspopup="menu" aria-expanded="false"><span>Flash</span>${icon('<path d="m8 10 4 4 4-4"/>')}</button><div class="nx-ai-model-menu" role="menu" aria-label="选择模型" hidden><button type="button" role="menuitemradio" aria-checked="true" data-model="deepseek-flash"><span><strong>Flash</strong><small>快速 · 多模态</small></span>${icon('<path d="m5 12 4 4L19 6"/>')}</button><button type="button" role="menuitemradio" aria-checked="false" data-model="deepseek-v4-pro"><span><strong>Pro</strong><small>进阶 · 文本</small></span>${icon('<path d="m5 12 4 4L19 6"/>')}</button></div></div>`;
+  const fileInput=document.createElement('input');fileInput.type='file';fileInput.multiple=true;fileInput.hidden=true;fileInput.accept='.png,.jpg,.jpeg,.gif,.webp,.pdf,.doc,.docx,.ppt,.pptx,.xls,.xlsx,.txt,.md,.csv,.json,.epub';
+  const attachments=document.createElement('div');attachments.className='nx-ai-attachments';attachments.setAttribute('aria-label','待发送附件');
+  const composerNote=document.createElement('div');composerNote.className='nx-ai-composer-note';composerNote.setAttribute('role','status');
+  const model=toolbar.querySelector('.nx-ai-model-trigger'),thinkButton=toolbar.querySelector('.nx-ai-thinking'),searchButton=toolbar.querySelector('.nx-ai-search'),attachButton=toolbar.querySelector('.nx-ai-attach');
+  form.prepend(attachments);form.append(composerNote,toolbar,fileInput);toolbar.append(send);
+  let pendingFiles=[],uploadEpoch=0,activeAttachmentRequest=false;
+  const say=message=>{composerNote.textContent=message;};
+  const toggleOption=button=>{input.blur();const enabled=button.getAttribute('aria-pressed')!=='true';button.setAttribute('aria-pressed',String(enabled));button.classList.toggle('is-hover-paused',!enabled);};
+  [thinkButton,searchButton].forEach(button=>button.addEventListener('pointerleave',()=>button.classList.remove('is-hover-paused')));
+  thinkButton.addEventListener('click',()=>toggleOption(thinkButton));
+  searchButton.addEventListener('click',()=>toggleOption(searchButton));
+  const modelMenu=toolbar.querySelector('.nx-ai-model-menu');
+  let modelMenuOpen=false,modelMenuAnimation=null;
+  function setModelMenu(open){
+    if(modelMenuOpen===open)return;
+    const from=modelMenu.hidden?{transform:'scale(.92)',opacity:'0'}:{transform:getComputedStyle(modelMenu).transform,opacity:getComputedStyle(modelMenu).opacity};
+    modelMenuOpen=open;modelMenuAnimation?.cancel();modelMenuAnimation=null;
+    model.setAttribute('aria-expanded',String(open));modelMenu.inert=!open;
+    if(reduced.matches){modelMenu.hidden=!open;}
+    else {
+      modelMenu.hidden=false;
+      const animation=modelMenu.animate([from,{transform:open?'scale(1)':'scale(.92)',opacity:open?1:0}],{duration:open?200:150,easing:open?'cubic-bezier(.2,.75,.25,1)':'cubic-bezier(.4,0,.8,.3)',fill:'both'});
+      modelMenuAnimation=animation;
+      animation.onfinish=()=>{if(modelMenuAnimation!==animation)return;modelMenu.hidden=!modelMenuOpen;animation.cancel();modelMenuAnimation=null;};
+    }
+    if(open)modelMenu.querySelector('[aria-checked="true"]').focus({preventScroll:true});
+  }
+  function closeModelMenu(){setModelMenu(false);}
+  model.addEventListener('click',()=>{input.blur();setModelMenu(!modelMenuOpen);});
+  modelMenu.addEventListener('click',event=>{
+    const choice=event.target.closest('[data-model]');if(!choice)return;
+    model.value=choice.dataset.model;model.dispatchEvent(new Event('change'));
+    model.querySelector('span').textContent=model.value==='deepseek-flash'?'Flash':'Pro';model.setAttribute('aria-label',`选择模型，当前 ${model.querySelector('span').textContent}`);
+    modelMenu.querySelectorAll('[data-model]').forEach(button=>button.setAttribute('aria-checked',String(button.dataset.model===model.value)));
+    closeModelMenu();model.focus({preventScroll:true});
+  });
+  modelMenu.addEventListener('keydown',event=>{
+    if(event.key==='Escape'){event.preventDefault();event.stopPropagation();closeModelMenu();model.focus({preventScroll:true});}
+    else if(['ArrowUp','ArrowDown','Home','End'].includes(event.key)){event.preventDefault();const choices=[...modelMenu.querySelectorAll('button')],index=choices.indexOf(document.activeElement);choices[event.key==='Home'?0:event.key==='End'?choices.length-1:(index+1)%choices.length].focus();}
+  });
+  document.addEventListener('pointerdown',event=>{if(!event.target.closest('.nx-ai-model'))closeModelMenu();});
+  model.addEventListener('change',()=>{
+    if(model.value!=='deepseek-flash'&&(activeAttachmentRequest||pendingFiles.length||conversation.some(m=>m.attachments?.length))){model.value='deepseek-flash';say('这段对话包含附件，请继续使用 Flash；重新对话后可选择 Pro。');return;}
+    const pro=model.value!=='deepseek-flash';searchButton.disabled=pro;attachButton.disabled=pro;
+    if(pro)searchButton.setAttribute('aria-pressed','false');
+    say('');
+  });
+  attachButton.addEventListener('click',()=>{input.blur();say('');fileInput.click();});
+  function renderFiles(){
+    attachments.replaceChildren();
+    for(const file of pendingFiles){
+      const chip=document.createElement('div');chip.className='nx-ai-attachment';
+      if(file.preview){const img=document.createElement('img');img.src=file.preview;img.alt='';chip.append(img);}
+      else {const symbol=document.createElement('span');symbol.className='nx-ai-file-icon';symbol.innerHTML=icon('<path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8zM14 2v6h6M8 13h8M8 17h5"/>');chip.append(symbol);}
+      const info=document.createElement('span'),name=document.createElement('span'),state=document.createElement('small');name.textContent=file.name;state.textContent=file.error?'上传失败':file.token?'已就绪':'正在上传并解析…';info.append(name,state);chip.append(info);
+      if(file.error){const retry=document.createElement('button');retry.type='button';retry.textContent='重试';retry.setAttribute('aria-label',`重新上传 ${file.name}`);retry.onclick=()=>uploadAttachment(file);chip.append(retry);}
+      const remove=document.createElement('button');remove.type='button';remove.setAttribute('aria-label',`移除 ${file.name}`);remove.innerHTML=icon('<path d="m7 7 10 10M17 7 7 17"/>');remove.onclick=()=>{file.controller?.abort();if(file.preview)URL.revokeObjectURL(file.preview);pendingFiles=pendingFiles.filter(f=>f!==file);renderFiles();resizeInput();};chip.append(remove);attachments.append(chip);
+    }
+  }
+  async function uploadAttachment(file){
+    const epoch=uploadEpoch;file.error=false;file.controller=new AbortController();renderFiles();resizeInput();
+    try{
+      const data=await new Promise((resolve,reject)=>{const reader=new FileReader();reader.onload=()=>resolve(reader.result.split(',')[1]);reader.onerror=()=>reject(Error('无法读取文件。'));reader.readAsDataURL(file.file);});
+      if(epoch!==uploadEpoch||!pendingFiles.includes(file))return;
+      const response=await fetch(endpoint.replace(/\/chat$/,'/files'),{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({name:file.name,data}),signal:file.controller.signal});
+      const result=await response.json();if(!response.ok)throw Error(result.error||'上传失败，请重试。');file.token=result.token;
+    }catch(error){if(!file.controller.signal.aborted){file.error=true;say(error.message);}}
+    finally{if(epoch===uploadEpoch){renderFiles();resizeInput();}}
+  }
+  function selectFiles(files){
+    if(model.value!=='deepseek-flash'){say('请先选择 Flash，再添加附件。');return;}
+    for(const file of files){
+      if(pendingFiles.length>=4){say('每次最多添加 4 个文件。');break;}
+      if(!file.size||file.size>8*1024*1024){say(`${file.name} 为空或超过 8 MB。`);continue;}
+      if(!/\.(png|jpe?g|gif|webp|pdf|docx?|pptx?|xlsx?|txt|md|csv|json|epub)$/i.test(file.name)){say('暂不支持该格式，请选择图片、PDF、Office 或文本文件。');continue;}
+      const item={file,name:file.name,preview:/^image\//.test(file.type)?URL.createObjectURL(file):null};pendingFiles.push(item);uploadAttachment(item);
+    }
+  }
+  fileInput.addEventListener('cancel',event=>{event.stopPropagation();say('');});
+  fileInput.addEventListener('change',()=>{selectFiles(fileInput.files);fileInput.value='';});
+  input.addEventListener('paste',event=>{const files=[...(event.clipboardData?.files||[])];if(files.length){event.preventDefault();selectFiles(files);}});
+  form.addEventListener('dragover',event=>{if(event.dataTransfer.types.includes('Files')){event.preventDefault();form.classList.add('is-dragging');}});
+  form.addEventListener('dragleave',()=>form.classList.remove('is-dragging'));
+  form.addEventListener('drop',event=>{event.preventDefault();form.classList.remove('is-dragging');selectFiles(event.dataTransfer.files);});
+  function clearFiles(){closeModelMenu();uploadEpoch++;pendingFiles.forEach(f=>{f.controller?.abort();if(f.preview)URL.revokeObjectURL(f.preview);});pendingFiles=[];renderFiles();say('');}
   new ResizeObserver(()=>{
     if(form.offsetHeight)main.style.setProperty('--nx-composer-height',`${form.offsetHeight}px`);
   }).observe(form);
   const messages = dialog.querySelector('.nx-ai-messages');
   const suggestions = dialog.querySelector('.nx-ai-suggestions');
   let suggestionsPending = false, welcomeAnimations = [];
-  const greetings=['你好，南星。','今天想聊些什么？','我们从哪里开始？','一起准备下一步吧。','有什么需要我帮忙的？'];
+  // Seven equally likely slots give the requested 2:1:1:1:2 greeting weights.
+  const greetings=['你好，南星。','你好，南星。','最近有什么新想法？','有什么需要我帮忙的？','有什么想了解的？','我们从哪里开始？','我们从哪里开始？'];
   const refresh=document.createElement('button');refresh.type='button';refresh.className='nx-ai-refresh';refresh.setAttribute('aria-label','换一组预设问题');
   refresh.innerHTML='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 7v5h-5M4 17v-5h5M6 7a7 7 0 0 1 12-1l2 3M4 15l2 3a7 7 0 0 0 12-1"/></svg><span>换一组</span>';
   refresh.addEventListener('click',()=>{refreshSuggestions(false);revealSuggestions(false);});
@@ -195,15 +284,15 @@
           dist+=flow;
           float phase=angle/(2.*PI)*2.+time*.065+progress*.16;
           vec3 color=spectrum(phase+dist*.0016);
-          float bloom=gaussian(dist,34.)*.23 + gaussian(dist+17.,65.)*.085;
-          float ribbon=gaussian(dist,7.)*.36 + gaussian(dist-1.,1.6)*.35;
+          float bloom=gaussian(dist,52.)*.16 + gaussian(dist+22.,90.)*.06;
+          float ribbon=gaussian(dist,18.)*.16;
           float wave=(bloom+ribbon)*smoothstep(.012,.09,progress)*(1.-smoothstep(.88,1.,progress));
           // Follow the viewport edges rather than drawing a rounded card.
           float edge=min(min(p.x,viewport.x-p.x),min(p.y,viewport.y-p.y));
           float edgePhase=atan(p.y-viewport.y*.5,p.x-viewport.x*.5)/(2.*PI)+time*.04;
           vec3 edgeColor=spectrum(edgePhase);
           float breathing=.88+.12*sin(time*.8);
-          float perimeter=(gaussian(edge-1.2,1.6)*.64+gaussian(edge,12.)*.19+gaussian(edge,30.)*.035)*breathing;
+          float perimeter=(gaussian(edge,8.)*.18+gaussian(edge,24.)*.12+gaussian(edge,48.)*.025)*breathing;
           perimeter*=smoothstep(.62,.82,progress)*glow;
           float alpha=(wave+perimeter)*intensity;
           vec3 combined=(color*wave+edgeColor*perimeter)/max(wave+perimeter,.0001);
@@ -303,9 +392,9 @@
     // buffer cannot leave the reveal entirely white.
     const perimeter=travel>=.88;
     fallback.classList.toggle('nx-ai-perimeter',perimeter);
-    const lightOpacity=gl && !gl.isContextLost() ? .35 : .65;
+    const lightOpacity=target ? (gl && !gl.isContextLost() ? .16 : .3) : 0;
     if(perimeter)Object.assign(fallback.style,{width:'100%',height:'100%',left:'0',top:'0',opacity:String(lightOpacity*glow)});
-    else Object.assign(fallback.style,{width:`${rx*2+30}px`,height:`${ry*2+30}px`,left:`${x-rx-15}px`,top:`${y-ry-15}px`,opacity:String(lightOpacity*smooth(.012,.09,travel))});
+    else Object.assign(fallback.style,{width:`${rx*2+60}px`,height:`${ry*2+60}px`,left:`${x-rx-30}px`,top:`${y-ry-30}px`,opacity:String(lightOpacity*smooth(.012,.09,travel))});
     if (gl) {
       gl.viewport(0,0,canvas.width,canvas.height);
       gl.useProgram(program);
@@ -315,7 +404,7 @@
       gl.uniform1f(uniforms.radius,r);
       gl.uniform1f(uniforms.progress,travel);
       gl.uniform1f(uniforms.time,reduced.matches ? 0 : (now-started)/1000);
-      gl.uniform1f(uniforms.intensity,reduced.matches ? .45 : 1);
+      gl.uniform1f(uniforms.intensity,target ? (reduced.matches ? .3 : .8) : 0);
       gl.uniform1f(uniforms.glow,glow);
       gl.drawArrays(gl.TRIANGLES,0,6);
     }
@@ -389,6 +478,7 @@
       progress=clamp((2*t3-3*t2+1)*motion.from+(t3-2*t2+t)*motion.velocity*motion.duration+(-2*t3+3*t2)*motion.to+(t3-t2)*motion.endVelocity*motion.duration);
     }
     target = next;glowStarted=0;dialog.classList.remove('nx-ai-glow-finished');
+    dialog.classList.toggle('nx-ai-closing',!open);
     welcomeAnimations.forEach(animation=>{
       if(open && animation.playState==='paused')animation.play();
       else if(!open && animation.playState==='running')animation.pause();
@@ -473,13 +563,13 @@
     if(event.detail>0)toggle.classList.add('is-hover-paused');
     target?requestClose():requestOpen();
   });
-  dialog.addEventListener('cancel',event=>{event.preventDefault();requestClose();});
+  dialog.addEventListener('cancel',event=>{if(event.target!==dialog)return;event.preventDefault();requestClose();});
   dialog.addEventListener('keydown',event=>{
     if(event.key!=='Tab')return;
     const presets=[...suggestions.querySelectorAll('button')].filter(button=>button.getClientRects().length);
-    const composerControls=[input,...(send.disabled?[]:[send])];
+    const composerControls=[...form.querySelectorAll('textarea,button:not(:disabled),summary')].filter(e=>e.getClientRects().length);
     const mobile=matchMedia('(max-width:767px), (pointer:coarse)').matches;
-    const controls=main.inert?[toggle]:[...(restart.getClientRects().length?[restart]:[]),toggle,...messages.querySelectorAll('a[href],button:not(:disabled)'),...(mobile?[...presets,...composerControls]:[...composerControls,...presets])];
+    const controls=main.inert?[toggle]:[...(restart.getClientRects().length?[restart]:[]),toggle,...[...messages.querySelectorAll('a[href],button:not(:disabled),summary')].filter(e=>e.getClientRects().length),...(mobile?[...presets,...composerControls]:[...composerControls,...presets])];
     const index=controls.indexOf(document.activeElement);
     event.preventDefault();
     controls[(index+(event.shiftKey?-1:1)+controls.length)%controls.length].focus({preventScroll:true});
@@ -502,7 +592,8 @@
   canvas.addEventListener('webglcontextrestored',()=>{initLight();if(dialog.open)measure();});
 
   function resizeInput() {
-    send.disabled=!activeRequest&&!input.value.trim();
+    send.disabled=!activeRequest&&((!input.value.trim()&&!pendingFiles.length)||pendingFiles.some(f=>!f.token));
+    model.disabled=false;thinkButton.disabled=false;searchButton.disabled=model.value!=='deepseek-flash';attachButton.disabled=model.value!=='deepseek-flash';
     send.setAttribute('aria-label',activeRequest?'停止生成':'发送消息');
     send.innerHTML=activeRequest?stopMarkup:arrowMarkup;
     send.classList.toggle('is-generating',Boolean(activeRequest));
@@ -510,7 +601,7 @@
     if(followLatest&&!touchScroll){cancelAnimationFrame(sizeFrame);sizeFrame=requestAnimationFrame(()=>{messages.scrollTop=messages.scrollHeight;});}
   }
   function resetConversation() {
-    generation++;activeRequest?.abort();activeRequest=null;conversation=[];
+    generation++;activeRequest?.abort();activeRequest=null;activeAttachmentRequest=false;conversation=[];clearFiles();
     messages.replaceChildren();messages.setAttribute('aria-busy','false');
     dialog.classList.remove('has-conversation');resizeInput();
   }
@@ -562,7 +653,7 @@
   dialog.addEventListener('touchend',endTouch,{passive:true});
   dialog.addEventListener('touchcancel',endTouch,{passive:true});
   form.addEventListener('click',event=>{
-    if(event.target.closest('button,a,textarea'))return;
+    if(event.target.closest('button,a,textarea,select,label,input'))return;
     input.focus({preventScroll:true});
   });
   function addMessage(text,who) {
@@ -575,12 +666,13 @@
     if(markdown)body.innerHTML=markdown.render(text);else body.textContent=text;
     if(follow)messages.scrollTop=messages.scrollHeight;
   }
-  function remember(history,text,answer) {
-    conversation=[...history,{role:'user',content:text},...(answer?[{role:'assistant',content:answer}]:[])];
+  function remember(history,text,answer,files=[],webContext) {
+    conversation=[...history,{role:'user',content:text,...(files.length?{attachments:files.map(f=>f.token)}:{})},...(answer?[{role:'assistant',content:answer,...(webContext?{webContext}:{})}]:[])];
     // Only completed pairs are sent back, with bounded in-memory context.
     while(conversation.length>28 || conversation.reduce((n,m)=>n+m.content.length,0)>28000)conversation.splice(0,2);
   }
-  function addCopy(row,text) {
+  function addCopy(row,text,regenerate) {
+    const actions=document.createElement('div');actions.className='nx-ai-actions';
     const copy=document.createElement('button');copy.className='nx-ai-copy';copy.type='button';copy.setAttribute('aria-label','复制回答');
     copy.innerHTML='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><rect x="8" y="8" width="12" height="12" rx="2"/><path d="M15 8V5a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h3"/></svg><svg class="nx-ai-copy-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m5 12 4 4L19 6"/></svg>';
     let copyTimer=0,copyAnimation=null;
@@ -598,7 +690,38 @@
         copyTimer=setTimeout(()=>{copyAnimation?.cancel();copy.setAttribute('aria-label','复制回答');copy.classList.remove('is-copied');},1500);
       }
       catch{copy.setAttribute('aria-label','复制失败，请选择文字复制');}
-    });row.append(copy);
+    });actions.append(copy);
+    const thumb='<path d="M7 10v10H3V10h4Zm0 0 5-7a2 2 0 0 1 2 2l-1 5h5a2 2 0 0 1 2 2l-1 6a2 2 0 0 1-2 2H7"/>';
+    const votes=['点赞','点踩'].map((label,index)=>{
+      const button=document.createElement('button');button.type='button';button.className='nx-ai-feedback'+(index?' nx-ai-dislike':'');button.setAttribute('aria-label',label);button.setAttribute('aria-pressed','false');button.innerHTML=icon(thumb);
+      button.addEventListener('click',()=>{const selected=button.getAttribute('aria-pressed')!=='true';votes.forEach(item=>item.setAttribute('aria-pressed','false'));button.setAttribute('aria-pressed',String(selected));});actions.append(button);return button;
+    });
+    if(regenerate){const button=document.createElement('button');button.type='button';button.className='nx-ai-regenerate';button.setAttribute('aria-label','重新生成');button.innerHTML=icon('<path d="M20 7v5h-5M4 17v-5h5M6 7a7 7 0 0 1 12-1l2 3M4 15l2 3a7 7 0 0 0 12-1"/>');button.addEventListener('click',()=>{if(!activeRequest)regenerate();});actions.append(button);}
+    row.append(actions);
+    updateRegenerateButtons();
+  }
+  function updateRegenerateButtons(){
+    const last=messages.querySelector('.nx-ai-message-assistant:last-child');
+    messages.querySelectorAll('.nx-ai-regenerate').forEach(button=>{button.hidden=button.closest('.nx-ai-message')!==last;button.disabled=Boolean(activeRequest);});
+  }
+  function animateDisclosure(details){
+    const summary=details.querySelector('summary'),content=summary.nextElementSibling;
+    let expanded=details.open,animation=null,fade=null;
+    summary.setAttribute('aria-expanded',String(expanded));
+    summary.addEventListener('click',event=>{
+      event.preventDefault();
+      const from=details.getBoundingClientRect().height;
+      const opacity=details.open?getComputedStyle(content).opacity:'0';
+      expanded=!expanded;animation?.cancel();fade?.cancel();
+      details.classList.toggle('is-expanded',expanded);summary.setAttribute('aria-expanded',String(expanded));
+      if(reduced.matches){details.open=expanded;details.style.removeProperty('overflow');return;}
+      details.open=true;
+      const to=expanded?details.getBoundingClientRect().height:summary.getBoundingClientRect().height;
+      details.style.overflow='hidden';
+      animation=details.animate([{height:`${from}px`},{height:`${to}px`}],{duration:260,easing:'cubic-bezier(.22,.72,.25,1)'});
+      fade=content.animate([{opacity},{opacity:expanded?1:0}],{duration:expanded?220:160,easing:'ease-out',fill:'forwards'});
+      animation.onfinish=()=>{details.open=expanded;details.style.removeProperty('overflow');animation=null;fade?.cancel();fade=null;};
+    });
   }
   async function receiveEvents(response,onEvent) {
     const reader=response.body.getReader(),decoder=new TextDecoder();let buffer='';
@@ -617,22 +740,32 @@
   async function sendMessage(text,retry) {
     if(activeRequest||!target)return;
     const history=retry?.history || conversation.slice();
+    const files=retry?.files||pendingFiles.map(f=>({name:f.name,token:f.token}));
+    if(files.some(f=>!f.token)){say('请等待附件解析完成，或移除上传失败的文件。');return;}
+    const options=retry?.options||{model:model.value,thinking:thinkButton.getAttribute('aria-pressed')==='true',search:searchButton.getAttribute('aria-pressed')==='true',readUrls:model.value==='deepseek-flash'};
     messages.querySelectorAll('.nx-ai-retry').forEach(button=>button.remove());
     followLatest=true;
     dialog.classList.add('has-conversation');
-    if(!retry)addMessage(text,'user');
+    if(!retry){const user=addMessage(text,'user');if(files.length){const names=document.createElement('div');names.className='nx-ai-sent-files';names.textContent=files.map(f=>'▤ '+f.name).join(' · ');user.row.prepend(names);}}
+    if(!retry)clearFiles();
     const reply=retry?.reply || addMessage('','assistant');
-    reply.row.querySelectorAll('.nx-ai-error,.nx-ai-copy').forEach(node=>node.remove());
+    reply.row.querySelectorAll('.nx-ai-error,.nx-ai-actions,.nx-ai-copy,.nx-ai-reasoning,.nx-ai-sources,.nx-ai-tool-status').forEach(node=>node.remove());
     reply.body.replaceChildren();reply.row.classList.add('is-pending');
     reply.body.setAttribute('aria-label','正在回答');
-    const controller=new AbortController(),id=++generation;activeRequest=controller;
-    input.value='';resizeInput();messages.setAttribute('aria-busy','true');
+    const controller=new AbortController(),id=++generation;activeRequest=controller;activeAttachmentRequest=files.length>0||history.some(m=>m.attachments?.length);
+    if(!retry)input.value='';resizeInput();updateRegenerateButtons();messages.setAttribute('aria-busy','true');
     messages.scrollTop=messages.scrollHeight;
-    let answer='',completed=false,paintTimer=0,finishReason='stop';
+    let answer='',completed=false,paintTimer=0,finishReason='stop',webContext,reasoning='';
+    const thinking=document.createElement('details');thinking.className='nx-ai-reasoning';thinking.hidden=true;
+    const summary=document.createElement('summary');summary.textContent='正在思考';const thought=document.createElement('div');thinking.append(summary,thought);animateDisclosure(thinking);reply.row.prepend(thinking);
+    const toolStatus=document.createElement('div');toolStatus.className='nx-ai-tool-status';toolStatus.setAttribute('role','status');reply.row.insertBefore(toolStatus,reply.body);
+    const sources=document.createElement('details');sources.className='nx-ai-sources';sources.hidden=true;const sourceLabel=document.createElement('summary');const sourceList=document.createElement('div');sources.append(sourceLabel,sourceList);animateDisclosure(sources);reply.row.append(sources);const seenSources=new Set();
+    const addSource=source=>{try{const url=new URL(source.url);if(!['https:','http:'].includes(url.protocol)||seenSources.has(url.href))return;seenSources.add(url.href);const link=document.createElement('a');link.href=url.href;link.target='_blank';link.rel='noopener noreferrer';const title=document.createElement('span');title.textContent=source.title||url.hostname;link.append(title);link.insertAdjacentHTML('beforeend',icon('<path d="M7 17 17 7M7 7h10v10"/>'));sourceList.append(link);sourceLabel.replaceChildren();const caption=document.createElement('span');caption.textContent='参考来源';const count=document.createElement('span');count.className='nx-ai-source-count';count.textContent=String(seenSources.size);sourceLabel.append(caption,count);}catch{}};
+
     const flush=()=>{clearTimeout(paintTimer);paintTimer=0;if(id===generation)paint(reply.body,answer);};
     try{
       if(!endpoint)throw new Error('AI 服务暂不可用，请稍后再试。');
-      const response=await fetch(endpoint,{method:'POST',headers:{'Content-Type':'application/json'},credentials:'omit',cache:'no-store',body:JSON.stringify({messages:[...history,{role:'user',content:text}]}),signal:controller.signal});
+      const response=await fetch(endpoint,{method:'POST',headers:{'Content-Type':'application/json'},credentials:'omit',cache:'no-store',body:JSON.stringify({...options,...(retry?.previousAnswer?{previousAnswer:retry.previousAnswer}:{}),messages:[...history,{role:'user',content:text,...(files.length?{attachments:files.map(f=>f.token)}:{})}]}),signal:controller.signal});
       if(!response.ok){const error=await response.json().catch(()=>({}));throw new Error(error.error||'连接暂不可用，请重试。');}
       if(!response.body || !response.headers.get('content-type')?.includes('text/event-stream'))throw new Error('连接暂不可用，请重试。');
       await receiveEvents(response,event=>{
@@ -640,12 +773,17 @@
         if(event.type==='delta'){
           answer+=event.text;reply.row.classList.remove('is-pending');reply.body.removeAttribute('aria-label');
           if(!paintTimer)paintTimer=setTimeout(flush,70);
-        }else if(event.type==='done'){completed=true;finishReason=event.finishReason;}
+        }else if(event.type==='reasoning'){reasoning+=event.text;thinking.hidden=false;thought.textContent=reasoning;}
+        else if(event.type==='tool'){const call=event.event.call;if(call){toolStatus.textContent=event.event.type==='call_started'?(call.type==='deepseek_read_url'?'正在读取网页…':'正在搜索网页…'):(call.status==='failed'?'部分网页未能读取':'已完成网页检索');for(const source of call.sources||[])addSource(source);if(call.page)addSource(call.page);}}
+        else if(event.type==='sources'){for(const item of event.annotations||[])if(item.url_citation)addSource(item.url_citation);}
+        else if(event.type==='web-context')webContext=event.token;
+        else if(event.type==='done'){completed=true;finishReason=event.finishReason;}
         else if(event.type==='error')throw new Error(event.message);
       });
       if(!completed)throw new Error('连接中断，请重试。');
       if(id!==generation)return;
-      flush();remember(history,text,answer);addCopy(reply.row,answer);
+      if(retry?.previousAnswer&&answer.replace(/\s/g,'')===retry.previousAnswer.replace(/\s/g,''))throw new Error('这次回答与上一版相同，已保留原回答，可再次重新生成。');
+      flush();remember(history,text,answer,files,webContext);sources.hidden=seenSources.size===0;addCopy(reply.row,answer,()=>sendMessage(text,{history,reply,files,options,previousAnswer:answer,previousWebContext:webContext}));
       if(finishReason==='length'){
         const note=document.createElement('div');note.className='nx-ai-error';note.textContent='回答较长，可继续追问。';reply.row.append(note);
       }
@@ -653,22 +791,23 @@
       if(id!==generation)return;
       flush();
       const stopped=controller.signal.aborted;
-      if(stopped&&answer)remember(history,text,answer);
+      if(stopped&&answer)remember(history,text,answer,files,webContext);
       const note=document.createElement('div');note.className='nx-ai-error';
       const label=document.createElement('span');label.textContent=stopped?'已停止':(error instanceof TypeError?'连接暂不可用，请重试。':error.message);
       note.append(label);
       const retryButton=document.createElement('button');retryButton.type='button';retryButton.className='nx-ai-retry';retryButton.textContent='重试';
-      retryButton.addEventListener('click',()=>sendMessage(text,{history,reply}));note.append(retryButton);reply.row.append(note);
-      if(answer)addCopy(reply.row,answer);
+      retryButton.addEventListener('click',()=>sendMessage(text,{history,reply,files,options,previousAnswer:retry?.previousAnswer}));note.append(retryButton);reply.row.append(note);
+      if(retry?.previousAnswer){answer=retry.previousAnswer;paint(reply.body,answer);reply.row.querySelectorAll('.nx-ai-reasoning,.nx-ai-sources,.nx-ai-tool-status').forEach(e=>e.remove());remember(history,text,answer,files,retry.previousWebContext);}
+      if(answer){sources.hidden=seenSources.size===0;addCopy(reply.row,answer,()=>sendMessage(text,{history,reply,files,options,previousAnswer:answer,previousWebContext:webContext}));}
     }finally{
       clearTimeout(paintTimer);
-      if(id===generation){activeRequest=null;reply.row.classList.remove('is-pending');reply.body.removeAttribute('aria-label');messages.setAttribute('aria-busy','false');resizeInput();}
+      if(id===generation){summary.textContent=completed?'思考过程':'思考已停止';toolStatus.textContent='';activeRequest=null;activeAttachmentRequest=false;reply.row.classList.remove('is-pending');reply.body.removeAttribute('aria-label');messages.setAttribute('aria-busy','false');resizeInput();updateRegenerateButtons();}
     }
   }
   form.addEventListener('submit',event=>{
     event.preventDefault();
     if(activeRequest){activeRequest.abort();return;}
-    const text=input.value.trim();if(text)sendMessage(text);
+    const text=input.value.trim();if(text||pendingFiles.length)sendMessage(text||'请帮我分析这些附件。');
   });
   input.addEventListener('keydown',event=>{
     if(event.key==='Enter'&&!event.shiftKey&&!event.isComposing&&event.keyCode!==229&&!touch.matches&&!activeRequest){event.preventDefault();form.requestSubmit();}

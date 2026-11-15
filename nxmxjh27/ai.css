@@ -70,7 +70,7 @@ html.nx-ai-active > body > .page { visibility:hidden; }
   transition: border-color .3s, box-shadow .3s;
 }
 .nx-ai-composer.is-multiline { border-radius: 23px; }
-.nx-ai-composer:focus-within { border-color: #e5e3ea; box-shadow: 0 4px 12px #30283c14, 0 12px 36px #30283c12, inset 0 1px 3px #30283c08; }
+.nx-ai-composer:has(textarea:focus) { border-color: #e5e3ea; box-shadow: 0 4px 12px #30283c14, 0 12px 36px #30283c12, inset 0 1px 3px #30283c08; }
 .nx-ai textarea {
   display: block; width: 100%; height: 28px; min-height: 28px; min-width: 0; max-height: var(--nx-input-max, 140px); padding: 0; margin: 0;
   border: 0; border-radius: 0; outline: none; resize: none; background: transparent; color: #35313d;
@@ -244,7 +244,7 @@ html.nx-ai-active > body > .page { visibility:hidden; }
 /* Soft focus feedback, including Safari's native input/tap treatment. */
 .nx-ai :is(button,textarea,form) { -webkit-tap-highlight-color:transparent; }
 .nx-ai textarea, .nx-ai textarea:focus, .nx-ai textarea:focus-visible { -webkit-appearance:none;appearance:none;outline:none;box-shadow:none;border:0; }
-.nx-ai-composer:focus-within { border-color:#e5e3ea;box-shadow:0 4px 12px #30283c14,0 12px 36px #30283c12,inset 0 1px 3px #30283c08; }
+.nx-ai-composer:has(textarea:focus) { border-color:#e5e3ea;box-shadow:0 4px 12px #30283c14,0 12px 36px #30283c12,inset 0 1px 3px #30283c08; }
 .nx-ai-toggle:focus-visible { box-shadow:none; }
 .nx-ai-restart { display:none; }
 @media (max-width:767px), (pointer:coarse) {
@@ -330,3 +330,218 @@ html.nx-ai-active > body > .page { visibility:hidden; }
     background:transparent;box-shadow:none;outline:none;
   }
 }
+
+/* Compact multimodal composer. All emphasis is neutral and pointer-specific. */
+.nx-ai-composer { display:flex;flex-direction:column;align-items:stretch;gap:0;padding:14px 14px 10px;border-radius:24px; }
+.nx-ai-composer textarea { padding:0 4px; }
+.nx-ai-toolbar { display:flex;align-items:center;gap:5px;margin-top:12px;min-width:0;cursor:default; }
+.nx-ai-tool { display:inline-flex;align-items:center;justify-content:center;gap:5px;min-height:34px;padding:6px 9px;border:1px solid transparent;border-radius:18px;background:transparent;color:#76777c;font:12px/1.4 -apple-system,BlinkMacSystemFont,"PingFang SC",sans-serif;white-space:nowrap;cursor:pointer;transition:box-shadow .2s,background .2s; }
+.nx-ai-tool svg,.nx-ai-model svg { width:16px;height:16px;flex:none; }
+.nx-ai-attach { width:34px;padding:7px; }
+.nx-ai-attach svg { width:20px;height:20px; }
+.nx-ai-tool[aria-pressed="true"] { background:#f0f1f3;border-color:#e6e7ea;color:#36383d; }
+.nx-ai-tool:disabled { opacity:.4;cursor:default; }
+.nx-ai-model { position:relative;display:flex;align-items:center;margin-left:auto;color:#56585e; }
+.nx-ai-model select { appearance:none;-webkit-appearance:none;max-width:90px;min-height:34px;padding:6px 24px 6px 9px;border:0;border-radius:16px;background:transparent;color:inherit;font:500 12px/1.4 -apple-system,BlinkMacSystemFont,sans-serif;cursor:pointer;outline:none; }
+.nx-ai-model svg { position:absolute;right:5px;width:13px;height:13px;pointer-events:none; }
+.nx-ai-toolbar .nx-ai-send { align-self:center;flex:none;width:34px;height:34px;margin-left:3px; }
+.nx-ai-composer-note { font-size:11px;line-height:1.6;color:#929399;padding:5px 4px 0; }
+.nx-ai-composer-note:empty { display:none; }
+.nx-ai-attachments { display:flex;gap:8px;overflow-x:auto;max-width:100%;scrollbar-width:none; }
+.nx-ai-attachments:empty { display:none; }
+.nx-ai-attachment { display:flex;align-items:center;gap:8px;flex:none;max-width:280px;padding:8px;margin:0 0 12px;border:1px solid #e9e9ec;border-radius:12px;font-size:12px;background:#fafafa; }
+.nx-ai-attachment > span:not(.nx-ai-file-icon) { min-width:0; }
+.nx-ai-attachment > span > span { display:block;max-width:170px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;color:#4b4d52; }
+.nx-ai-attachment small { display:block;font-size:10px;color:#999ba1; }
+.nx-ai-attachment img { width:34px;height:34px;object-fit:cover;border-radius:6px; }
+.nx-ai-file-icon svg { width:25px;height:30px;color:#93959c; }
+.nx-ai-attachment button { display:grid;place-items:center;flex:none;min-width:28px;height:28px;padding:4px;border:0;border-radius:50%;background:transparent;color:#85878c;cursor:pointer;font:inherit; }
+.nx-ai-attachment button svg { width:15px;height:15px; }
+.nx-ai-sent-files { padding-bottom:6px;font-size:12px;color:#86858d; }
+.nx-ai-reasoning { margin:0 0 14px;color:#86868d;font-size:13px; }
+.nx-ai-reasoning summary,.nx-ai-sources summary { cursor:pointer;width:fit-content;padding:5px 0; }
+.nx-ai-reasoning > div { white-space:pre-wrap;line-height:1.8;padding:8px 0 8px 14px;border-left:2px solid #e8e8eb;max-height:240px;overflow:auto;overscroll-behavior:contain; }
+.nx-ai-tool-status { color:#93949a;font-size:12px;margin-bottom:8px; }
+.nx-ai-tool-status:empty { display:none; }
+.nx-ai-sources { margin-top:16px;font-size:12px;color:#82838a; }
+.nx-ai-sources > div { display:flex;flex-wrap:wrap;gap:8px;padding:8px 0; }
+.nx-ai-sources a { max-width:100%;padding:5px 9px;border-radius:8px;background:#f2f2f4;color:#61636b;text-decoration:none;overflow-wrap:anywhere; }
+.nx-ai-composer.is-dragging { box-shadow:0 4px 12px #30283c20,0 12px 36px #30283c18; }
+.nx-ai :is(.nx-ai-tool,.nx-ai-model select,.nx-ai-attachment button):focus-visible { outline:none;box-shadow:0 2px 8px #00000020,0 7px 18px #00000012; }
+@media(hover:hover) and (pointer:fine) {
+  .nx-ai-tool:not(:disabled):hover,.nx-ai-model select:not(:disabled):hover,.nx-ai-attachment button:hover { box-shadow:0 3px 10px #00000014,0 9px 24px #0000000d;background:#f5f5f6; }
+  .nx-ai-send:not(:disabled):hover { background:#404146;transform:none;box-shadow:0 3px 10px #00000020; }
+}
+@media(max-width:767px), (pointer:coarse) {
+  .nx-ai-composer { padding:13px 10px 8px;border-radius:22px; }
+  .nx-ai-toolbar { gap:1px;margin-top:9px; }
+  .nx-ai-tool { padding:6px;min-height:40px;gap:4px;font-size:11px; }
+  .nx-ai-attach { width:32px; }
+  .nx-ai-model select { min-height:40px;padding-left:6px;font-size:11px; }
+  .nx-ai-toolbar .nx-ai-send { width:36px;height:36px;margin-left:0; }
+  .nx-ai-attachment button { min-width:36px;height:36px; }
+}
+@media(hover:none), (pointer:coarse) {
+  .nx-ai :is(.nx-ai-tool,.nx-ai-model select,.nx-ai-attachment button):is(:hover,:focus,:focus-visible) { box-shadow:none;outline:none; }
+  .nx-ai-send:not(:disabled):hover { background:#353039;box-shadow:none;transform:none; }
+}
+
+/* Model picker uses the same quiet surface as the composer. */
+.nx-ai-model-trigger { display:flex;align-items:center;justify-content:center;gap:7px;min-height:34px;padding:6px 10px;border:0;border-radius:17px;background:transparent;color:#606168;font:500 12px/1.4 -apple-system,BlinkMacSystemFont,sans-serif;cursor:pointer; }
+.nx-ai-model-trigger:disabled { opacity:.45;cursor:default; }
+.nx-ai-model .nx-ai-model-trigger svg { position:static;width:12px;height:12px; }
+.nx-ai-model-menu { position:absolute;bottom:calc(100% + 12px);right:0;z-index:10;width:204px;padding:6px;border:1px solid #e9e9ec;border-radius:18px;background:#fffffff7;backdrop-filter:blur(20px);box-shadow:0 5px 16px #00000008,0 16px 48px #00000010; }
+.nx-ai-model-menu[hidden] { display:none; }
+.nx-ai-model-menu button { display:flex;align-items:center;justify-content:space-between;width:100%;min-height:58px;padding:10px 12px;border:0;border-radius:12px;background:transparent;color:#51535a;text-align:left;font:inherit;cursor:pointer; }
+.nx-ai-model-menu strong { display:block;font-size:13px;font-weight:500; }
+.nx-ai-model-menu small { display:block;margin-top:3px;color:#999ba2;font-size:11px;font-weight:400; }
+.nx-ai-model .nx-ai-model-menu svg { position:static;width:16px;height:16px;visibility:hidden;color:#6c6f77; }
+.nx-ai-model-menu button[aria-checked="true"] svg { visibility:visible; }
+.nx-ai-model-menu button:focus-visible { outline:none;background:#f5f5f7;box-shadow:none; }
+@media(hover:hover) and (pointer:fine) {
+  .nx-ai-model-trigger:not(:disabled):hover { background:#f5f5f6;box-shadow:0 3px 10px #00000010; }
+  .nx-ai-model-menu button:hover { background:#f5f5f7; }
+}
+@media(max-width:767px), (pointer:coarse) { .nx-ai-model-trigger { min-height:40px;padding:6px 8px;font-size:11px;gap:5px; } }
+@media(hover:none), (pointer:coarse) { .nx-ai-model-trigger:is(:hover,:focus,:focus-visible),.nx-ai-model-menu button:is(:hover,:focus,:focus-visible) { background:transparent;box-shadow:none;outline:none; } }
+.nx-ai-toolbar .nx-ai-send { margin-left:12px; }
+@media(max-width:767px), (pointer:coarse) { .nx-ai-toolbar .nx-ai-send { margin-left:8px; } }
+
+/* Function controls never cast shadows or activate the text-editing surface. */
+.nx-ai-toolbar { gap:10px; }
+.nx-ai :is(.nx-ai-tool,.nx-ai-model-trigger,.nx-ai-attachment button):is(:hover,:focus,:focus-visible) { box-shadow:none; }
+.nx-ai :is(.nx-ai-tool,.nx-ai-model-trigger):focus-visible { outline:1px solid #bfc1c7;outline-offset:2px; }
+@media(max-width:767px), (pointer:coarse) { .nx-ai-toolbar { gap:6px; } }
+@media(max-width:359px) {
+  .nx-ai-thinking span,.nx-ai-search span { display:none; }
+  .nx-ai-thinking::after { content:'思考'; }
+  .nx-ai-search::after { content:'联网'; }
+}
+@media(hover:none), (pointer:coarse) {
+  .nx-ai :is(.nx-ai-tool,.nx-ai-model-trigger):focus-visible { outline:none; }
+}
+.nx-ai-tool,.nx-ai-model { flex-shrink:0; }
+@media(max-width:767px), (pointer:coarse) { .nx-ai-toolbar { column-gap:8px; } }
+@media(max-width:359px) { .nx-ai-thinking svg,.nx-ai-search svg { display:none; } }
+@media(min-width:768px) and (pointer:fine) {
+  .nx-ai:not(.has-conversation) .nx-ai-model-menu { top:calc(100% + 12px);bottom:auto; }
+  .nx-ai:not(.has-conversation) .nx-ai-composer { z-index:3; }
+}
+/* A slim visible pill inside a comfortable touch target. */
+.nx-ai-tool,.nx-ai-model-trigger { position:relative;isolation:isolate; }
+.nx-ai-tool::before,.nx-ai-model-trigger::before { content:'';position:absolute;z-index:-1;inset:3px 0;border:1px solid transparent;border-radius:14px;pointer-events:none; }
+.nx-ai .nx-ai-tool,.nx-ai .nx-ai-model-trigger,
+.nx-ai .nx-ai-tool:is(:hover,:focus,:focus-visible,[aria-pressed="true"]),
+.nx-ai .nx-ai-model-trigger:is(:hover,:focus,:focus-visible) { background:transparent;border-color:transparent;box-shadow:none; }
+.nx-ai-tool[aria-pressed="true"]::before { background:#f0f1f3;border-color:#e6e7ea; }
+@media(hover:hover) and (pointer:fine) {
+  .nx-ai-tool:not(:disabled):hover::before,.nx-ai-model-trigger:not(:disabled):hover::before { background:#f4f4f6; }
+}
+@media(max-width:767px), (pointer:coarse) { .nx-ai-tool::before,.nx-ai-model-trigger::before { inset:6px 0; } }
+.nx-ai-thinking,.nx-ai-search { padding-inline:11px; }
+.nx-ai-tool::before,.nx-ai-model-trigger::before { inset-block:2px;border-radius:15px; }
+@media(max-width:767px), (pointer:coarse) {
+  .nx-ai-thinking,.nx-ai-search { padding-inline:8px; }
+  .nx-ai-tool::before,.nx-ai-model-trigger::before { inset-block:5px; }
+}
+/* The attachment control has a circular surface, independent of text pills. */
+.nx-ai-attach::before { width:30px;height:30px;inset:50% auto auto 50%;transform:translate(-50%,-50%);border-radius:50%; }
+
+/* Closing is a clean reveal; opening uses a broad, low-contrast glow. */
+.nx-ai.nx-ai-closing :is(.nx-ai-light,.nx-ai-fallback) { visibility:hidden; }
+.nx-ai-fallback:not(.nx-ai-perimeter) {
+  -webkit-mask:radial-gradient(closest-side,transparent calc(100% - 60px),#000 calc(100% - 30px),transparent 100%);
+  mask:radial-gradient(closest-side,transparent calc(100% - 60px),#000 calc(100% - 30px),transparent 100%);
+  filter:blur(12px);
+}
+.nx-ai-fallback.nx-ai-perimeter { padding:6px;filter:blur(8px); }
+.nx-ai-model-trigger { font-size:13px; }
+@media(max-width:767px), (pointer:coarse) { .nx-ai-model-trigger { font-size:12px; } }
+
+/* Disclosure rows and reference chips share a quiet, deliberate rhythm. */
+.nx-ai :is(.nx-ai-reasoning,.nx-ai-sources) > summary {
+  display:flex;align-items:center;gap:9px;min-height:32px;padding:5px 8px;margin-left:-8px;
+  border-radius:8px;list-style:none;color:#85868e;font-size:12px;line-height:22px;
+  user-select:none;transition:background .18s,color .18s;
+}
+.nx-ai :is(.nx-ai-reasoning,.nx-ai-sources) > summary::-webkit-details-marker { display:none; }
+.nx-ai :is(.nx-ai-reasoning,.nx-ai-sources) > summary::marker { content:''; }
+.nx-ai :is(.nx-ai-reasoning,.nx-ai-sources) > summary::before {
+  content:'';flex:none;width:6px;height:6px;margin:0 3px 0 1px;border-right:1.4px solid currentColor;border-bottom:1.4px solid currentColor;
+  transform:rotate(-45deg);transition:transform .2s ease;
+}
+.nx-ai :is(.nx-ai-reasoning,.nx-ai-sources)[open] > summary::before { transform:rotate(45deg) translate(-1px,-1px); }
+.nx-ai-source-count { display:grid;place-items:center;min-width:19px;height:19px;padding-inline:5px;border-radius:6px;background:#eeeff2;color:#92949b;font-size:10px;font-variant-numeric:tabular-nums; }
+.nx-ai-reasoning > div { margin:7px 0 0 4px;border-left-color:#e6e7eb;padding:3px 0 3px 16px;color:#888a93;font-size:12px; }
+.nx-ai-sources > div { gap:8px;padding:9px 0 2px; }
+.nx-ai-sources a {
+  display:inline-flex;align-items:center;gap:9px;min-height:32px;max-width:100%;padding:5px 10px;
+  border:1px solid #e9eaee;border-radius:10px;background:#f6f6f8;color:#777982;font-size:12px;line-height:20px;
+  transition:background .18s,border-color .18s,color .18s;text-decoration:none;
+}
+.nx-ai-sources a > span { min-width:0;overflow-wrap:anywhere; }
+.nx-ai-sources a > svg { width:12px;height:12px;flex:none;color:#a6a8b0;transition:color .18s; }
+.nx-ai :is(.nx-ai-reasoning,.nx-ai-sources) > summary:focus-visible,.nx-ai-sources a:focus-visible { outline:none;background:#eeeff2;color:#484b54; }
+@media(hover:hover) and (pointer:fine) {
+  .nx-ai :is(.nx-ai-reasoning,.nx-ai-sources) > summary:hover { background:#f0f1f4;color:#60636c; }
+  .nx-ai-sources a:hover { background:#eaecef;border-color:#daddE3;color:#363a43;text-decoration:none; }
+  .nx-ai-sources a:hover > svg { color:#626671; }
+}
+@media(hover:none), (pointer:coarse) {
+  .nx-ai :is(.nx-ai-reasoning,.nx-ai-sources) > summary { min-height:40px; }
+  .nx-ai-sources a { min-height:38px; }
+  .nx-ai :is(.nx-ai-reasoning,.nx-ai-sources) > summary:focus-visible { background:transparent;color:#85868e; }
+  .nx-ai-sources a:focus-visible { background:#f6f6f8;color:#777982; }
+}
+
+/* One consistent answer-action row across mouse and touch. */
+.nx-ai-actions { display:flex;align-items:center;gap:6px;margin:10px 0 0; }
+.nx-ai-actions > button { display:grid;place-items:center;flex:none;width:30px;height:30px;margin:0;padding:6px;border:0;border-radius:8px;background:transparent;color:#a0a1aa;cursor:pointer;transition:background .18s,color .18s;box-shadow:none; }
+.nx-ai-actions > button svg { width:16px;height:16px; }
+.nx-ai-dislike svg { transform:rotate(180deg); }
+.nx-ai-actions > button[aria-pressed="true"],.nx-ai-actions > .nx-ai-copy.is-copied { background:#eeeff2;color:#565963; }
+.nx-ai-actions > button:disabled { opacity:.35;cursor:default; }
+.nx-ai-actions > button:focus-visible { outline:none;background:#eeeff2;color:#565963; }
+@media(hover:hover) and (pointer:fine) {
+  .nx-ai-actions > button:not(:disabled):not(.is-copied):not(.is-hover-paused):hover { background:#eeeff2;color:#565963;box-shadow:none;transform:none; }
+}
+@media(hover:none), (pointer:coarse) {
+  .nx-ai-actions { gap:4px;margin-left:-5px; }
+  .nx-ai-actions > button { width:40px;height:40px;padding:11px; }
+  .nx-ai-actions > button:not([aria-pressed="true"]):not(.is-copied):is(:hover,:focus,:focus-visible) { background:transparent;color:#a0a1aa;box-shadow:none; }
+}
+.nx-ai-feedback[aria-pressed="true"] svg { fill:currentColor; }
+/* Selected votes are indicated only by their solid icon. */
+.nx-ai .nx-ai-actions > button.nx-ai-feedback[aria-pressed="true"],
+.nx-ai .nx-ai-actions > button.nx-ai-feedback[aria-pressed="true"]:is(:hover,:focus,:focus-visible) {
+  background:transparent;box-shadow:none;
+}
+
+/* Text-only disclosure controls, with a trailing animated chevron. */
+.nx-ai :is(.nx-ai-reasoning,.nx-ai-sources) > summary {
+  margin-left:0;padding-inline:0;gap:7px;border-radius:0;background:transparent;
+}
+.nx-ai :is(.nx-ai-reasoning,.nx-ai-sources) > summary::before { display:none; }
+.nx-ai :is(.nx-ai-reasoning,.nx-ai-sources) > summary::after {
+  content:'';flex:none;width:6px;height:6px;margin:0 4px 2px 5px;
+  border-right:1.4px solid currentColor;border-bottom:1.4px solid currentColor;
+  transform:rotate(-45deg);transition:transform .24s ease;
+}
+.nx-ai :is(.nx-ai-reasoning,.nx-ai-sources).is-expanded > summary::after { transform:rotate(45deg); }
+.nx-ai :is(.nx-ai-reasoning,.nx-ai-sources) > summary:is(:hover,:focus,:focus-visible) { background:transparent;box-shadow:none; }
+.nx-ai-source-count { min-width:0;padding:0;background:transparent;border-radius:0;font-size:11px; }
+@media(hover:hover) and (pointer:fine) {
+  .nx-ai :is(.nx-ai-reasoning,.nx-ai-sources) > summary:hover { color:#454852; }
+}
+.nx-ai-actions > button[hidden] { display:none; }
+.nx-ai-model-menu { transform-origin:bottom right; }
+@media(min-width:768px) and (pointer:fine) {
+  .nx-ai:not(.has-conversation) .nx-ai-model-menu { transform-origin:top right; }
+}
+/* Align disclosure labels with the visible left edge of the action icons. */
+.nx-ai :is(.nx-ai-reasoning,.nx-ai-sources) > summary { padding-left:7px; }
+.nx-ai-source-count { display:block;height:auto;font-size:inherit;line-height:inherit;align-self:auto; }
+.nx-ai-sources > div { padding-left:7px; }
+.nx-ai .nx-ai-tool.is-hover-paused[aria-pressed="false"]::before { background:transparent;border-color:transparent;box-shadow:none; }
+.nx-ai .nx-ai-tool.is-hover-paused[aria-pressed="false"] { box-shadow:none; }
+.nx-ai .nx-ai-reasoning > summary { padding-left:0; }
