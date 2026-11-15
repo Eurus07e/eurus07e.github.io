@@ -309,3 +309,15 @@ html.nx-ai-active > body > .page { visibility:hidden; }
   }
 }
 .nx-ai-toggle.is-hover-paused { box-shadow:none; }
+
+.nx-ai-toggle .nx-ai-open-icon svg { width:23px;height:23px; }
+.nx-ai-toggle[aria-expanded="true"]:focus-visible,
+.nx-ai-toggle.is-hover-paused { background:#fffffff2;border-color:#e7e5ec;box-shadow:none; }
+.nx-ai-suggestions { position:relative;padding-top:0; }
+.nx-ai-suggestions .nx-ai-refresh { position:static;align-self:flex-start;display:flex;align-items:center;gap:5px;min-height:28px;width:auto;margin-top:4px;padding:3px 7px;font-size:12px;color:#95969b; }
+.nx-ai-refresh svg { width:14px;height:14px; }
+@media(max-width:767px), (pointer:coarse) {
+  .nx-ai-suggestions { padding-top:0; }
+  .nx-ai-suggestions button:not(.nx-ai-refresh) { width:100%; }
+  .nx-ai-suggestions .nx-ai-refresh { right:0;min-height:40px;padding:8px 4px; }
+}

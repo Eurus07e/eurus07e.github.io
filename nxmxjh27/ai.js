@@ -43,6 +43,11 @@
   const messages = dialog.querySelector('.nx-ai-messages');
   const suggestions = dialog.querySelector('.nx-ai-suggestions');
   let suggestionsPending = false, welcomeAnimations = [];
+  const greetings=['你好，南星。','今天想聊些什么？','我们从哪里开始？','一起准备下一步吧。','有什么需要我帮忙的？'];
+  const refresh=document.createElement('button');refresh.type='button';refresh.className='nx-ai-refresh';refresh.setAttribute('aria-label','换一组预设问题');
+  refresh.innerHTML='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 7v5h-5M4 17v-5h5M6 7a7 7 0 0 1 12-1l2 3M4 15l2 3a7 7 0 0 0 12-1"/></svg><span>换一组</span>';
+  refresh.addEventListener('click',()=>{refreshSuggestions(false);revealSuggestions(false);});
+  let previousQuestions=[];
   const suggestedQuestions = [
     '介绍一下“南星梦想计划”',
     '如何拿到更多志愿时长？',
@@ -59,18 +64,24 @@
     '帮我列一份活动工作拍摄清单',
     '新闻稿怎么写，才能突出我们团队的特色？'
   ];
-  function refreshSuggestions() {
+  function refreshSuggestions(changeGreeting=true) {
+    if(changeGreeting){
+      const greeting=greetings[Math.floor(Math.random()*greetings.length)];
+      const punctuation=document.createElement('span');punctuation.className='nx-ai-period';punctuation.textContent=greeting.slice(-1);
+      dialog.querySelector('.nx-ai-welcome h1').replaceChildren(document.createTextNode(greeting.slice(0,-1)),punctuation);
+    }
     welcomeAnimations.forEach(animation=>animation.cancel());
     welcomeAnimations=[];
     suggestionsPending=true;
     suggestions.classList.add('is-awaiting-entry');
-    dialog.querySelector('.nx-ai-welcome').classList.add('is-awaiting-entry');
-    const questions=[...suggestedQuestions];
+    if(changeGreeting)dialog.querySelector('.nx-ai-welcome').classList.add('is-awaiting-entry');
+    const questions=suggestedQuestions.filter(text=>!previousQuestions.includes(text));
     for(let i=questions.length-1;i>0;i--){
       const j=Math.floor(Math.random()*(i+1));
       [questions[i],questions[j]]=[questions[j],questions[i]];
     }
-    suggestions.replaceChildren(...questions.slice(0,3).map(text=>{
+    previousQuestions=questions.slice(0,3);
+    suggestions.replaceChildren(...previousQuestions.map(text=>{
       const button=document.createElement('button');button.type='button';
       const icon=document.createElement('span');icon.className='nx-ai-suggestion-icon';icon.setAttribute('aria-hidden','true');
       icon.textContent=['✨','⏳','📅','📋','🤝','📑','📂','⚖️','🎯','💬','🗓️','🎓','📷','✍️'][suggestedQuestions.indexOf(text)];
@@ -80,8 +91,9 @@
       button.addEventListener('click',()=>sendMessage(text));
       return button;
     }));
+    suggestions.append(refresh);
   }
-  function revealSuggestions() {
+  function revealSuggestions(animateWelcome=true) {
     suggestionsPending=false;
     const welcome=dialog.querySelector('.nx-ai-welcome');
     welcome.classList.remove('is-awaiting-entry');
@@ -90,12 +102,12 @@
     const animate=(element,keyframes,options)=>{
       welcomeAnimations.push(element.animate(keyframes,{fill:'backwards',...options}));
     };
-    for(const element of [welcome.querySelector('.nx-ai-symbol'),welcome.querySelector('h1')]){
+    for(const element of animateWelcome?[welcome.querySelector('.nx-ai-symbol'),welcome.querySelector('h1')]:[]){
       animate(element,[{opacity:0},{opacity:1}],{duration:300,easing:'ease-out'});
     }
     [...suggestions.children].forEach((button,index)=>animate(button,
       [{opacity:0,transform:'translateY(8px)'},{opacity:1,transform:'translateY(0)'}],
-      {duration:360,delay:400+index*70,easing:'cubic-bezier(.22,1,.36,1)'}
+      {duration:360,delay:(animateWelcome?400:0)+index*70,easing:'cubic-bezier(.22,1,.36,1)'}
     ));
   }
 
@@ -127,6 +139,9 @@
   let previousFocus = null, historyOwned = false, returnURL = '', gl, program, uniforms;
   let started = performance.now();
   let keyboardFrame = 0;
+  const initialPixelRatio=devicePixelRatio || 1;
+  let uiZoom=1;
+  const viewportZoom=()=>1/Math.max(.25,(window.visualViewport?.scale || 1)*(devicePixelRatio || 1)/initialPixelRatio);
   let viewportBaseline = {width: innerWidth, height: innerHeight};
   let editingStarted = false, followLatest = true, sizeFrame = 0;
   let layoutHeight = 0, layoutTop = 0;
@@ -211,7 +226,7 @@
   function measure() {
     layoutVisibleViewport();
     const rect = toggle.getBoundingClientRect(), bounds=dialog.getBoundingClientRect();
-    const x = rect.x-bounds.x + rect.width / 2, y = rect.y-bounds.y + rect.height / 2;
+    const x = (rect.x-bounds.x + rect.width / 2)/uiZoom, y = (rect.y-bounds.y + rect.height / 2)/uiZoom;
     const width = dialog.clientWidth || innerWidth, height = dialog.clientHeight || innerHeight;
     geometry = {x, y, width, height, radius: Math.hypot(Math.max(x,width-x)/width, Math.max(y,height-y)/height) + .08};
     // Cap fill rate on high-DPI phones and large displays without softening the UI.
@@ -242,9 +257,11 @@
     // One coordinate system for the entire top-layer dialog. An absolute
     // dialog uses document coordinates, so visualViewport.pageTop/pageLeft
     // locate it without feeding a moving fixed element's rect back into itself.
-    const height=Math.round(viewport?.height || innerHeight);
-    const top=Math.max(0,Math.round(viewport?.pageTop ?? window.scrollY));
-    const width=viewport?.width || innerWidth;
+    uiZoom=viewportZoom();
+    dialog.style.zoom=String(uiZoom);
+    const height=Math.round((viewport?.height || innerHeight)/uiZoom);
+    const top=Math.max(0,Math.round((viewport?.pageTop ?? window.scrollY)/uiZoom));
+    const width=(viewport?.width || innerWidth)/uiZoom;
     const orientationChanged=Math.abs(innerWidth-viewportBaseline.width)>80;
     if(orientationChanged)viewportBaseline={width:innerWidth,height:Math.max(innerHeight,dialog.clientHeight)};
     else if(height>viewportBaseline.height)viewportBaseline.height=height;
@@ -252,7 +269,7 @@
     const previousKeyboard=dialog.classList.contains('nx-ai-keyboard');
     const changed=Math.abs(layoutHeight-height)>1 || Math.abs(layoutTop-top)>1 || keyboard!==previousKeyboard;
     dialog.classList.toggle('nx-ai-keyboard',keyboard);
-    Object.assign(dialog.style,{top:`${top}px`,left:`${viewport?.pageLeft ?? window.scrollX}px`,width:`${width}px`,height:`${height}px`});
+    Object.assign(dialog.style,{top:`${top}px`,left:`${(viewport?.pageLeft ?? window.scrollX)/uiZoom}px`,width:`${width}px`,height:`${height}px`});
     main.style.top='0px';
     main.style.setProperty('--nx-view-height',`${height}px`);
     main.style.setProperty('--nx-view-width',`${width}px`);
@@ -327,13 +344,24 @@
     dialog.classList.remove('has-conversation');
     (previousFocus?.isConnected ? previousFocus : toggle).focus({preventScroll:true});
   }
+  // Integrate a smooth speed ramp: original pace at the start, continuously
+  // accelerating through the approach, reaching about 2.5x near the button.
+  // Both speed and acceleration are continuous; openings are unchanged.
+  function motionTime(now) {
+    const elapsed=Math.max(0,(now-motion.start)/motion.duration);
+    if(motion.to!==0)return {t:clamp(elapsed),rate:1};
+    const ramp=clamp((elapsed-.35)/.4);
+    const integral=.4*(ramp*ramp*ramp-.5*ramp*ramp*ramp*ramp)+Math.max(0,elapsed-.75);
+    const warped=elapsed+1.5*integral;
+    return {t:clamp(warped),rate:warped>=1?0:1+1.5*ramp*ramp*(3-2*ramp)};
+  }
   function frame(now) {
     raf = 0;
     if (!dialog.open || document.hidden) return;
     if (motion) {
       // Cubic Hermite interpolation carries velocity through a reversal, so a
       // second click turns the existing wave around instead of starting over.
-      const t=clamp((now-motion.start)/motion.duration), t2=t*t, t3=t2*t;
+      const {t}=motionTime(now), t2=t*t, t3=t2*t;
       progress=clamp((2*t3-3*t2+1)*motion.from+(t3-2*t2+t)*motion.velocity*motion.duration+(-2*t3+3*t2)*motion.to);
       if (t === 1) {
         progress=motion.to; motion=null;
@@ -348,8 +376,8 @@
   function startFrame() { if (!raf) raf=requestAnimationFrame(frame); }
   function velocityAt(now) {
     if (!motion) return 0;
-    const t=clamp((now-motion.start)/motion.duration), t2=t*t;
-    return ((6*t2-6*t)*motion.from+(3*t2-4*t+1)*motion.velocity*motion.duration+(-6*t2+6*t)*motion.to)/motion.duration;
+    const {t,rate}=motionTime(now), t2=t*t;
+    return ((6*t2-6*t)*motion.from+(3*t2-4*t+1)*motion.velocity*motion.duration+(-6*t2+6*t)*motion.to)*rate/motion.duration;
   }
   function setOpen(open) {
     const next = Number(open);
@@ -367,8 +395,9 @@
       const entryRect=toggle.getBoundingClientRect();
       Object.assign(entrySpace.style,{width:`${entryRect.width}px`,height:`${entryRect.height}px`});
       const viewport=window.visualViewport;
-      dialog.style.setProperty('--nx-ai-exit-top',`${Math.max(0,entryRect.top-(viewport?.offsetTop || 0))}px`);
-      dialog.style.setProperty('--nx-ai-exit-right',`${Math.max(0,(viewport?.width || innerWidth)-entryRect.right+(viewport?.offsetLeft || 0))}px`);
+      uiZoom=viewportZoom();
+      dialog.style.setProperty('--nx-ai-exit-top',`${Math.max(0,(entryRect.top-(viewport?.offsetTop || 0))/uiZoom)}px`);
+      dialog.style.setProperty('--nx-ai-exit-right',`${Math.max(0,((viewport?.width || innerWidth)-entryRect.right+(viewport?.offsetLeft || 0))/uiZoom)}px`);
       const pageWidth=document.documentElement.clientWidth;
       viewportBaseline={width:innerWidth,height:Math.max(innerHeight,window.visualViewport?.height || 0)};
       editingStarted=false;followLatest=true;
