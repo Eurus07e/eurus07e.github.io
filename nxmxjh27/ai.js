@@ -197,7 +197,7 @@
           vec3 color=spectrum(phase+dist*.0016);
           float bloom=gaussian(dist,34.)*.23 + gaussian(dist+17.,65.)*.085;
           float ribbon=gaussian(dist,7.)*.36 + gaussian(dist-1.,1.6)*.35;
-          float wave=(bloom+ribbon)*smoothstep(0.,.035,progress)*(1.-smoothstep(.88,1.,progress));
+          float wave=(bloom+ribbon)*smoothstep(.012,.09,progress)*(1.-smoothstep(.88,1.,progress));
           // Follow the viewport edges rather than drawing a rounded card.
           float edge=min(min(p.x,viewport.x-p.x),min(p.y,viewport.y-p.y));
           float edgePhase=atan(p.y-viewport.y*.5,p.x-viewport.x*.5)/(2.*PI)+time*.04;
@@ -305,7 +305,7 @@
     fallback.classList.toggle('nx-ai-perimeter',perimeter);
     const lightOpacity=gl && !gl.isContextLost() ? .35 : .65;
     if(perimeter)Object.assign(fallback.style,{width:'100%',height:'100%',left:'0',top:'0',opacity:String(lightOpacity*glow)});
-    else Object.assign(fallback.style,{width:`${rx*2+30}px`,height:`${ry*2+30}px`,left:`${x-rx-15}px`,top:`${y-ry-15}px`,opacity:String(lightOpacity)});
+    else Object.assign(fallback.style,{width:`${rx*2+30}px`,height:`${ry*2+30}px`,left:`${x-rx-15}px`,top:`${y-ry-15}px`,opacity:String(lightOpacity*smooth(.012,.09,travel))});
     if (gl) {
       gl.viewport(0,0,canvas.width,canvas.height);
       gl.useProgram(program);
@@ -362,7 +362,7 @@
       // Cubic Hermite interpolation carries velocity through a reversal, so a
       // second click turns the existing wave around instead of starting over.
       const {t}=motionTime(now), t2=t*t, t3=t2*t;
-      progress=clamp((2*t3-3*t2+1)*motion.from+(t3-2*t2+t)*motion.velocity*motion.duration+(-2*t3+3*t2)*motion.to);
+      progress=clamp((2*t3-3*t2+1)*motion.from+(t3-2*t2+t)*motion.velocity*motion.duration+(-2*t3+3*t2)*motion.to+(t3-t2)*motion.endVelocity*motion.duration);
       if (t === 1) {
         progress=motion.to; motion=null;
         if(target){dialog.classList.add('nx-ai-settled');document.documentElement.classList.add('nx-ai-active');glowStarted=now;}
@@ -377,13 +377,17 @@
   function velocityAt(now) {
     if (!motion) return 0;
     const {t,rate}=motionTime(now), t2=t*t;
-    return ((6*t2-6*t)*motion.from+(3*t2-4*t+1)*motion.velocity*motion.duration+(-6*t2+6*t)*motion.to)*rate/motion.duration;
+    return ((6*t2-6*t)*motion.from+(3*t2-4*t+1)*motion.velocity*motion.duration+(-6*t2+6*t)*motion.to+(3*t2-2*t)*motion.endVelocity*motion.duration)*rate/motion.duration;
   }
   function setOpen(open) {
     const next = Number(open);
     if (target === next && (dialog.open || !next)) return;
     const now = performance.now();
     let velocity = velocityAt(now);
+    if(motion){
+      const {t}=motionTime(now),t2=t*t,t3=t2*t;
+      progress=clamp((2*t3-3*t2+1)*motion.from+(t3-2*t2+t)*motion.velocity*motion.duration+(-2*t3+3*t2)*motion.to+(t3-t2)*motion.endVelocity*motion.duration);
+    }
     target = next;glowStarted=0;dialog.classList.remove('nx-ai-glow-finished');
     welcomeAnimations.forEach(animation=>{
       if(open && animation.playState==='paused')animation.play();
@@ -445,7 +449,10 @@
     const duration=(open?480:420)*Math.max(.35,Math.sqrt(distance));
     const maxVelocity=3*Math.max(distance,.04)/duration;
     velocity=Math.max(-maxVelocity,Math.min(maxVelocity,velocity));
-    motion={from:progress,to:target,start:now,duration,velocity};
+    // The closing wave disappears into the button before its velocity drops
+    // to zero; the radius-linked light envelope hides the final handoff.
+    const endVelocity=open?0:-distance/duration;
+    motion={from:progress,to:target,start:performance.now(),duration,velocity,endVelocity};
     startFrame();
   }
   function requestOpen() {

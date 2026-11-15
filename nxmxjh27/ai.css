@@ -202,7 +202,9 @@ html.nx-ai-active > body > .page { visibility:hidden; }
 .nx-ai-suggestions.is-awaiting-entry button { opacity:0;transform:translateY(8px); }
 .nx-ai-suggestions button { display:flex;align-items:center;gap:14px;width:fit-content;max-width:100%;min-height:48px;padding:10px 6px;border:0;border-radius:10px;background:transparent;color:#929497;text-align:left;font:400 15px/1.6 -apple-system,BlinkMacSystemFont,"PingFang SC",sans-serif;cursor:pointer;-webkit-tap-highlight-color:transparent;touch-action:manipulation; }
 .nx-ai-suggestion-icon { width:24px;flex:none;text-align:center;font-size:21px;line-height:1.4; }
-.nx-ai-suggestions button:hover { background:#f2f2f4;color:#55585e; }
+@media (hover:hover) and (pointer:fine) {
+  .nx-ai-suggestions button:hover { background:#f2f2f4;color:#55585e; }
+}
 .nx-ai-suggestions button:focus-visible { outline:none;box-shadow:0 2px 8px #30283c18,0 7px 18px #30283c10; }
 .nx-ai.has-conversation .nx-ai-suggestions { display:none; }
 .nx-ai-welcome { min-height:0;flex-shrink:1;scrollbar-width:none; }
@@ -320,4 +322,11 @@ html.nx-ai-active > body > .page { visibility:hidden; }
   .nx-ai-suggestions { padding-top:0; }
   .nx-ai-suggestions button:not(.nx-ai-refresh) { width:100%; }
   .nx-ai-suggestions .nx-ai-refresh { right:0;min-height:40px;padding:8px 4px; }
+}
+
+/* Touch browsers can retain :hover and :focus-visible after a tap. */
+@media (hover:none), (pointer:coarse) {
+  .nx-ai-suggestions button:is(:hover,:focus,:focus-visible) {
+    background:transparent;box-shadow:none;outline:none;
+  }
 }
