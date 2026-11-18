@@ -1,7 +1,7 @@
 {
   "version": 1,
   "sourceRepository": "Eurus07e/personal-website",
-  "sourceCommit": "17593bb75ff0483465b7d28daa26530a3b9fb1e8",
+  "sourceCommit": "f09d5b8a68d7c84722fb8121bfdff11dbc33df13",
   "files": {
     ".nojekyll": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
     "assets/blog/article-search.css": "7fc82d051d097fe4dc7503be4faa88971e84af6821a72ea322029ace27843acc",
@@ -28,7 +28,7 @@
     "assets/uploads/图像2026-9-10 20.54.png": "2aae2520a45acbf48f1c5757aa32516831e7c8cc805ee5f70dc8f61fd8dbd20b",
     "assets/uploads/截屏2026-08-31 21.35.17.png": "513afa85f2abe9d24ecac60736f610adcfd80e12f87d1bd9cc17e32546b2f5d3",
     "blog/ai/index.html": "055a674b94f90c8e703b7927a19a13e9f88cb47bb51f6a3d768584dfc5215060",
-    "blog/beta-gamma-dirichlet-distributions/index.html": "2ef29d4a96ea0a8fde09bd7127303524654893f7eec828feb036ef65063ca24c",
+    "blog/beta-gamma-dirichlet-distributions/index.html": "3a4696f09f41a93663aaa9287248ad20c883abc2c759f9033a6b0c36caa02601",
     "blog/bintree/index.html": "a43dd396aedca8ed9f34d67d92aa6aded6d48ed52d4971600cc7740e4bd310d2",
     "blog/bonus01/index.html": "5e9aa0743b9fded1a3f9ab72e6908a8f4512cd7655c4dfd2a30420dfcad790c4",
     "blog/conditionalprobability/index.html": "3740e5d3a7b081cc2ce4954ce8cee64469d5c669b0a008373f24d24bedb0ff3a",
@@ -42,7 +42,7 @@
     "blog/hanota/index.html": "5b0de0c7c557cdd17b69b2756108666a7e42f626aef5276ac88535ea8821904e",
     "blog/heap/index.html": "44b1e8ce67285de08aaee86d262c6166dd89fc6a28da9d8d3fd6693084d02dd1",
     "blog/hotkeys/index.html": "a3ff3aced84f459266cb4c46751e9d0372747b1b2d6e8aa48af07e565834bd31",
-    "blog/index.html": "926e744b9077f648929b052faacc413125932236621a68db902d46476cfcf7d2",
+    "blog/index.html": "ccd66c3ca614c636bd1596eeb8390985d8a328ada664a812ab44b902b1d86fb0",
     "blog/justincase/index.html": "714e89b57d293e30291f4d93d332e20c23bacdfb84dbd98bfb89f03a8bb5ebb0",
     "blog/kmp/index.html": "37e638b002ba2d661c7cc55b0bda198ec047a5ac49c4b7135432d6c09fdcbd1d",
     "blog/logic2p2/index.html": "a4439822d55d61ee09602d48bc75aebccaddd29f54b9d43be10c050524dff11b",
