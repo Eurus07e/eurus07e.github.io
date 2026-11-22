@@ -31,9 +31,30 @@
   menu.addEventListener('click',()=>setMenu(menu.getAttribute('aria-expanded')!=='true'));
   document.querySelector('.ai-nav-entry').addEventListener('click',()=>setMenu(false));
   matchMedia('(max-width:640px)').addEventListener('change',()=>setMenu(false));
-  window.addEventListener('pageshow',()=>setMenu(false));
+  const topOnly=document.getElementById('nav-top-only');
+  const bar=menu.closest('.topbar');
+  const storageKey='nanxing-nav-top-only';
+  function updateBar(){
+    const hide=topOnly.checked && window.scrollY>1;
+    if(bar.inert===hide)return;
+    if(hide)setMenu(false);
+    bar.inert=hide;
+  }
+  function restoreNavPreference(){
+    try{topOnly.checked=localStorage.getItem(storageKey)==='true';}catch{}
+    updateBar();
+  }
+  restoreNavPreference();
+  window.addEventListener('scroll',updateBar,{passive:true});
+  window.addEventListener('pageshow',()=>{setMenu(false);restoreNavPreference();});
+  window.addEventListener('storage',e=>{if(e.key===storageKey||e.key===null)restoreNavPreference();});
   trigger.addEventListener('click',()=>open(panel.hidden));
-  panel.addEventListener('change',({target})=>apply(target.name,target.value,true));
+  panel.addEventListener('change',({target})=>{
+    if(target===topOnly){
+      try{localStorage.setItem(storageKey,String(topOnly.checked));}catch{}
+      updateBar();
+    }else apply(target.name,target.value,true);
+  });
   document.addEventListener('pointerdown',e=>{if(!e.target.closest('.preferences'))open(false);});
   document.addEventListener('focusin',e=>{
     if(!e.target.closest('.preferences'))open(false);
