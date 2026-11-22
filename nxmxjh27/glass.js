@@ -8,18 +8,17 @@
   svg.style.cssText='position:absolute;width:0;height:0;pointer-events:none';
   document.body.append(svg);
 
-  function updateMap(image,width,height) {
+  function updateMap(image,width,height,radius) {
     const canvas = document.createElement('canvas');
     canvas.width = width;
     canvas.height = height;
     const ctx = canvas.getContext('2d');
     if (!ctx) return;
     const map = ctx.createImageData(width,height);
-    const radius = height/2;
     for (let y=0;y<height;y++) {
       for (let x=0;x<width;x++) {
         const dx = x+.5 - Math.min(width-radius,Math.max(radius,x+.5));
-        const dy = y+.5-radius;
+        const dy = y+.5 - Math.min(height-radius,Math.max(radius,y+.5));
         const distance = Math.hypot(dx,dy);
         const depth = radius-distance;
         const bend = depth>=0 && depth<6 ? Math.sin(Math.PI*depth/6) : 0;
@@ -33,7 +32,7 @@
     image.setAttribute('href',canvas.toDataURL());
   }
 
-  for (const [index,host] of [...nav.querySelectorAll('.brand,.nav-menu-toggle,.nav-items,.ai-nav-entry,.nx-ai-toggle')].entries()) {
+  for (const [index,host] of [...nav.querySelectorAll('.brand,.nav-menu-toggle,.nav-items,.ai-nav-entry,.nx-ai-toggle,#preferences-panel')].entries()) {
     const id='member-lens-'+index;
     const filter=document.createElementNS(ns,'filter');
     filter.id=id;
@@ -50,8 +49,10 @@
     new ResizeObserver(()=>{
       const width=host.offsetWidth,height=host.offsetHeight;
       // The expanded mobile navigation is a sheet, not a lens.
-      if (!width || !height || height>64 || width<height) return;
-      updateMap(image,width,height);
+      if (!width || !height || (host.matches('.nav-items') && height>64)) return;
+      const corner = parseFloat(getComputedStyle(host).borderTopLeftRadius);
+      const radius = host.id==='preferences-panel' ? corner : height/2;
+      updateMap(image,width,height,radius);
       host.style.setProperty('--edge-lens',`url("#${id}")`);
     }).observe(host);
   }

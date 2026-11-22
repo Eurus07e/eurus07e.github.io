@@ -165,11 +165,11 @@ html{scroll-padding-top:calc(var(--nav-height) + 10px + env(safe-area-inset-top)
 .member-nav .nx-ai-toggle:not(.is-hover-paused):hover{box-shadow:none;background:transparent}
 .member-nav :focus-visible{outline:2px solid var(--link);outline-offset:1px}
 .preferences{position:relative}
-#preferences-panel{position:absolute;right:0;top:calc(100% + 6px);z-index:40;background:white;border:1px solid #dedee4;border-radius:16px;box-shadow:0 12px 40px #2422371c;padding:18px;width:260px;color:var(--ink)}
+#preferences-panel{position:absolute;right:0;top:calc(100% + 6px);z-index:40;isolation:isolate;background:transparent;border:0;border-radius:18px;padding:18px;width:260px;color:var(--ink)}
 #preferences-panel fieldset{border:0;padding:0;margin:0;min-width:0}
 #preferences-panel fieldset+fieldset{margin-top:16px}
 #preferences-panel legend{font:600 13px var(--member-sans);margin-bottom:8px;padding:0}
-.segments{display:flex;position:relative;isolation:isolate;border-radius:10px;background:var(--tint);padding:3px}
+.segments{display:flex;position:relative;isolation:isolate;border-radius:10px;background:color-mix(in srgb,var(--link) 9%,rgba(246,246,248,.7));padding:3px}
 .segments::before{content:"";position:absolute;z-index:-1;left:3px;top:3px;bottom:3px;width:calc((100% - 6px)/3);background:white;border-radius:7px;box-shadow:0 1px 4px #28203226;transition:transform .22s cubic-bezier(.2,.75,.25,1)}
 .segments:has(label:nth-child(2) input:checked)::before{transform:translateX(100%)}
 .segments:has(label:nth-child(3) input:checked)::before{transform:translateX(200%)}
@@ -221,7 +221,7 @@ html{scroll-padding-top:calc(var(--nav-height) + 10px + env(safe-area-inset-top)
 .nav-items{display:flex;align-items:center;gap:4px}
 .member-nav :is(.brand,.nav-menu-toggle,.nx-ai-toggle,.nav-items){pointer-events:auto}
 .member-nav :is(.brand,.nav-menu-toggle,.nx-ai-toggle){position:relative;inset:auto;isolation:isolate;border-radius:50%}
-.member-nav :is(.brand,.nav-menu-toggle,.nx-ai-toggle)::before,.nav-items::before{
+.member-nav :is(.brand,.nav-menu-toggle,.nx-ai-toggle)::before,.nav-items::before,#preferences-panel::before{
  content:"";position:absolute;inset:0;z-index:-1;pointer-events:none;border-radius:inherit;
  background:linear-gradient(163deg,#ffffff66 0%,transparent 32%,#bec7d012 70%,#ffffff52 100%),var(--nav-glass);
  -webkit-backdrop-filter:blur(13px) saturate(175%);backdrop-filter:blur(13px) saturate(175%);
@@ -229,9 +229,15 @@ html{scroll-padding-top:calc(var(--nav-height) + 10px + env(safe-area-inset-top)
 }
 /* Chromium can refract the live backdrop. WebKit keeps the frosted optical rim. */
 @supports (backdrop-filter:url("#rim")) and (not (-webkit-touch-callout:none)){
- .member-nav :is(.brand,.nav-menu-toggle,.nx-ai-toggle)::before,.nav-items::before{
+ .member-nav :is(.brand,.nav-menu-toggle,.nx-ai-toggle)::before,.nav-items::before,#preferences-panel::before{
    backdrop-filter:var(--edge-lens,blur(0px)) blur(2.2px) saturate(155%);
  }
+}
+#preferences-panel::before{
+ -webkit-backdrop-filter:blur(20px) saturate(155%);backdrop-filter:blur(20px) saturate(155%);
+}
+@supports (backdrop-filter:url("#rim")) and (not (-webkit-touch-callout:none)){
+ #preferences-panel::before{backdrop-filter:var(--edge-lens,blur(0px)) blur(12px) saturate(155%)}
 }
 @media(min-width:641px){
  .nav-items{position:relative;isolation:isolate;border-radius:999px;padding-inline:10px}
@@ -255,7 +261,7 @@ html{scroll-padding-top:calc(var(--nav-height) + 10px + env(safe-area-inset-top)
  body>.page{transition:opacity .22s ease}
  .member-menu-open body>.page{opacity:.38}
  .nav-items>a,.nav-items .settings-trigger{padding:2px 0;font-size:27px;font-weight:600;line-height:1.4;min-height:44px}
- .nav-items #preferences-panel{position:static;margin:6px 0;width:min(280px,calc(100vw - 64px))}
+ .nav-items #preferences-panel{position:relative;inset:auto;margin:6px 0;width:min(280px,calc(100vw - 64px))}
  html.member-menu-open{overflow:hidden}
  .topbar::before{
    content:"";position:absolute;inset:0 0 auto;z-index:-1;pointer-events:none;
