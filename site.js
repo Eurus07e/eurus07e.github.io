@@ -47,7 +47,7 @@ if (articleToc) {
   let outlineAnimation = null;
   let openingOutline = false;
   const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
-  const backLink = document.querySelector('.article-main > .back-link');
+  const backLink = document.querySelector('.article-main > .back-link, [data-outline-anchor]');
   const outlineButton = document.createElement('button');
   outlineButton.type = 'button';
   outlineButton.className = 'article-toc-toggle';

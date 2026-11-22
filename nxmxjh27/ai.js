@@ -1,10 +1,11 @@
 (() => {
   'use strict';
   const star = (id, className = '') => `<svg class="${className}" viewBox="0 0 40 40" fill="none" aria-hidden="true"><defs><linearGradient id="${id}" x1="3" y1="35" x2="35" y2="4" gradientUnits="userSpaceOnUse"><stop stop-color="#5cadf7"/><stop offset=".38" stop-color="#8b7ce7"/><stop offset=".68" stop-color="#d38ac8"/><stop offset="1" stop-color="#f1a887"/></linearGradient></defs><path d="M20 3c1.9 11 6 15.1 17 17-11 1.9-15.1 6-17 17C18.1 26 14 21.9 3 20 14 18.1 18.1 14 20 3Z" fill="url(#${id})"/></svg>`;
-  const toggle = document.createElement('button');
+  const toggle = document.querySelector('.ai-nav-entry');
+  if (!toggle) return;
   toggle.className = 'nx-ai-toggle';
   toggle.type = 'button';
-  toggle.setAttribute('aria-label', '打开南星 AI');
+  toggle.setAttribute('aria-label', 'AI 助手');
   toggle.setAttribute('aria-haspopup', 'dialog');
   toggle.setAttribute('aria-controls', 'nx-ai');
   toggle.setAttribute('aria-expanded', 'false');
@@ -13,7 +14,7 @@
   const entrySpace = document.createElement('span');
   entrySpace.className = 'nx-ai-entry-space';
   entrySpace.setAttribute('aria-hidden','true');
-  (document.querySelector('.directory-header h1') || document.body).append(anchor, toggle);
+  toggle.before(anchor);
 
   const dialog = document.createElement('dialog');
   dialog.id = 'nx-ai';
@@ -521,7 +522,7 @@
     // changing state; otherwise reparenting can skip the opening transition.
     getComputedStyle(toggle.querySelector('.nx-ai-close-icon')).transform;
     toggle.setAttribute('aria-expanded',String(open));
-    toggle.setAttribute('aria-label',open?'关闭南星 AI':'打开南星 AI');
+    toggle.setAttribute('aria-label',open?'关闭南星 AI':'AI 助手');
     if (!open) {
       document.documentElement.classList.remove('nx-ai-active');
       dialog.classList.remove('nx-ai-settled');
