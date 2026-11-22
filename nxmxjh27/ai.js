@@ -561,12 +561,14 @@
   }
   toggle.addEventListener('pointerleave',()=>toggle.classList.remove('is-hover-paused'));
   toggle.addEventListener('click',event=>{
+    toggle.classList.toggle('pointer-activated', event.detail > 0);
     if(event.detail>0)toggle.classList.add('is-hover-paused');
     target?requestClose():requestOpen();
   });
   dialog.addEventListener('cancel',event=>{if(event.target!==dialog)return;event.preventDefault();requestClose();});
   dialog.addEventListener('keydown',event=>{
     if(event.key!=='Tab')return;
+    toggle.classList.remove('pointer-activated');
     const presets=[...suggestions.querySelectorAll('button')].filter(button=>button.getClientRects().length);
     const composerControls=[...form.querySelectorAll('textarea,button:not(:disabled),summary')].filter(e=>e.getClientRects().length);
     const mobile=matchMedia('(max-width:767px), (pointer:coarse)').matches;

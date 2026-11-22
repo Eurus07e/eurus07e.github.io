@@ -553,4 +553,4 @@ html.nx-ai-active > body > .page { visibility:hidden; }
 .nx-ai > .nx-ai-toggle::before{content:"";position:absolute;inset-block:calc((var(--nav-height) - 44px)/2);inset-inline:calc((var(--nav-height) - 44px)/2) 0}
 .nx-ai > .nx-ai-toggle .nx-ai-close-icon{width:28px;height:28px;justify-content:center;border:1px solid var(--soft-line);border-radius:50%;background:white}
 .nx-ai > .nx-ai-toggle .nx-ai-close-icon svg{width:17px;height:17px}
-.nx-ai > .nx-ai-toggle:focus-visible .nx-ai-close-icon{outline:2px solid var(--link);outline-offset:1px}
+.nx-ai > .nx-ai-toggle:not(.pointer-activated):focus-visible .nx-ai-close-icon{border:2px solid #666}

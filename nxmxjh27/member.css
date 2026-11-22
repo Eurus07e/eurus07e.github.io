@@ -143,6 +143,7 @@ html{scroll-behavior:auto;-webkit-text-size-adjust:100%;text-size-adjust:100%}
  --member-sans:-apple-system,BlinkMacSystemFont,"PingFang SC","Microsoft YaHei",sans-serif;
  --member-font:"Songti SC","STSong","SimSun","Noto Serif CJK SC",Georgia,serif;
  --nav-height:36px;
+ --nav-glass:rgba(255,255,255,.36);
  --ink:#493956;--heading:#403047;--muted:#6e6476;--link:#674482;--link-hover:#47265f;
  --date:var(--muted);--line:#aaa;--soft-line:#e3e3e3;
  --tint:color-mix(in srgb,var(--link) 8%,white);
@@ -153,7 +154,7 @@ html{scroll-behavior:auto;-webkit-text-size-adjust:100%;text-size-adjust:100%}
 :root[data-font="kai"]{--member-font:"Kaiti SC","STKaiti","KaiTi","DFKai-SB",Georgia,serif}
 body,.member-reading .article-body,.member-home .article-body{color:var(--ink);font-family:var(--member-font)}
 html{scroll-padding-top:calc(var(--nav-height) + 10px + env(safe-area-inset-top))}
-.topbar{position:sticky;top:0;z-index:20;background:rgba(255,255,255,.28);-webkit-backdrop-filter:blur(13px) saturate(175%);backdrop-filter:blur(13px) saturate(175%);padding:calc(env(safe-area-inset-top) + 7px) calc(env(safe-area-inset-right) + 7px) 7px max(14px,env(safe-area-inset-left))}
+.topbar{position:sticky;top:0;z-index:20;background:var(--nav-glass);-webkit-backdrop-filter:blur(13px) saturate(175%);backdrop-filter:blur(13px) saturate(175%);padding:calc(env(safe-area-inset-top) + 7px) calc(env(safe-area-inset-right) + 7px) 7px max(14px,env(safe-area-inset-left))}
 .member-nav{width:100%;display:flex;align-items:center;justify-content:flex-end;gap:clamp(6px,1.3vw,22px);min-height:var(--nav-height);font:500 14px/1.3 var(--member-sans)}
 .member-nav>a,.nav-items>a,.member-nav>.nx-ai-toggle,.member-nav>.ai-nav-entry,.settings-trigger{display:inline-flex;align-items:center;justify-content:center;min-height:var(--nav-height);padding:0 8px;color:var(--ink);white-space:nowrap}
 .member-nav .brand{margin-inline-end:auto;padding-inline-start:0}
@@ -239,7 +240,7 @@ html{scroll-padding-top:calc(var(--nav-height) + 10px + env(safe-area-inset-top)
  .topbar{background:transparent;-webkit-backdrop-filter:none;backdrop-filter:none}
  .topbar::before{
    content:"";position:absolute;inset:0 0 auto;z-index:-1;pointer-events:none;
-   height:100%;background:rgba(255,255,255,.28);
+   height:100%;background:var(--nav-glass);
    -webkit-backdrop-filter:blur(13px) saturate(175%);backdrop-filter:blur(13px) saturate(175%);
    transition:height .28s cubic-bezier(.22,.75,.25,1);
  }
