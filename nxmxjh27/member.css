@@ -143,7 +143,7 @@ html{scroll-behavior:auto;-webkit-text-size-adjust:100%;text-size-adjust:100%}
  --member-sans:-apple-system,BlinkMacSystemFont,"PingFang SC","Microsoft YaHei",sans-serif;
  --member-font:"Songti SC","STSong","SimSun","Noto Serif CJK SC",Georgia,serif;
  --nav-height:36px;
- --nav-glass:rgba(255,255,255,.36);
+ --nav-glass:rgba(255,255,255,.20);
  --ink:#493956;--heading:#403047;--muted:#6e6476;--link:#674482;--link-hover:#47265f;
  --date:var(--muted);--line:#aaa;--soft-line:#e3e3e3;
  --tint:color-mix(in srgb,var(--link) 8%,white);
