@@ -96,7 +96,7 @@
   function restoreNavPreference(){
     let saved=null;
     try{saved=localStorage.getItem(storageKey());}catch{}
-    topOnly.checked=saved===null?compact.matches:saved==='true';
+    topOnly.checked=saved==='true';
     measureThreshold();
     updateBar();
   }
