@@ -77,7 +77,9 @@
   }
   restoreNavPreference();
   window.addEventListener('scroll',updateBar,{passive:true});
-  window.addEventListener('pageshow',()=>{setMenu(false);restoreNavPreference();});
+  window.addEventListener('pageshow',event=>{
+    if(event.persisted){setMenu(false);restoreNavPreference();}
+  });
   window.addEventListener('storage',e=>{if(e.key===storageKey||e.key===null)restoreNavPreference();});
   trigger.addEventListener('click',()=>open(!expanded()));
   panel.addEventListener('change',({target})=>{
