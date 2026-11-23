@@ -57,7 +57,10 @@
     menu.setAttribute('aria-expanded',String(show));
     root.classList.toggle('member-menu-open',show);
     content.inert=show;
-    if(!show)open(false);
+    if(!show){
+      open(false);
+      requestAnimationFrame(updateBar);
+    }
   }
   menu.addEventListener('click',()=>setMenu(menu.getAttribute('aria-expanded')!=='true'));
   document.querySelector('.ai-nav-entry').addEventListener('click',()=>setMenu(false));
@@ -83,7 +86,9 @@
   function updateBar(){
     const offset=window.scrollY;
     bar.classList.toggle('is-scrolled',offset>8);
-    const hide=topOnly.checked && (bar.inert ? offset>1 : offset>=(compact.matches?mobileHideOffset:96));
+    // A short viewport may scroll while a control in the open sheet gains focus.
+    const menuOpen=menu.getAttribute('aria-expanded')==='true';
+    const hide=topOnly.checked && !menuOpen && (bar.inert ? offset>1 : offset>=(compact.matches?mobileHideOffset:96));
     if(bar.inert===hide)return;
     if(hide)setMenu(false);
     bar.inert=hide;
