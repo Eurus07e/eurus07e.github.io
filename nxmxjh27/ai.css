@@ -42,7 +42,7 @@ html.nx-ai-open::-webkit-scrollbar, html.nx-ai-open > body::-webkit-scrollbar { 
 }
 .nx-ai::backdrop { background: transparent; }
 html.nx-ai-active > body > .page { visibility:hidden; }
-.nx-ai > .nx-ai-toggle { position:absolute; width:var(--nav-height); height:var(--nav-height); top:calc(7px + env(safe-area-inset-top)); right:calc(7px + env(safe-area-inset-right)); }
+.nx-ai > .nx-ai-toggle { position:absolute; width:var(--nav-height); height:var(--nav-height); top:var(--nx-ai-exit-top); right:var(--nx-ai-exit-right); isolation:isolate; }
 .nx-ai.nx-ai-settled, .nx-ai.nx-ai-settled::backdrop { background:var(--nx-ai-background); }
 .nx-ai *, .nx-ai *::before, .nx-ai *::after { box-sizing: border-box; }
 .nx-ai-surface {
@@ -546,11 +546,11 @@ html.nx-ai-active > body > .page { visibility:hidden; }
 .nx-ai .nx-ai-tool.is-hover-paused[aria-pressed="false"] { box-shadow:none; }
 .nx-ai .nx-ai-reasoning > summary { padding-left:0; }
 
-/* The reveal uses the entry's center; only the visible close control shrinks. */
+/* The same button anchors the reveal and its return action. */
 .nx-ai > button.nx-ai-toggle:is(:enabled,:hover,:focus-visible){
  border:0;background:transparent;box-shadow:none;color:var(--ink);
 }
 .nx-ai > .nx-ai-toggle::before{content:"";position:absolute;inset-block:calc((var(--nav-height) - 44px)/2);inset-inline:calc((var(--nav-height) - 44px)/2) 0}
-.nx-ai > .nx-ai-toggle .nx-ai-close-icon{width:28px;height:28px;justify-content:center;border:1px solid var(--soft-line);border-radius:50%;background:white}
+.nx-ai > .nx-ai-toggle .nx-ai-close-icon{width:100%;height:100%;justify-content:center;border-radius:50%}
 .nx-ai > .nx-ai-toggle .nx-ai-close-icon svg{width:17px;height:17px}
 .nx-ai > .nx-ai-toggle:not(.pointer-activated):focus-visible .nx-ai-close-icon{border:2px solid #666}

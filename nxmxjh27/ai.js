@@ -320,7 +320,7 @@
     const width = dialog.clientWidth || innerWidth, height = dialog.clientHeight || innerHeight;
     geometry = {x, y, width, height, radius: Math.hypot(Math.max(x,width-x)/width, Math.max(y,height-y)/height) + .08};
     // Cap fill rate on high-DPI phones and large displays without softening the UI.
-    const scale = Math.min(devicePixelRatio || 1, 1.5, Math.sqrt(1400000 / (width * height)));
+    const scale = Math.min(devicePixelRatio || 1, 1.5, Math.sqrt(800000 / (width * height)));
     const pixelWidth=Math.round(width*scale),pixelHeight=Math.round(height*scale);
     if(canvas.width!==pixelWidth || canvas.height!==pixelHeight){
       canvas.width=pixelWidth;canvas.height=pixelHeight;
