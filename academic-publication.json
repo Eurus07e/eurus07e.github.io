@@ -1,7 +1,7 @@
 {
   "version": 1,
   "sourceRepository": "Eurus07e/personal-website",
-  "sourceCommit": "1cd025e276ce4c1829d2f834a3f239a96760d066",
+  "sourceCommit": "88431b7c92a442da425789dffb4aced6a1226508",
   "files": {
     ".nojekyll": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
     "assets/blog/article-search.css": "7fc82d051d097fe4dc7503be4faa88971e84af6821a72ea322029ace27843acc",
@@ -42,7 +42,7 @@
     "blog/hanota/index.html": "f22a67f239e050f24dadec41c0133382e1e05a10374304f4f37809202f8e41f6",
     "blog/heap/index.html": "a9ed3f1a7681e0ce69fe577868d9bce2123a1810ce5a777b1c8861297963f972",
     "blog/hotkeys/index.html": "ee0ddaa0d2b9eb35a30b083a94e8037d2c0d913015a65e7b9473042c1a67fb1c",
-    "blog/index.html": "56524df8b2bd580a526450c3bceb06cad4cbc45a1493cc428ce42d2920835521",
+    "blog/index.html": "7a81bce454f8cf58b1614c2b376485a8eb3e99896e05595fed6dfe54969d58a5",
     "blog/justincase/index.html": "3a1c12a2e4b7ed8dd9f838c803e47a28e1fc3fd4f54e29961b951d5124c9df25",
     "blog/kmp/index.html": "6a6d309bb1ad9cc2e9c082b84cbfe013fa67fa20acd1ee4c093544391f3d4dd2",
     "blog/logic2p2/index.html": "05ad2a60832278ff350493ed0cfe780cb0151a6accf65839969174de9d0319ab",
@@ -66,7 +66,7 @@
     "blog/rpn/index.html": "4a23ce7aaf7ff0b4b5199128845491c2c83084c85d149594b3acfafde507eef5",
     "blog/rv/index.html": "eea66c1f6c6c5ae94fa81db607415fc0ff8e6c2486487406181c28727710d712",
     "blog/sampling-distributions-and-degrees-of-freedom/index.html": "9e314d34a1c5321f5487be85cfe36d7219761f014f4ae3aa11e25b22fa60b721",
-    "blog/sampling-distributions-from-a-normal-population/index.html": "1a8b563bdf7cba09c374b534b55f0ffdd55fb72d9a633b9b3b97a775e7e5692f",
+    "blog/sampling-distributions-from-a-normal-population/index.html": "423541c61e998b5a4b99378524f200a7992b5e03b7cfec845ab7542266d9be1f",
     "blog/scireading/index.html": "6349b2ba0ab48b696d26daded0e8fbbb4e690c3c67a3fef30d08e06216fd64e0",
     "blog/terminal/index.html": "e80174bdaf9aba83d159c2ab9087407f6b1d03aefc576b08f882443fc0b08222",
     "blog/twelvefold-way/index.html": "54fe8d4edbc0bfde2ecacf171d48ed300ede07bf7aef2ee446d28b479ac6b4d7",
