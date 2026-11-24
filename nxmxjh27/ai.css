@@ -554,12 +554,12 @@ html.nx-ai-active > body > .page { visibility:hidden; }
 .nx-ai > .nx-ai-toggle::before{content:"";position:absolute;inset-block:calc((var(--nav-height) - 44px)/2);inset-inline:calc((var(--nav-height) - 44px)/2) 0}
 .nx-ai > .nx-ai-toggle .nx-ai-close-icon{width:100%;height:100%;justify-content:center;border-radius:50%}
 .nx-ai > .nx-ai-toggle .nx-ai-close-icon svg{width:17px;height:17px}
-.nx-ai > .nx-ai-toggle:not(.pointer-activated):focus-visible .nx-ai-close-icon{border:2px solid light-dark(#666,var(--line))}
+:root:not(.using-pointer) .nx-ai > .nx-ai-toggle:focus-visible{outline:2px solid var(--keyboard-focus);outline-offset:2px}
 
 @media screen and (prefers-color-scheme:dark) {
   :root { --nx-ai-background:var(--canvas); }
   .nx-ai-composer:has(textarea:focus) { background:color-mix(in srgb,var(--surface) 88%,var(--raised));border-color:var(--soft-line); }
-  .nx-ai :is(button,summary,a):focus-visible { outline:2px solid var(--link);outline-offset:2px; }
+  :root:not(.using-pointer) .nx-ai :is(button,summary,a):focus-visible { outline:2px solid var(--keyboard-focus);outline-offset:2px; }
   .nx-ai-send:disabled { color:var(--muted);background:var(--surface); }
   .nx-ai-message-body table { border-collapse:collapse; }
   .nx-ai-message-body :is(th,td) { border:1px solid var(--line);padding:.35em .6em; }

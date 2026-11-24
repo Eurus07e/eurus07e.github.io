@@ -248,6 +248,7 @@ html{scroll-behavior:auto;-webkit-text-size-adjust:100%;text-size-adjust:100%}
  --member-sans:-apple-system,BlinkMacSystemFont,"PingFang SC","Microsoft YaHei",sans-serif;
  --member-font:"Songti SC","STSong","SimSun","Noto Serif CJK SC","Nanxing Song","Nanxing Song Extra",Georgia,serif;
  --nav-height:36px;
+ --keyboard-focus:#646464;
  --canvas:#fff; --surface:#fafafa; --raised:#f2f2f4;
  --glass-sheen:linear-gradient(163deg,#ffffff36,transparent 32%,#bec7d00a 70%,#ffffff28);
  --glass-edge:inset 0 1.4px 1.6px #fffffff5,inset 1px 0 2px #ffffffc7,inset -1px -1.5px 2.5px #54607324,0 1px 2px #34425813,0 4px 10px -3px #25344828;
@@ -272,7 +273,7 @@ html{scroll-padding-top:calc(var(--nav-height) + 10px + env(safe-area-inset-top)
 .member-nav .nx-ai-toggle,.member-nav .ai-nav-entry,.settings-trigger{position:static;background:transparent;border:0;box-shadow:none;border-radius:6px;width:auto;height:auto;font:inherit;cursor:pointer}
 .member-nav .nx-ai-toggle .nx-ai-close-icon{display:none}
 .member-nav .nx-ai-toggle:not(.is-hover-paused):hover{box-shadow:none;background:transparent}
-.member-nav :focus-visible{outline:2px solid var(--link);outline-offset:1px}
+.member-nav :focus-visible{outline:2px solid var(--keyboard-focus);outline-offset:1px}
 .preferences{position:relative}
 #preferences-panel{position:absolute;right:0;top:calc(100% + 6px);z-index:40;isolation:isolate;background:transparent;border:0;border-radius:18px;padding:18px;width:260px;color:var(--ink)}
 .settings-content{position:relative}
@@ -287,7 +288,7 @@ html{scroll-padding-top:calc(var(--nav-height) + 10px + env(safe-area-inset-top)
 .segments input{position:absolute;opacity:0;width:1px;height:1px}
 .segments span{display:block;border-radius:7px;padding:9px 0;font-size:13px;color:var(--muted)}
 .segments input:checked+span{color:var(--heading);font-weight:600}
-.segments input:focus-visible+span{outline:2px solid var(--link)}
+.segments input:focus-visible+span{outline:2px solid var(--keyboard-focus)}
 @media(prefers-reduced-motion:reduce){.segments::before{transition:none}}
 .page.landing-page{width:min(960px,calc(100% - 72px))}
 .member-title{padding:24px 0 22px}
@@ -389,7 +390,7 @@ html{scroll-padding-top:calc(var(--nav-height) + 10px + env(safe-area-inset-top)
 .nav-preference span::after{content:"";display:block;width:16px;height:16px;border-radius:50%;background:white;box-shadow:0 1px 2px #0003;transition:transform .2s ease}
 .nav-preference input:checked+span{background:var(--link)}
 .nav-preference input:checked+span::after{transform:translateX(14px)}
-.nav-preference input:focus-visible+span{outline:2px solid var(--link);outline-offset:2px}
+.nav-preference input:focus-visible+span{outline:2px solid var(--keyboard-focus);outline-offset:2px}
 .topbar{
  opacity:1;transform:translateY(0);
  transition:transform .32s cubic-bezier(.22,.75,.25,1),opacity .24s ease-out,visibility 0s;
@@ -454,6 +455,7 @@ html{scroll-padding-top:calc(var(--nav-height) + 10px + env(safe-area-inset-top)
 @media screen and (prefers-color-scheme:dark){
  :root{
   color-scheme:dark;
+  --keyboard-focus:#aaa;
   --canvas:#19171d; --surface:#25232b; --raised:#35323d;
   --ink:#e2dbe8; --heading:#f3ecf7; --muted:#b7adbf;
   --link:#d8b6ef; --link-hover:#f1d5ff;
@@ -483,11 +485,19 @@ html{scroll-padding-top:calc(var(--nav-height) + 10px + env(safe-area-inset-top)
  .article-body pre,.article-body :not(pre)>code{background:var(--surface)}
  .article-body blockquote{color:var(--muted)}
  .article-body blockquote::before{background:var(--line)}
- .member-nav :focus-visible, .page :focus-visible,.skip-link:focus-visible{outline:2px solid var(--link);outline-offset:2px}
+ .member-nav :focus-visible, .page :focus-visible,.skip-link:focus-visible{outline:2px solid var(--keyboard-focus);outline-offset:2px}
 }
 @media screen and (prefers-color-scheme:dark) and (min-width:641px){
  .member-nav::before{background:var(--nav-glass)}
 }
 @media screen and (prefers-color-scheme:dark) and (min-width:641px) and (max-width:1199px){
  .article-toc{background:var(--surface)}
+}
+
+/* Keep pointer activation quiet, including focus restored after a dialog closes. */
+html.using-pointer #nx-ai :is(button,a,summary):focus,
+html.using-pointer :is(button,a,summary,input):focus,
+html.using-pointer :is(.segments,.nav-preference) input:focus+span{
+ outline:none;
+ box-shadow:none;
 }

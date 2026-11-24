@@ -1,5 +1,12 @@
 (() => {
   const root = document.documentElement;
+  // A dialog can move focus after a tap and still match :focus-visible.
+  document.addEventListener('pointerdown', () => root.classList.add('using-pointer'), true);
+  document.addEventListener('keydown', event => {
+    if (['Tab', 'ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight', 'Home', 'End', 'Enter', ' ', 'Escape'].includes(event.key)) {
+      root.classList.remove('using-pointer');
+    }
+  }, true);
   const panel = document.getElementById('preferences-panel') || document.querySelector('.settings-page');
   const trigger = document.querySelector('.settings-trigger');
   const options = {font:['song','kai','system'],color:['purple','ink','blue']};
