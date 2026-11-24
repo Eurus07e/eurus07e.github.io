@@ -249,9 +249,9 @@ html{scroll-behavior:auto;-webkit-text-size-adjust:100%;text-size-adjust:100%}
  --member-font:"Songti SC","STSong","SimSun","Noto Serif CJK SC","Nanxing Song","Nanxing Song Extra",Georgia,serif;
  --nav-height:36px;
  --canvas:#fff; --surface:#fafafa; --raised:#f2f2f4;
- --glass-sheen:linear-gradient(163deg,#ffffff66,transparent 32%,#bec7d012 70%,#ffffff52);
+ --glass-sheen:linear-gradient(163deg,#ffffff36,transparent 32%,#bec7d00a 70%,#ffffff28);
  --glass-edge:inset 0 1.4px 1.6px #fffffff5,inset 1px 0 2px #ffffffc7,inset -1px -1.5px 2.5px #54607324,0 1px 2px #34425813,0 4px 10px -3px #25344828;
- --nav-glass:rgba(255,255,255,.15);
+ --nav-glass:rgba(255,255,255,.08);
  --ink:#493956;--heading:#403047;--muted:#6e6476;--link:#674482;--link-hover:#47265f;
  --date:var(--muted);--line:#aaa;--soft-line:#e3e3e3;
  --tint:color-mix(in srgb,var(--link) 8%,white);
@@ -340,7 +340,7 @@ html{scroll-padding-top:calc(var(--nav-height) + 10px + env(safe-area-inset-top)
 }
 @media(min-width:641px){
  .topbar{border-bottom:1px solid #dedee3}
- .member-nav::before{background:rgba(255,255,255,.45);box-shadow:none;opacity:0;transition:opacity .18s ease}
+ .member-nav::before{background:rgba(255,255,255,.24);box-shadow:none;opacity:0;transition:opacity .18s ease}
  .topbar.is-scrolled .member-nav::before{opacity:1}
  .member-nav .nx-ai-toggle::before,.nav-controls::before{content:none}
  .nav-controls{padding-inline-end:8px;margin-inline-end:auto}
@@ -457,11 +457,11 @@ html{scroll-padding-top:calc(var(--nav-height) + 10px + env(safe-area-inset-top)
   --canvas:#19171d; --surface:#25232b; --raised:#35323d;
   --ink:#e2dbe8; --heading:#f3ecf7; --muted:#b7adbf;
   --link:#d8b6ef; --link-hover:#f1d5ff;
-  --line:#595360; --soft-line:#403b46;
+  --line:#433e48; --soft-line:#332f37;
   --tint:color-mix(in srgb,var(--link) 12%,var(--canvas));
-  --nav-glass:rgba(34,32,40,.87);
-  --glass-sheen:linear-gradient(163deg,#ddd2ec0e,transparent 40%,#bbb4ce06);
-  --glass-edge:inset 0 0 0 1px #dfd4ef24,inset 0 1px 1px #e5def014,0 4px 14px #0004;
+  --nav-glass:rgba(39,35,42,.26);
+  --glass-sheen:radial-gradient(ellipse at 18% 0%,#f3ded315,transparent 62%);
+  --glass-edge:inset 0 2px 5px -3px #e4cfc429,0 5px 18px -6px #09070b66;
  }
  :root[data-color="ink"]{
   --ink:#dfdfe1; --heading:#f4f4f5; --muted:#b4b4ba; --link:#d1d1d5; --link-hover:#fff;
@@ -471,13 +471,13 @@ html{scroll-padding-top:calc(var(--nav-height) + 10px + env(safe-area-inset-top)
  }
  html,body{background:var(--canvas)}
  .skip-link,.segments{background:var(--surface)}
- .segments{box-shadow:inset 0 0 0 1px var(--soft-line)}
- .segments::before{background:color-mix(in srgb,var(--link) 22%,var(--surface));box-shadow:inset 0 0 0 1px #ffffff26}
+ .segments::before{background:color-mix(in srgb,var(--link) 22%,var(--surface));box-shadow:0 2px 6px #100e141f}
  .nav-preference span{background:#605a67}
  .nav-preference span::after{background:#e4dfea}
  .nav-preference input:checked+span::after{background:var(--canvas)}
  .home-section,.topbar,.worklist-tools .worklist-outline-heading{border-color:var(--soft-line)}
- .worklist-tools::before{box-shadow:var(--glass-edge)}
+ .worklist-tools::before{background:var(--glass-sheen),var(--nav-glass);box-shadow:var(--glass-edge)}
+ #preferences-panel,.worklist-tools .article-toc{--nav-glass:rgba(36,32,39,.46)}
  .article-body th{background:var(--tint);color:var(--heading)}
  .article-body :is(th,td,pre){border-color:var(--line)}
  .article-body pre,.article-body :not(pre)>code{background:var(--surface)}
