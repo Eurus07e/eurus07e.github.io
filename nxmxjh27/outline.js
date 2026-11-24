@@ -158,3 +158,90 @@ if (articleToc) {
   new ResizeObserver(scheduleOutlineUpdate).observe(document.querySelector('.article-main'));
 }
 
+// Use the same outline control and links at every viewport width.
+(() => {
+  const tools = document.querySelector('.worklist-tools');
+  const title = document.querySelector('.worklist-title');
+  const button = title.querySelector('.article-toc-toggle');
+  const outline = document.querySelector('.article-toc');
+  const content = outline.querySelector('.worklist-outline-content');
+  const mobile = matchMedia('(max-width:640px)');
+  const menu = document.querySelector('.nav-menu-toggle');
+
+  const reduceMotion = matchMedia('(prefers-reduced-motion: reduce)');
+  let motion;
+  let expanded = false;
+
+  function showMobileOutline(show) {
+    if (show === expanded) return;
+    expanded = show;
+    outline.open = true;
+    outline.inert = !show;
+    function finish() {
+      outline.open = expanded;
+      motion?.cancel();
+      motion = null;
+    }
+    if (reduceMotion.matches) {
+      finish();
+    } else if (motion) {
+      motion.reverse();
+    } else {
+      // Keep the backdrop stationary while the content moves, as in Setting.
+      motion = content.animate([
+        {opacity:0, transform:'translateY(-3px)'},
+        {opacity:1, transform:'none'}
+      ], {duration:180, easing:'ease-in-out', direction:show?'normal':'reverse', fill:'both'});
+      motion.onfinish = finish;
+    }
+  }
+
+  function placeOutline() {
+    motion?.cancel();
+    motion = null;
+    expanded = false;
+    outline.open = false;
+    outline.inert = false;
+    if (mobile.matches) {
+      tools.prepend(button);
+      tools.append(outline);
+    } else {
+      title.append(button);
+      title.closest('header').after(outline);
+    }
+  }
+  placeOutline();
+  mobile.addEventListener('change', placeOutline);
+
+  button.addEventListener('click', event => {
+    if (!mobile.matches) return;
+    // The shared reader handles desktop clicks. Keep mobile details visible through exit.
+    event.stopImmediatePropagation();
+    if (menu.getAttribute('aria-expanded') === 'true') menu.click();
+    showMobileOutline(!expanded);
+  }, {capture:true});
+  document.addEventListener('click', event => {
+    if (!mobile.matches || button.contains(event.target)) return;
+    if (!outline.contains(event.target) || event.target.closest('a')) {
+      showMobileOutline(false);
+    }
+  });
+  // Retract the capsule into the AI entry while leaving via the mobile navigation.
+  const nav = menu.closest('nav');
+  nav.addEventListener('click', event => {
+    const link = event.target.closest('a[href]');
+    if (!mobile.matches || reduceMotion.matches || !link || event.defaultPrevented ||
+        event.ctrlKey || event.altKey || event.metaKey || event.shiftKey || link.target ||
+        link.pathname === location.pathname) return;
+    event.preventDefault();
+    tools.classList.add('is-leaving');
+    setTimeout(() => location.assign(link.href), 180);
+  });
+  window.addEventListener('pageshow', () => tools.classList.remove('is-leaving'));
+  document.addEventListener('keydown', event => {
+    if (mobile.matches && outline.open && event.key === 'Escape') {
+      showMobileOutline(false);
+      button.focus();
+    }
+  });
+})();

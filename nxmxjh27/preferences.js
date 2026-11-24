@@ -1,6 +1,6 @@
 (() => {
   const root = document.documentElement;
-  const panel = document.getElementById('preferences-panel');
+  const panel = document.getElementById('preferences-panel') || document.querySelector('.settings-page');
   const trigger = document.querySelector('.settings-trigger');
   const options = {font:['song','kai','system'],color:['purple','ink','blue']};
   function apply(name,value,save=false) {
@@ -17,12 +17,12 @@
     apply(name,name==='font' && stored==='sans' ? 'system' : stored);
   }
   const reducedMotion=matchMedia('(prefers-reduced-motion:reduce)');
-  const expanded=()=>trigger.getAttribute('aria-expanded')==='true';
+  const expanded=()=>trigger?.getAttribute('aria-expanded')==='true';
   const controls=panel.querySelector('.settings-content');
   const glass=panel.querySelector('.settings-glass');
   let panelMotion=[];
   function open(show){
-    if(show===expanded())return;
+    if(!trigger || show===expanded())return;
     trigger.setAttribute('aria-expanded',String(show));
     panel.inert=!show;
     if(reducedMotion.matches || !controls.animate){
@@ -65,13 +65,6 @@
   menu.addEventListener('click',()=>setMenu(menu.getAttribute('aria-expanded')!=='true'));
   document.querySelector('.ai-nav-entry').addEventListener('click',()=>setMenu(false));
   const compact=matchMedia('(max-width:640px)');
-  const settings=trigger.closest('.preferences');
-  const items=document.getElementById('nav-items');
-  function positionSettings(){
-    if(compact.matches)items.append(settings);
-    else items.closest('.nav-controls').after(settings);
-  }
-  positionSettings();
   const topOnly=document.getElementById('nav-top-only');
   const bar=menu.closest('.topbar');
   const title=content.querySelector('h1');
@@ -101,7 +94,7 @@
     updateBar();
   }
   restoreNavPreference();
-  compact.addEventListener('change',()=>{setMenu(false);positionSettings();restoreNavPreference();});
+  compact.addEventListener('change',()=>{setMenu(false);restoreNavPreference();});
   if(window.ResizeObserver && title){
     const observer=new ResizeObserver(()=>{measureThreshold();updateBar();});
     observer.observe(bar);
@@ -112,7 +105,7 @@
     if(event.persisted){setMenu(false);restoreNavPreference();}
   });
   window.addEventListener('storage',e=>{if(e.key===storageKey()||e.key===null)restoreNavPreference();});
-  trigger.addEventListener('click',()=>open(!expanded()));
+  trigger?.addEventListener('click',()=>open(!expanded()));
   panel.addEventListener('change',({target})=>{
     if(target===topOnly){
       try{localStorage.setItem(storageKey(),String(topOnly.checked));}catch{}

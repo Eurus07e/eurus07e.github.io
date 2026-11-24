@@ -488,11 +488,16 @@
       refreshSuggestions();
       previousFocus=document.activeElement;
       const entryRect=toggle.getBoundingClientRect();
+      const starRect=toggle.querySelector('.nx-ai-open-icon svg').getBoundingClientRect();
       Object.assign(entrySpace.style,{width:`${entryRect.width}px`,height:`${entryRect.height}px`});
       const viewport=window.visualViewport;
       uiZoom=viewportZoom();
-      dialog.style.setProperty('--nx-ai-exit-top',`${Math.max(0,(entryRect.top-(viewport?.offsetTop || 0))/uiZoom)}px`);
-      dialog.style.setProperty('--nx-ai-exit-right',`${Math.max(0,((viewport?.width || innerWidth)-entryRect.right+(viewport?.offsetLeft || 0))/uiZoom)}px`);
+      // The Worklist star sits slightly inward within its tap target.
+      // Center the dialog button and reveal on the visible star at the handoff.
+      const centerX=starRect.left+starRect.width/2;
+      const centerY=starRect.top+starRect.height/2;
+      dialog.style.setProperty('--nx-ai-exit-top',`max(0px, ${(centerY-(viewport?.offsetTop || 0))/uiZoom}px - var(--nav-height)/2)`);
+      dialog.style.setProperty('--nx-ai-exit-right',`max(0px, ${((viewport?.width || innerWidth)+(viewport?.offsetLeft || 0)-centerX)/uiZoom}px - var(--nav-height)/2)`);
       const pageWidth=document.documentElement.clientWidth;
       viewportBaseline={width:innerWidth,height:Math.max(innerHeight,window.visualViewport?.height || 0)};
       editingStarted=false;followLatest=true;
