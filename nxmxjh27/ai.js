@@ -204,7 +204,7 @@
   const reduced = matchMedia('(prefers-reduced-motion: reduce)');
   const touch = matchMedia('(pointer: coarse)');
   const endpoint = document.querySelector('meta[name="nanxing-ai-endpoint"]')?.content || '';
-  const themeColor = document.querySelector('meta[name="theme-color"]');
+  const lightThemeColor = document.querySelector('meta[name="theme-color"][media="(prefers-color-scheme: light)"]');
   const arrowMarkup = send.innerHTML;
   const stopMarkup = '<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><rect x="7" y="7" width="10" height="10" rx="2"/></svg>';
   let conversation = [], activeRequest = null, generation = 0;
@@ -413,7 +413,7 @@
   function finishClose() {
     anchor.after(toggle); entrySpace.remove();
     document.documentElement.classList.remove('nx-ai-active','nx-ai-open');
-    if(themeColor)themeColor.content=previousThemeColor;
+    if(lightThemeColor)lightThemeColor.content=previousThemeColor;
     document.body.style.overflow = previousOverflow;
     if(rootLock){Object.assign(document.documentElement.style,rootLock);rootLock=null;}
     if(bodyLock){
@@ -505,9 +505,9 @@
       previousOverflow=document.body.style.overflow;
       previousGutter=document.documentElement.style.scrollbarGutter;
       previousTitle=document.title;
-      previousThemeColor=themeColor?.content || '';
+      previousThemeColor=lightThemeColor?.content || '';
       document.documentElement.classList.add('nx-ai-open');
-      if(themeColor)themeColor.content=getComputedStyle(document.documentElement).getPropertyValue('--nx-ai-background').trim();
+      if(lightThemeColor)lightThemeColor.content=getComputedStyle(document.documentElement).getPropertyValue('--nx-ai-light-background').trim();
       document.documentElement.style.scrollbarGutter='auto';
       document.body.style.overflow='hidden';
       rootLock={overflow:document.documentElement.style.overflow,overscrollBehavior:document.documentElement.style.overscrollBehavior};
