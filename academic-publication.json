@@ -1,7 +1,7 @@
 {
   "version": 1,
   "sourceRepository": "Eurus07e/personal-website",
-  "sourceCommit": "4f3c17019496e738b0dffb160d051ea4b7de91b7",
+  "sourceCommit": "960644b0f3fcbdbd157de541c890f24dca918c7b",
   "files": {
     ".nojekyll": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
     "assets/blog/article-search.css": "7fc82d051d097fe4dc7503be4faa88971e84af6821a72ea322029ace27843acc",
@@ -81,7 +81,9 @@
     "nxmxjh27/ai.css": "ee9419f582a3a1b019b1ef9f96a3e8009ddae51f65302b0c1c25be258e5d8594",
     "nxmxjh27/ai.js": "dea583d70ed6b824b8ad0e496ea0178712c01b63581559fa2c2d15cc4bcbbfa8",
     "nxmxjh27/faq/index.html": "d6cb06561feaf0d1d62060b270bd68e14f04a28338378c968237e15a5bf25d3c",
+    "nxmxjh27/files/2026-1.pdf": "ddb7cfe0f9f29570a5a3d5c178da0705783e1f31e8e931d3264b2049364cd41e",
     "nxmxjh27/files/2027.pdf": "3ddfef78b3e23e9dcb6c68e1f012cab754928342606af72aefe362d804658157",
+    "nxmxjh27/files/file.pdf": "02b46adb3d6f7164b1f5b911db58fc0ad66425f632193e158973b6eb0aa05744",
     "nxmxjh27/files/file.zip": "d1297081f192e736f2165f9a87b09cf88d15b677656af10d55b6779f8f1455d9",
     "nxmxjh27/files/love-nju.eps": "53a6c797364e8d97714f7c7a2940fc422282024fe3acc63c89ce2aefe7b79056",
     "nxmxjh27/files/nanxing-2026-completion.pdf": "7da9d110cecc1305f4bf36ab45eba441638372d831f77d725a9fa9d58724a4e0",
@@ -209,7 +211,7 @@
     "nxmxjh27/icons/favicon.svg": "bfee25826d1c217ce84f364e59cb454851d5e727e64542c8fc9dd8717557c686",
     "nxmxjh27/icons/logo.svg": "0e74c2881a879017863f7c7c1440ef1ddfb738130a8635fe16aeaf3e5a76f70b",
     "nxmxjh27/index.html": "f92ff306529b2bf3b5835d756cd3637225fa4e9551edd26684109045bbcde678",
-    "nxmxjh27/info/index.html": "32fc6f0e49f778357dd35aba3eb8882934fd28ffb1c0f3f9554e2dbd66b1a7ee",
+    "nxmxjh27/info/index.html": "ee8c2bd8dd7a2352c8ef5384ef9d70e2e4572c5cb49cbb71e5abaa17f313582b",
     "nxmxjh27/member.css": "f751e024a759eaa1564aa787892bb9f43b9fcc754190309a8b6287dd4c188681",
     "nxmxjh27/outline.js": "c2866a9668942b2fe3ff935b8fbc9c295fafe2dceacdcf410784d2041fa6676c",
     "nxmxjh27/preferences.js": "9a8d91ed8f2e02a6d2e79a2bd0dc6ffa9703e621ff7bc2cfbd834e0c0ae2a735",
